@@ -13,25 +13,21 @@ import { ModuloSeguridadLayout } from "../layout";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LinkGrid } from "../components";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-
-const formDefaultValues = {
-  nombreUsuario: "",
-  clave: "",
-};
+import { Controller, useForm } from "react-hook-form";
 
 export const AutenticacionPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
   const [showPassword, setShowPassword] = useState(false);
+
+  const onSubmit = (values) => {
+    console.log(values);
+  };
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -48,25 +44,33 @@ export const AutenticacionPage = () => {
         sx={{ mt: 1, width: "80%" }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField
-          margin="normal"
-          fullWidth
-          id="nombreUsuario"
-          label="Ingresa tu usuario"
+        <Controller
+          defaultValue=""
           name="nombreUsuario"
-          autoComplete="nombreUsuario"
-          autoFocus
-          error={!!errors.nombreUsuario}
-          helperText={errors?.nombreUsuario?.message}
-          {...register("nombreUsuario", {
-            required: "El nombre de usuario es requerido",
-          })}
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Ingresa tu nombre de usuario"
+              margin="normal"
+              fullWidth
+              autoComplete="nombreUsuario"
+              autoFocus
+              error={!!errors.nombreUsuario}
+              helperText={errors?.nombreUsuario?.message}
+            />
+          )}
+          rules={{
+            required: "El usuario es requerido",
+          }}
         />
+
         <FormControl variant="outlined" fullWidth margin="normal">
-          <InputLabel htmlFor="outlined-adornment-clave" error={!!errors.clave} >
+          <InputLabel htmlFor="outlined-adornment-clave" error={!!errors.clave}>
             Ingresa tu clave
           </InputLabel>
           <OutlinedInput
+            defaultValue=""
             id="outlined-adornment-clave"
             type={showPassword ? "text" : "password"}
             endAdornment={

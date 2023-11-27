@@ -1,68 +1,132 @@
-import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@mui/material";
 import { ModuloSeguridadLayout } from "../layout";
 import { LinkGrid } from "../components";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export const ReestablecerClavePage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    getValues,
+  } = useForm();
+
+  const onSubmit = (values) => {
+    console.log(values);
+  };
 
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
-  }
+  };
 
   const [showRePassword, setReShowPassword] = useState(false);
 
   const handleClickShowRePassword = () => {
     setReShowPassword(!showRePassword);
-  }
+  };
+
+  let passwordMatch =
+    watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
 
   return (
     <ModuloSeguridadLayout
       pageTitle="Reestablecer clave"
       titleDesc="Ingresa tu nueva clave"
     >
-      <Box component="form" noValidate sx={{ mt: 1, width: "80%" }}>
+      <Box
+        component="form"
+        noValidate
+        sx={{ mt: 1, width: "80%" }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <FormControl variant="outlined" fullWidth margin="normal">
-          <InputLabel htmlFor="outlined-adornment-clave">
-            Ingresa tu clave
+          <InputLabel
+            htmlFor="outlined-adornment-clave"
+            error={!!errors.clave || passwordMatch}
+          >
+            Ingresa tu nueva clave
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-clave"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
+                <IconButton onClick={handleClickShowPassword} edge="end">
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }
-            label="Ingresa tu clave"
+            error={!!errors.clave || passwordMatch}
+            label="Ingresa tu nueva clave"
+            {...register("clave", {
+              required: "La nueva clave es requerida",
+              minLength: {
+                value: 8,
+                message: "La clave debe tener al menos 8 caracteres",
+              },
+              maxLength: {
+                value: 16,
+                message: "La clave debe tener máximo 16 caracteres",
+              },
+            })}
           />
+          {errors?.clave ? (
+            <FormHelperText error>{errors?.clave?.message}</FormHelperText>
+          ) : passwordMatch ? (
+            <FormHelperText error>Las claves no coinciden</FormHelperText>
+          ) : null}
         </FormControl>
+
         <FormControl variant="outlined" fullWidth margin="normal">
-          <InputLabel htmlFor="outlined-adornment-clave">
-            Ingresa tu clave nuevamente
+          <InputLabel
+            htmlFor="outlined-adornment-reClave"
+            error={!!errors.reClave || passwordMatch}
+          >
+            Confirma tu nueva clave
           </InputLabel>
           <OutlinedInput
-            id="outlined-adornment-clave"
+            id="outlined-adornment-reClave"
             type={showRePassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton
-                  onClick={handleClickShowRePassword}
-                  edge="end"
-                >
+                <IconButton onClick={handleClickShowRePassword} edge="end">
                   {showRePassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }
-            label="Ingresa tu clave"
+            error={!!errors.reClave || passwordMatch}
+            label="Confirma tu nueva clave"
+            {...register("reClave", {
+              required: "La confirmación de la clave es requerida",
+              minLength: {
+                value: 8,
+                message: "La clave debe tener al menos 8 caracteres",
+              },
+              maxLength: {
+                value: 16,
+                message: "La clave debe tener máximo 16 caracteres",
+              },
+            })}
           />
+          {errors?.reClave ? (
+            <FormHelperText error>{errors?.reClave?.message}</FormHelperText>
+          ) : passwordMatch ? (
+            <FormHelperText error>Las claves no coinciden</FormHelperText>
+          ) : null}
         </FormControl>
         <Button
           type="submit"
