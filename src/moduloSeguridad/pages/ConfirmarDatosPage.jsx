@@ -1,8 +1,11 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { ModuloSeguridadLayout } from "../layout";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LinkGrid } from "../components";
 import { Controller, useForm } from "react-hook-form";
+import { showAlertMessage } from "../../helpers";
+
+const apiUrl = "http://localhost:8080/api/seguridad";
 
 export const ConfirmarDatosPage = () => {
   const {
@@ -12,13 +15,10 @@ export const ConfirmarDatosPage = () => {
     control,
   } = useForm();
 
-  const onSubmit = (values) => {
-    console.log(values);
-  };
-  
   const navigate = useNavigate();
 
-  const handleGoToPreguntaSeguridadPage = () => {
+  const onSubmit = async (formData) => {
+    
     navigate("/pregunta-seguridad");
   };
 

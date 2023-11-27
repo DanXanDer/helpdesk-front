@@ -1,3 +1,7 @@
+import React, { useEffect, useState } from "react";
+import { ModuloSeguridadLayout } from "../layout";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
 import {
   Box,
   Button,
@@ -6,25 +10,39 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  MenuItem,
   OutlinedInput,
+  Select,
+  TextField,
 } from "@mui/material";
-import { ModuloSeguridadLayout } from "../layout";
-import { LinkGrid } from "../components";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SelectAll, Visibility, VisibilityOff } from "@mui/icons-material";
+import { axiosPostRequest, showAlertMessage } from "../../helpers";
+import axios from "axios";
 
-export const ReestablecerClavePage = () => {
+const apiUrl = "http://localhost:8080/api/seguridad";
+
+export const CompletarDatosPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
     getValues,
+    control,
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setReShowPassword] = useState(false);
+  const [preguntasSeguridad, setPreguntasSeguridad] = useState([]);
+
+  const navigate = useNavigate();
+
+  const { state } = useLocation();
+
+  useEffect(() => {
+    const { preguntasSeguridad } = state;
+    setPreguntasSeguridad(preguntasSeguridad);
+  }, []);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -34,24 +52,101 @@ export const ReestablecerClavePage = () => {
     setReShowPassword(!showRePassword);
   };
 
-  const onSubmit = (values) => {
-    console.log(values);
-  };
-
   let passwordMatch =
     watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
 
+  const onSubmit = async (formData) => {
+
+    const formDataWithIdUsuario = {
+      ...formData,
+      idUsuario: state.idUsuario
+    };
+
+    try {
+      const {data}  = await axiosPostRequest(`${apiUrl}/completar-datos`, formDataWithIdUsuario)
+      //TODO: Redireccion a la pagina de bienvenida
+    } catch (error) {
+      const { mensaje } = error.response.data.error;
+      showAlertMessage("error", "Error", mensaje);
+    }
+  };
+
   return (
     <ModuloSeguridadLayout
-      pageTitle="Reestablecer clave"
-      titleDesc="Ingresa tu nueva clave"
+      pageTitle="Autenticación"
+      titleDesc="Completa tus datos"
     >
       <Box
         component="form"
         noValidate
         sx={{ mt: 1, width: "80%" }}
         onSubmit={handleSubmit(onSubmit)}
+        method="POST"
       >
+        <FormControl fullWidth margin="normal">
+          <InputLabel
+            id="select-pregunta-seguridad-label"
+            error={!!errors.preguntaSeguridad}
+          >
+            Pregunta de seguridad
+          </InputLabel>
+          <Controller
+            name="preguntaSeguridad"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Select
+                {...field}
+                labelId="select-pregunta-seguridad-label"
+                id="select-pregunta-seguridad"
+                label="Pregunta de seguridad"
+                error={!!errors.preguntaSeguridad}
+                autoFocus
+              >
+                {preguntasSeguridad.map(
+                  ({ idPreguntaSeguridad, nombrePreguntaSeguridad }) => (
+                    <MenuItem
+                      key={idPreguntaSeguridad}
+                      value={idPreguntaSeguridad}
+                    >
+                      {nombrePreguntaSeguridad}
+                    </MenuItem>
+                  )
+                )}
+              </Select>
+            )}
+            rules={{
+              required: "La pregunta de seguridad es requerida",
+            }}
+          />
+          {errors?.preguntaSeguridad ? (
+            <FormHelperText error>
+              {errors?.preguntaSeguridad?.message}
+            </FormHelperText>
+          ) : null}
+          <FormHelperText></FormHelperText>
+        </FormControl>
+
+        <Controller
+          defaultValue=""
+          name="rptaSecreta"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Ingresa tu respuesta secreta"
+              margin="normal"
+              fullWidth
+              autoComplete="rptaSecreta"
+              error={!!errors.rptaSecreta}
+              helperText={errors?.rptaSecreta?.message}
+            />
+          )}
+          rules={{
+            required: "La respuesta secreta es requerida",
+          }}
+        />
+
         <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel
             htmlFor="outlined-adornment-clave"
@@ -135,7 +230,6 @@ export const ReestablecerClavePage = () => {
         >
           Ingresar
         </Button>
-        <LinkGrid path="/autenticacion" text="Ir al inicio" />
       </Box>
     </ModuloSeguridadLayout>
   );

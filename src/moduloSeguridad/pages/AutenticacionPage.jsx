@@ -14,8 +14,19 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LinkGrid } from "../components";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {
+  axiosGetRequest,
+  axiosPostRequest,
+  showAlertMessage,
+} from "../../helpers";
+
+const apiUrl = "http://localhost:8080/api/seguridad";
 
 export const AutenticacionPage = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -25,8 +36,28 @@ export const AutenticacionPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = async (formData) => {
+    try {
+      const { data } = await axiosPostRequest(
+        `${apiUrl}/check-primer-login`,
+        formData
+      );
+
+      const { idUsuario, primerLogin } = data;
+
+      if (primerLogin == 1) {
+        const { data } = await axiosGetRequest(`${apiUrl}/preguntas-seguridad`);
+        const { preguntasSeguridad } = data;
+        navigate("/completar-datos", {
+          state: { idUsuario, preguntasSeguridad },
+        });
+      } else {
+        //TODO: Redireccion a la pagina de bienvenida
+      }
+    } catch (error) {
+      const { mensaje } = error.response.data.error;
+      showAlertMessage("error", "Error", mensaje);
+    }
   };
 
   const handleClickShowPassword = () => {
@@ -43,6 +74,7 @@ export const AutenticacionPage = () => {
         noValidate
         sx={{ mt: 1, width: "80%" }}
         onSubmit={handleSubmit(onSubmit)}
+        method="POST"
       >
         <Controller
           defaultValue=""
