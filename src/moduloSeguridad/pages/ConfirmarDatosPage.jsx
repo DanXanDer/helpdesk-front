@@ -3,7 +3,7 @@ import { ModuloSeguridadLayout } from "../layout";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LinkGrid } from "../components";
 import { Controller, useForm } from "react-hook-form";
-import { showAlertMessage } from "../../helpers";
+import { axiosPostRequest, showAlertMessage } from "../../helpers";
 
 const apiUrl = "http://localhost:8080/api/seguridad";
 
@@ -18,8 +18,16 @@ export const ConfirmarDatosPage = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (formData) => {
-    
-    navigate("/pregunta-seguridad");
+    try {
+      const {data} = await axiosPostRequest(`${apiUrl}/validar-datos-usuario`, formData);
+      const {idUsuario, preguntaSeguridad} = data;
+      navigate("/pregunta-seguridad", {
+        state: {idUsuario, preguntaSeguridad},
+      })
+    } catch (error) {
+      const { mensaje } = error.response.data.error;
+      showAlertMessage("error", "Error", mensaje);
+    }
   };
 
   return (
@@ -55,7 +63,7 @@ export const ConfirmarDatosPage = () => {
         />
         <Controller
           defaultValue=""
-          name="nombre"
+          name="nombres"
           control={control}
           render={({ field }) => (
             <TextField
@@ -63,10 +71,10 @@ export const ConfirmarDatosPage = () => {
               label="Ingresa tu nombre"
               margin="normal"
               fullWidth
-              autoComplete="nombre"
+              autoComplete="nombres"
               autoFocus
-              error={!!errors.nombre}
-              helperText={errors?.nombre?.message}
+              error={!!errors.nombres}
+              helperText={errors?.nombres?.message}
             />
           )}
           rules={{

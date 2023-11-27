@@ -1,8 +1,11 @@
 import { Box, Button, TextField } from "@mui/material";
 import { ModuloSeguridadLayout } from "../layout";
 import { LinkGrid } from "../components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
+import { axiosPostRequest, showAlertMessage } from "../../helpers";
+
+const apiUrl = "http://localhost:8080/api/seguridad";
 
 export const PreguntaSeguridadPage = () => {
   const {
@@ -12,16 +15,30 @@ export const PreguntaSeguridadPage = () => {
     control,
   } = useForm();
 
-  const onSubmit = (values) => {
-    console.log(values);
-  };
-
   const navigate = useNavigate();
 
-  const handleGoToReestablecerClavePage = () => {
-    navigate("/reestablecer-clave");
-  };
+  const { state } = useLocation();
 
+  const { idUsuario, preguntaSeguridad } = state;
+
+  const onSubmit = async (formData) => {
+    const formDataWithIdUsuario = {
+      ...formData,
+      idUsuario,
+    };
+    try {
+      await axiosPostRequest(
+        `${apiUrl}/validar-rpta-secreta`,
+        formDataWithIdUsuario
+      );
+      navigate("/reestablecer-clave", {
+        state: { idUsuario },
+      });
+    } catch (error) {
+      const { mensaje } = error.response.data.error;
+      showAlertMessage("error", "Error", mensaje);
+    }
+  };
   return (
     <ModuloSeguridadLayout
       pageTitle="Pregunta de seguridad"
@@ -39,10 +56,10 @@ export const PreguntaSeguridadPage = () => {
           id="preguntaSeguridad"
           name="preguntaSeguridad"
           label="Pregunta de seguridad"
-          defaultValue={"¿Cuál es el nombre de tu mascota?"}
-          InputProps={{
-            readOnly: true,
-          }}
+          value={preguntaSeguridad}
+          inputProps={
+            { readOnly: true } // readOnly is a boolean attribute of input tag
+          }
         />
 
         <Controller
