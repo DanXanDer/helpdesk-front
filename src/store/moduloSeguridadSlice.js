@@ -16,12 +16,17 @@ export const moduloSeguridadSlice = createSlice({
   initialState,
   reducers: {
     setUsuarioLogin: (state, action) => {
-      state.status = "authenticated";
-      state.usuario = {...action.payload};      
+      state.status = "autenticado";
+      state.usuario = { ...action.payload };
+    },
+    setUsuarioLogout: (state) => {
+      state.status = initialState.status;
+      state.usuario = { ...initialState.usuario };
     },
   },
 });
 
-export const { setUsuarioLogin } = moduloSeguridadSlice.actions;
+export const { setUsuarioLogin, setUsuarioLogout } =
+  moduloSeguridadSlice.actions;
 
 export default moduloSeguridadSlice.reducer;

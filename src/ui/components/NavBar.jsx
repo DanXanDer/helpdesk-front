@@ -1,12 +1,23 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
-import { Menu } from "@mui/icons-material";
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
+import { Logout, Menu } from "@mui/icons-material";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
+import { axiosPostRequest } from "../../helpers";
+import { useNavigate } from "react-router-dom";
+
+const apiUrl = "http://localhost:8080/api/seguridad";
 
 export const NavBar = ({ drawerWidth }) => {
-
-  const { usuario } = useModuloSeguridadStore();
+  const { usuario, handleUsuarioLogout } = useModuloSeguridadStore();
 
   const { handleDrawerToggle } = useUiStore();
+
+  const navigate = useNavigate();
+
+  const onUsuarioLogout = async () => {
+    handleUsuarioLogout();
+    await axiosPostRequest(`${apiUrl}/logout-usuario`, null);
+    navigate("/autenticacion");
+  };
 
   return (
     <AppBar
@@ -14,9 +25,15 @@ export const NavBar = ({ drawerWidth }) => {
       sx={{
         width: { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
+        backgroundColor: "primary.light",
       }}
     >
-      <Toolbar>
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -29,6 +46,14 @@ export const NavBar = ({ drawerWidth }) => {
         <Typography variant="h6" noWrap component="div">
           Bienvenido! {usuario.nombres}
         </Typography>
+        <Button
+          onClick={onUsuarioLogout}
+          color="error"
+          variant="contained"
+          startIcon={<Logout />}
+        >
+          Salir
+        </Button>
       </Toolbar>
     </AppBar>
   );

@@ -1,5 +1,4 @@
 import { List } from "@mui/material";
-import React from "react";
 import { SideBarListItem } from "./SideBarListItem";
 import { useModuloSeguridadStore } from "../../hooks";
 
