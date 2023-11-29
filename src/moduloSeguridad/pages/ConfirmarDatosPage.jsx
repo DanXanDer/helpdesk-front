@@ -7,6 +7,7 @@ import { axiosPostRequest, showAlertMessage } from "../../helpers";
 
 const apiUrl = "http://localhost:8080/api/seguridad";
 
+//TODO: Proteccion de ruta
 export const ConfirmarDatosPage = () => {
   const {
     register,

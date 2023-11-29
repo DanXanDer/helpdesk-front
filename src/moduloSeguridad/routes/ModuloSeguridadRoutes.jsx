@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
   AutenticacionPage,
+  BienvenidaPage,
   CompletarDatosPage,
   ConfirmarDatosPage,
   PreguntaSeguridadPage,
@@ -23,6 +24,7 @@ export const ModuloSeguridadRoutes = () => {
           element={<ReestablecerClavePage />}
         ></Route>
         <Route path="completar-datos" element={<CompletarDatosPage />}></Route>
+        <Route path="bienvenida" element={<BienvenidaPage />}></Route>
       </Routes>
     </div>
   );

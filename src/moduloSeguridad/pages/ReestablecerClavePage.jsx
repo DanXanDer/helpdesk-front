@@ -11,13 +11,14 @@ import {
 import { ModuloSeguridadLayout } from "../layout";
 import { LinkGrid } from "../components";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { axiosPostRequest, showAlertMessage } from "../../helpers";
 
 const apiUrl = "http://localhost:8080/api/seguridad";
 
+//TODO: Proteccion de ruta
 export const ReestablecerClavePage = () => {
   const {
     register,
@@ -33,6 +34,10 @@ export const ReestablecerClavePage = () => {
   const { state } = useLocation();
 
   const { idUsuario } = state;
+
+  useEffect(() => {
+    console.log(state);
+  },[])
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);

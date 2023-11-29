@@ -14,13 +14,13 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LinkGrid } from "../components";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   axiosGetRequest,
   axiosPostRequest,
   showAlertMessage,
 } from "../../helpers";
+import { useModuloSeguridadStore } from "../../hooks";
 
 const apiUrl = "http://localhost:8080/api/seguridad";
 
@@ -35,6 +35,8 @@ export const AutenticacionPage = () => {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const { handleUsuarioLogin } = useModuloSeguridadStore();
 
   const onSubmit = async (formData) => {
     try {
@@ -52,7 +54,12 @@ export const AutenticacionPage = () => {
           state: { idUsuario, preguntasSeguridad },
         });
       } else {
-        //TODO: Redireccion a la pagina de bienvenida
+        const { data } = await axiosPostRequest(
+          `${apiUrl}/logear-usuario`,
+          idUsuario
+        );
+        handleUsuarioLogin(data);
+        navigate("/bienvenida");
       }
     } catch (error) {
       const { mensaje } = error.response.data.error;

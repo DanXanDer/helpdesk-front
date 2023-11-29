@@ -3,3 +3,4 @@ export * from "./ConfirmarDatosPage";
 export * from "./PreguntaSeguridadPage";
 export * from "./ReestablecerClavePage";
 export * from "./CompletarDatosPage";
+export * from "./BienvenidaPage";
