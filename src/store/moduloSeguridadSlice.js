@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  status: "no-autenticado", // no-autenticado, autenticado, autenticando
-  usuario: {
+  status: "checking", // no-autenticado, autenticado, autenticando
+  usuario: null /* {
     idUsuario: null,
-    nombreUsuario: null,
     nombres: null,
-    apellidos: null,
+    tipo: null,
     privilegios: [],
-  },
+  }, */,
 };
 
 export const moduloSeguridadSlice = createSlice({
@@ -20,8 +19,8 @@ export const moduloSeguridadSlice = createSlice({
       state.usuario = { ...action.payload };
     },
     setUsuarioLogout: (state) => {
-      state.status = initialState.status;
-      state.usuario = { ...initialState.usuario };
+      state.status = "no-autenticado";
+      state.usuario = null;
     },
   },
 });

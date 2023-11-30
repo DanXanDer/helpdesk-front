@@ -9,9 +9,10 @@ import React from "react";
 import { CustomIcon } from "./CustomIcon";
 
 export const SideBarListItem = ({ idPrivilegio, label, icon, path }) => {
+
   return (
     <ListItem key={idPrivilegio} disablePadding>
-      <ListItemButton>
+      <ListItemButton onClick={(path) => } >
         <ListItemIcon>
           <CustomIcon icon={icon} />
         </ListItemIcon>

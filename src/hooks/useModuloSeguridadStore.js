@@ -5,11 +5,12 @@ import {
 } from "../store/moduloSeguridadSlice";
 
 export const useModuloSeguridadStore = () => {
-  const { usuario } = useSelector((state) => state.moduloSeguridadSlice);
+  const { usuario, status } = useSelector((state) => state.moduloSeguridadSlice);
 
   const dispatch = useDispatch();
 
   const handleUsuarioLogin = (data) => {
+    
     dispatch(setUsuarioLogin(data));
   };
 
@@ -20,6 +21,7 @@ export const useModuloSeguridadStore = () => {
   return {
     //Properties
     usuario,
+    status,
 
     //Methods
     handleUsuarioLogin,

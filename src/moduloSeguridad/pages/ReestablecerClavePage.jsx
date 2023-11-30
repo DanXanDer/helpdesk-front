@@ -35,10 +35,6 @@ export const ReestablecerClavePage = () => {
 
   const { idUsuario } = state;
 
-  useEffect(() => {
-    console.log(state);
-  },[])
-
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };

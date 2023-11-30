@@ -5,6 +5,7 @@ export const axiosGetRequest = async (apiUrl) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   });
 
   return {

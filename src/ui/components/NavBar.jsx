@@ -16,7 +16,6 @@ export const NavBar = ({ drawerWidth }) => {
   const onUsuarioLogout = async () => {
     handleUsuarioLogout();
     await axiosPostRequest(`${apiUrl}/logout-usuario`, null);
-    navigate("/autenticacion");
   };
 
   return (

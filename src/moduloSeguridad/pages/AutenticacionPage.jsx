@@ -59,7 +59,9 @@ export const AutenticacionPage = () => {
           idUsuario
         );
         handleUsuarioLogin(data);
-        navigate("/bienvenida");
+        /* const url = `modulo-${data.tipo}`;
+        navigate(`/${url}`); */
+        navigate("/")
       }
     } catch (error) {
       const { mensaje } = error.response.data.error;
