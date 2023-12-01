@@ -3,8 +3,7 @@ import { Logout, Menu } from "@mui/icons-material";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 import { axiosPostRequest } from "../../helpers";
 import { useNavigate } from "react-router-dom";
-
-const apiUrl = "http://localhost:8080/api/seguridad";
+import { getApiUrl } from "../../moduloSeguridad/helpers/getApiUrl";
 
 export const NavBar = ({ drawerWidth }) => {
   const { usuario, handleUsuarioLogout } = useModuloSeguridadStore();
@@ -15,7 +14,7 @@ export const NavBar = ({ drawerWidth }) => {
 
   const onUsuarioLogout = async () => {
     handleUsuarioLogout();
-    await axiosPostRequest(`${apiUrl}/logout-usuario`, null);
+    await axiosPostRequest(`${getApiUrl()}/logout-usuario`, null);
   };
 
   return (
@@ -24,7 +23,6 @@ export const NavBar = ({ drawerWidth }) => {
       sx={{
         width: { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
-        backgroundColor: "primary.light",
       }}
     >
       <Toolbar
@@ -45,14 +43,14 @@ export const NavBar = ({ drawerWidth }) => {
         <Typography variant="h6" noWrap component="div">
           Bienvenido! {usuario.nombres}
         </Typography>
-        <Button
-          onClick={onUsuarioLogout}
-          color="error"
-          variant="contained"
-          startIcon={<Logout />}
+        <IconButton
+          sx={{
+            color: "white",
+          }}
+          onClick={() => onUsuarioLogout()}
         >
-          Salir
-        </Button>
+          <Logout />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

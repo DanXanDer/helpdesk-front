@@ -21,8 +21,7 @@ import {
   showAlertMessage,
 } from "../../helpers";
 import { useModuloSeguridadStore } from "../../hooks";
-
-const apiUrl = "http://localhost:8080/api/seguridad";
+import { getApiUrl } from "../helpers";
 
 export const AutenticacionPage = () => {
   const navigate = useNavigate();
@@ -41,26 +40,24 @@ export const AutenticacionPage = () => {
   const onSubmit = async (formData) => {
     try {
       const { data } = await axiosPostRequest(
-        `${apiUrl}/check-primer-login`,
+        `${getApiUrl()}/check-primer-login`,
         formData
       );
 
       const { idUsuario, primerLogin } = data;
 
       if (primerLogin == 1) {
-        const { data } = await axiosGetRequest(`${apiUrl}/preguntas-seguridad`);
+        const { data } = await axiosGetRequest(`${getApiUrl()}/preguntas-seguridad`);
         const { preguntasSeguridad } = data;
         navigate("/completar-datos", {
           state: { idUsuario, preguntasSeguridad },
         });
       } else {
         const { data } = await axiosPostRequest(
-          `${apiUrl}/logear-usuario`,
+          `${getApiUrl()}/logear-usuario`,
           idUsuario
         );
         handleUsuarioLogin(data);
-        /* const url = `modulo-${data.tipo}`;
-        navigate(`/${url}`); */
         navigate("/")
       }
     } catch (error) {

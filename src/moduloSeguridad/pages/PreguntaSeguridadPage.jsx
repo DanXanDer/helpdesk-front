@@ -4,8 +4,7 @@ import { LinkGrid } from "../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { axiosPostRequest, showAlertMessage } from "../../helpers";
-
-const apiUrl = "http://localhost:8080/api/seguridad";
+import { getApiUrl } from "../helpers";
 
 //TODO: Proteccion de ruta
 export const PreguntaSeguridadPage = () => {
@@ -29,7 +28,7 @@ export const PreguntaSeguridadPage = () => {
     };
     try {
       await axiosPostRequest(
-        `${apiUrl}/validar-rpta-secreta`,
+        `${getApiUrl()}/validar-rpta-secreta`,
         formDataWithIdUsuario
       );
       navigate("/reestablecer-clave", {

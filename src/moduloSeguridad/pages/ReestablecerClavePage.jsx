@@ -15,8 +15,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { axiosPostRequest, showAlertMessage } from "../../helpers";
-
-const apiUrl = "http://localhost:8080/api/seguridad";
+import { getApiUrl } from "../helpers";
 
 //TODO: Proteccion de ruta
 export const ReestablecerClavePage = () => {
@@ -54,7 +53,7 @@ export const ReestablecerClavePage = () => {
     };
     try {
       await axiosPostRequest(
-        `${apiUrl}/reestablecer-clave`,
+        `${getApiUrl()}/reestablecer-clave`,
         formDataWithIdUsuario
       );
       showAlertMessage("success", "Éxito", "Clave reestablecida correctamente");

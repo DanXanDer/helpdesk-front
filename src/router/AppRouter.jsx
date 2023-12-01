@@ -7,8 +7,7 @@ import { ModuloAdministradorRoutes } from "../moduloAdministrador/routes";
 import { ModuloClienteRoutes } from "../moduloCliente/routes";
 import { axiosGetRequest, showAlertMessage } from "../helpers";
 import { CheckingSesion } from "../ui/components";
-
-const apiUrl = "http://localhost:8080/api/seguridad";
+import { getApiUrl } from "../moduloSeguridad/helpers/getApiUrl";
 
 export const AppRouter = () => {
 
@@ -17,7 +16,7 @@ export const AppRouter = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { data } = await axiosGetRequest(`${apiUrl}/usuario-activo`);
+        const { data } = await axiosGetRequest(`${getApiUrl()}/usuario-activo`);
         if (data.idUsuario !== 0) {
           handleUsuarioLogin(data);
         }

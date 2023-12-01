@@ -4,8 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LinkGrid } from "../components";
 import { Controller, useForm } from "react-hook-form";
 import { axiosPostRequest, showAlertMessage } from "../../helpers";
-
-const apiUrl = "http://localhost:8080/api/seguridad";
+import { getApiUrl } from "../helpers";
 
 //TODO: Proteccion de ruta
 export const ConfirmarDatosPage = () => {
@@ -20,7 +19,7 @@ export const ConfirmarDatosPage = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const {data} = await axiosPostRequest(`${apiUrl}/validar-datos-usuario`, formData);
+      const {data} = await axiosPostRequest(`${getApiUrl()}/validar-datos-usuario`, formData);
       const {idUsuario, preguntaSeguridad} = data;
       navigate("/pregunta-seguridad", {
         state: {idUsuario, preguntaSeguridad},

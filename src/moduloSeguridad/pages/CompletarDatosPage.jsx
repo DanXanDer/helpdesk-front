@@ -18,8 +18,7 @@ import {
 import { SelectAll, Visibility, VisibilityOff } from "@mui/icons-material";
 import { axiosPostRequest, showAlertMessage } from "../../helpers";
 import axios from "axios";
-
-const apiUrl = "http://localhost:8080/api/seguridad";
+import { getApiUrl } from "../helpers";
 
 export const CompletarDatosPage = () => {
   const {
@@ -63,7 +62,7 @@ export const CompletarDatosPage = () => {
     };
 
     try {
-      const {data}  = await axiosPostRequest(`${apiUrl}/completar-datos`, formDataWithIdUsuario)
+      const {data}  = await axiosPostRequest(`${getApiUrl()}/completar-datos`, formDataWithIdUsuario)
       //TODO: Redireccion a la pagina de bienvenida
     } catch (error) {
       const { mensaje } = error.response.data.error;
