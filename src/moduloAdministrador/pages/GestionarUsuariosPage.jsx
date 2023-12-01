@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -21,27 +21,33 @@ export const GestionarUsuariosPage = () => {
 
   return (
     <HelpDeskLayout>
-      <Box sx={{ height: "100%", width: "100%", backgroundColor: "white" }}>
-        <Box sx={{ height: 800, width: 1 }}>
-          <DataGrid
-            disableRowSelectionOnClick
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            columns={TableColumns(handleUpdateUsuarios)}
-            rows={usuarios}
-            slots={{
-              toolbar: GridToolbar,
-              noRowsOverlay: CustomNoRowsOverlay,
-              noResultsOverlay: CustomNoRowsOverlay,
-            }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-              },
-            }}
-          />
-        </Box>
+      <Button
+        variant="contained"
+        sx={{
+          mb: 2
+        }}
+      >
+        Crear usuario
+      </Button>
+      <Box sx={{ height: 700}}>
+        <DataGrid
+          disableRowSelectionOnClick
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          columns={TableColumns(handleUpdateUsuarios)}
+          rows={usuarios}
+          slots={{
+            toolbar: GridToolbar,
+            noRowsOverlay: CustomNoRowsOverlay,
+            noResultsOverlay: CustomNoRowsOverlay,
+          }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
+        />
       </Box>
     </HelpDeskLayout>
   );

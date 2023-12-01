@@ -55,15 +55,22 @@ export const CompletarDatosPage = () => {
     watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
 
   const onSubmit = async (formData) => {
-
     const formDataWithIdUsuario = {
       ...formData,
-      idUsuario: state.idUsuario
+      idUsuario: state.idUsuario,
     };
 
     try {
-      const {data}  = await axiosPostRequest(`${getApiUrl()}/completar-datos`, formDataWithIdUsuario)
-      //TODO: Redireccion a la pagina de bienvenida
+      await axiosPostRequest(
+        `${getApiUrl()}/completar-datos`,
+        formDataWithIdUsuario
+      );
+      const { data } = await axiosPostRequest(
+        `${getApiUrl()}/logear-usuario`,
+        state.idUsuario
+      );
+      handleUsuarioLogin(data);
+      navigate("/");
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);

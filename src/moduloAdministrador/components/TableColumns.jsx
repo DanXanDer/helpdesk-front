@@ -5,7 +5,7 @@ import { getApiUrl, getUsuarios } from "../helpers";
 
 const columnOptions = {
   headerAlign: "left",
-  width: 195,
+  width: 190,
   align: "left",
 };
 

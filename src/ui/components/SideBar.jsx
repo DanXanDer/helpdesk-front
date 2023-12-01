@@ -1,9 +1,8 @@
-import { Box, Drawer } from "@mui/material";
+import { Box, Drawer, Paper } from "@mui/material";
 import { useUiStore } from "../../hooks";
 import { SideBarContent } from "./SideBarContent";
 
 export const SideBar = ({ drawerWidth }) => {
-
   const { mobileOpen, handleDrawerToggle } = useUiStore();
 
   return (
