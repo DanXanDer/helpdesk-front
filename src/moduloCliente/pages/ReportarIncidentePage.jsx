@@ -4,14 +4,15 @@ import { Controller, useForm } from "react-hook-form";
 import { Box } from "@mui/system";
 import { Report } from "@mui/icons-material";
 import { FilePond, registerPlugin } from "react-filepond";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import { axiosPostRequest, showAlertMessage } from "../../helpers";
+import { showAlertMessage } from "../../helpers";
 import { getApiUrl } from "../helpers";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
@@ -22,10 +23,12 @@ export const ReportarIncidentePage = () => {
     formState: { errors },
   } = useForm();
   const filePondRef = useRef(null);
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
+      formData.append("nombreIncidente", data.nombreIncidente);
       formData.append("descripcion", data.descripcion);
       data.imagenes.forEach((imagen) => formData.append("imagenes", imagen));
       await axios.post(`${getApiUrl()}/reportar-incidente`, formData, {
@@ -35,6 +38,7 @@ export const ReportarIncidentePage = () => {
         withCredentials: true,
       });
       showAlertMessage("success", "Exito", "Incidente reportado correctamente");
+      navigate("/bienvenida");
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);
@@ -58,6 +62,29 @@ export const ReportarIncidentePage = () => {
       >
         <Controller
           defaultValue=""
+          name="nombreIncidente"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Resume tu incidente"
+              margin="normal"
+              fullWidth
+              autoFocus
+              error={!!errors.nombreIncidente}
+              helperText={errors?.nombreIncidente?.message}
+            />
+          )}
+          rules={{
+            required: "El resumen del incidente es requerido",
+            maxLength: {
+              value: 100,
+              message: "El resumen del incidente debe tener máximo 100 caracteres",
+            }
+          }}
+        />
+        <Controller
+          defaultValue=""
           name="descripcion"
           control={control}
           render={({ field }) => (
@@ -77,6 +104,10 @@ export const ReportarIncidentePage = () => {
           )}
           rules={{
             required: "Debe ingresar una descripción del incidente",
+            maxLength: {
+              value: 500,
+              message: "La descripción del incidente debe tener máximo 500 caracteres",
+            }
           }}
         />
         <Controller
