@@ -24,6 +24,7 @@ import {
 } from "../../helpers";
 import { getApiUrl } from "../helpers";
 import { FormCliente, FormTrabajador } from "../components";
+import { useNavigate } from "react-router-dom";
 
 const tipoUsuario = [
   {
@@ -47,6 +48,7 @@ export const CrearUsuarioPage = () => {
     unregister,
   } = useForm();
 
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [selectTipoUsuario, setSelectTipoUsuario] = useState("");
   const [empresas, setEmpresas] = useState([]);
@@ -107,8 +109,8 @@ export const CrearUsuarioPage = () => {
         "Usuario creado",
         "El usuario se creó correctamente"
       );
+      navigate("/gestionar-usuarios");
     } catch (error) {
-      console.log(error);
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);
     }

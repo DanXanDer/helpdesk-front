@@ -1799,6 +1799,21 @@ file-entry-cache@^6.0.1:
   dependencies:
     flat-cache "^3.0.4"
 
+filepond-plugin-image-exif-orientation@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/filepond-plugin-image-exif-orientation/-/filepond-plugin-image-exif-orientation-1.0.11.tgz#c46b522e8873e2ad5b9c7e2bbbe71176c9df58b2"
+  integrity sha512-hLBc12Fk6Zkj3L8mSAn+elugHOqT5rLUbgVXQQIQjMe0FsGjtpoxqeVR6jt4IWHGat2L9sFAgU2TGmd1mqosCg==
+
+filepond-plugin-image-preview@^4.6.11:
+  version "4.6.11"
+  resolved "https://registry.yarnpkg.com/filepond-plugin-image-preview/-/filepond-plugin-image-preview-4.6.11.tgz#706a66ac859fa91dd7153958b2325b512fe2f0c6"
+  integrity sha512-0EmQ9HnOb/X0xc5rLcNRhhmdUbp7oiicRwQrcr90ZfVmPJOOZoX3ZGUEsEPj7luMI55huguhcVozdESxtqnuRw==
+
+filepond@^4.30.4:
+  version "4.30.4"
+  resolved "https://registry.yarnpkg.com/filepond/-/filepond-4.30.4.tgz#036d87d9b0ab27d19fb5e302eae799df90e094e4"
+  integrity sha512-FCwsMvG9iiEs6uobdDrTaKsCgsqys0NuLgPPD8n37AYVYBiiDkrPkk9MSIU5rT2FahYcL1bScYI9huIPtlzqyA==
+
 find-root@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/find-root/-/find-root-1.1.0.tgz#abcfc8ba76f708c42a97b3d685b7e9450bfb9ce4"
@@ -2723,6 +2738,11 @@ react-dom@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-filepond@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/react-filepond/-/react-filepond-7.1.2.tgz#8f04d06396a59b5980dda479c095ed23e6d1f68b"
+  integrity sha512-vrlx9o/n+jGikh6jLey+PpUGYtEZn8MdeB6JFeX/5/N/Mu75IHG+MFQbv8R27bNXvS41mDtV9Fo5DG+s6siVIA==
 
 react-hook-form@^7.48.2:
   version "7.48.2"

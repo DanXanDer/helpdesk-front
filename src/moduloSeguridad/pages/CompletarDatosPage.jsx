@@ -19,6 +19,7 @@ import { SelectAll, Visibility, VisibilityOff } from "@mui/icons-material";
 import { axiosPostRequest, showAlertMessage } from "../../helpers";
 import axios from "axios";
 import { getApiUrl } from "../helpers";
+import { useModuloSeguridadStore } from "../../hooks";
 
 export const CompletarDatosPage = () => {
   const {
@@ -33,10 +34,10 @@ export const CompletarDatosPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setReShowPassword] = useState(false);
   const [preguntasSeguridad, setPreguntasSeguridad] = useState([]);
-
   const navigate = useNavigate();
-
   const { state } = useLocation();
+
+  const { handleUsuarioLogin } = useModuloSeguridadStore();
 
   useEffect(() => {
     const { preguntasSeguridad } = state;
@@ -69,6 +70,7 @@ export const CompletarDatosPage = () => {
         `${getApiUrl()}/logear-usuario`,
         state.idUsuario
       );
+      console.log(data);
       handleUsuarioLogin(data);
       navigate("/");
     } catch (error) {

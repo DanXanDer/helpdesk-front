@@ -37,13 +37,13 @@ export const AppRouter = () => {
     <Routes>
       {usuario ? (
         <>
-          {usuario.tipo === "trabajador" && (
+          {usuario.tipo === "Trabajador" && (
             <Route path="/*" element={<ModuloTrabajadorRoutes />} />
           )}
-          {usuario.tipo === "administrador" && (
+          {usuario.tipo === "ADdministrador" && (
             <Route path="/*" element={<ModuloAdministradorRoutes />} />
           )}
-          {usuario.tipo === "cliente" && (
+          {usuario.tipo === "Cliente" && (
             <Route path="/*" element={<ModuloClienteRoutes />} />
           )}
         </>

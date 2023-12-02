@@ -9,7 +9,10 @@ export const ModuloAdministradorRoutes = () => {
       <Route path="bienvenida" element={<BienvenidaPage />} />
       <Route path="/*" element={<Navigate to="/bienvenida" />} />
       <Route path="gestionar-usuarios" element={<GestionarUsuariosPage />} />
-      <Route path="crear-usuario" element={<CrearUsuarioPage />} />
+      <Route
+        path="gestionar-usuarios/crear-usuario"
+        element={<CrearUsuarioPage />}
+      />
     </Routes>
   );
 };

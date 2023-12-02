@@ -1,9 +1,10 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import {
   GenerarReportePage,
   IncidentesReportadosPage,
   MisTicketsPage,
 } from "../pages";
+import { BienvenidaPage } from "../../moduloSeguridad/pages";
 
 export const ModuloTrabajadorRoutes = () => {
   return (

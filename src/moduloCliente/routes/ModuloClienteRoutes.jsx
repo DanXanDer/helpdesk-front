@@ -1,9 +1,11 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import {
   ActualizarInformacionPage,
   MisReportesPage,
   ReportarIncidentePage,
 } from "../pages";
+import { BienvenidaPage } from "../../moduloSeguridad/pages";
+
 
 export const ModuloClienteRoutes = () => {
   return (

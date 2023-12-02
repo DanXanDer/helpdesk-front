@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { getUsuarios } from "../helpers";
 import { CustomNoRowsOverlay, TableColumns } from "../components";
+import { useNavigate } from "react-router-dom";
+import { PersonAdd } from "@mui/icons-material";
 
 export const GestionarUsuariosPage = () => {
   const [usuarios, setUsuarios] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -19,17 +23,23 @@ export const GestionarUsuariosPage = () => {
     setUsuarios(usuarios);
   };
 
+  const handleCrearUsuarioNavigate = () => {
+    navigate("/gestionar-usuarios/crear-usuario");
+  };
+
   return (
     <HelpDeskLayout>
       <Button
         variant="contained"
         sx={{
-          mb: 2
+          mb: 2,
         }}
+        startIcon={<PersonAdd />}
+        onClick={handleCrearUsuarioNavigate}
       >
         Crear usuario
       </Button>
-      <Box sx={{ height: 700}}>
+      <Box sx={{ height: 700 }}>
         <DataGrid
           disableRowSelectionOnClick
           disableColumnFilter
