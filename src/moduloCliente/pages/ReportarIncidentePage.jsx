@@ -79,8 +79,9 @@ export const ReportarIncidentePage = () => {
             required: "El resumen del incidente es requerido",
             maxLength: {
               value: 100,
-              message: "El resumen del incidente debe tener máximo 100 caracteres",
-            }
+              message:
+                "El resumen del incidente debe tener máximo 100 caracteres",
+            },
           }}
         />
         <Controller
@@ -106,8 +107,9 @@ export const ReportarIncidentePage = () => {
             required: "Debe ingresar una descripción del incidente",
             maxLength: {
               value: 500,
-              message: "La descripción del incidente debe tener máximo 500 caracteres",
-            }
+              message:
+                "La descripción del incidente debe tener máximo 500 caracteres",
+            },
           }}
         />
         <Controller
@@ -124,7 +126,7 @@ export const ReportarIncidentePage = () => {
               allowMultiple={true}
               maxFiles={3}
               credits={false}
-              labelIdle='Arrastre y suelte sus archivos o <span class="filepond--label-action"> Examinar </span>'
+              labelIdle='Arrastre y suelte sus archivos (máximo 3) o <span class="filepond--label-action"> Examinar </span>'
             />
           )}
         />

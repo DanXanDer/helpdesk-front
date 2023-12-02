@@ -40,7 +40,7 @@ export const AppRouter = () => {
           {usuario.tipo === "Trabajador" && (
             <Route path="/*" element={<ModuloTrabajadorRoutes />} />
           )}
-          {usuario.tipo === "ADdministrador" && (
+          {usuario.tipo === "Administrador" && (
             <Route path="/*" element={<ModuloAdministradorRoutes />} />
           )}
           {usuario.tipo === "Cliente" && (

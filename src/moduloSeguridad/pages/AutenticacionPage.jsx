@@ -46,7 +46,7 @@ export const AutenticacionPage = () => {
 
       const { idUsuario, primerLogin } = data;
 
-      if (primerLogin == 1) {
+      if (primerLogin === 1) {
         const { data } = await axiosGetRequest(`${getApiUrl()}/preguntas-seguridad`);
         const { preguntasSeguridad } = data;
         navigate("/completar-datos", {
@@ -58,7 +58,7 @@ export const AutenticacionPage = () => {
           idUsuario
         );
         handleUsuarioLogin(data);
-        navigate("/")
+        navigate("/bienvenida")
       }
     } catch (error) {
       const { mensaje } = error.response.data.error;

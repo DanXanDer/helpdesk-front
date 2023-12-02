@@ -1,5 +1,11 @@
+import { HelpDeskLayout } from "../../ui/layout";
+import { FormClave, FormDatos } from "../components";
+
 export const ActualizarInformacionPage = () => {
   return (
-    <div>ActualizarInformacionPage</div>
-  )
-}
+    <HelpDeskLayout>
+      <FormDatos />
+      <FormClave/>
+    </HelpDeskLayout>
+  );
+};
