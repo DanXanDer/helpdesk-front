@@ -3,9 +3,10 @@ import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { getUsuarios } from "../helpers";
-import { CustomNoRowsOverlay, TableColumns } from "../components";
+import { TableColumns } from "../components";
 import { useNavigate } from "react-router-dom";
 import { PersonAdd } from "@mui/icons-material";
+import { CustomNoRowsOverlay } from "../../ui/components";
 
 export const GestionarUsuariosPage = () => {
   const [usuarios, setUsuarios] = useState([]);
