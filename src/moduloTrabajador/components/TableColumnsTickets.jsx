@@ -1,7 +1,5 @@
 import { Details } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { axiosGetRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
 import { useNavigate } from "react-router-dom";
 
 const columnOptions = {
@@ -9,7 +7,7 @@ const columnOptions = {
   align: "left",
 };
 
-export const TableColumnsIncidentes = () => {
+export const TableColumnsTickets = () => {
   const navigate = useNavigate();
 
   const columns = [
@@ -43,7 +41,7 @@ export const TableColumnsIncidentes = () => {
       width: 150,
       ...columnOptions,
       renderCell: ({ row }) => {
-        const handleReporteDetalles = async () => {
+        /*const handleReporteDetalles = async () => {
           try {
             const { data } = await axiosGetRequest(
               `${getApiUrl()}/reportes-incidentes/${row.id}`
@@ -55,13 +53,13 @@ export const TableColumnsIncidentes = () => {
             const { mensaje } = error.response.data.error;
             showAlertMessage("error", "Error", mensaje);
           }
-        };
+        };*/
 
         return (
           <Button
             variant="contained"
             startIcon={<Details />}
-            onClick={handleReporteDetalles}
+            //onClick={handleReporteDetalles}
           >
             Detalles
           </Button>

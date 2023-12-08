@@ -12,8 +12,6 @@ import { CustomNoRowsOverlay } from "../../ui/components";
 export const IncidentesReportadosPage = () => {
   const [reportesIncidentes, setReportesIncidentes] = useState([]);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     (async () => {
       const { data } = await axiosGetRequest(

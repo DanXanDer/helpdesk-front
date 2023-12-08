@@ -11,14 +11,12 @@ export const ModuloSeguridadLayout = ({ children, pageTitle, titleDesc }) => {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: "url(https://source.unsplash.com/random)",
+          backgroundImage: "url(/src/assets/images/hero.jpeg)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"
               ? t.palette.grey[50]
               : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
         }}
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={15} square>
