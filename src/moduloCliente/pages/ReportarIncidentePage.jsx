@@ -130,10 +130,6 @@ export const ReportarIncidentePage = () => {
             />
           )}
         />
-
-        <Grid container>
-          <Grid item></Grid>
-        </Grid>
         <Grid container justifyContent="center">
           <Grid item>
             <Button

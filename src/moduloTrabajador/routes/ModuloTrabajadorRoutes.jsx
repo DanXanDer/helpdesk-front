@@ -3,7 +3,8 @@ import {
   GenerarReportePage,
   IncidentesReportadosPage,
   MisTicketsPage,
-  DetallesIncidentePage
+  DetallesIncidentePage,
+  DetallesTicketPage,
 } from "../pages";
 import { BienvenidaPage } from "../../moduloSeguridad/pages";
 
@@ -18,7 +19,11 @@ export const ModuloTrabajadorRoutes = () => {
         element={<IncidentesReportadosPage />}
       />
       <Route path="/mis-tickets" element={<MisTicketsPage />} />
-      <Route path="/incidentes-reportados/detalles"  element={<DetallesIncidentePage/>} />
+      <Route
+        path="/incidentes-reportados/detalles"
+        element={<DetallesIncidentePage />}
+      />
+      <Route path="/mis-tickets/detalles" element={<DetallesTicketPage />} />
     </Routes>
   );
 };

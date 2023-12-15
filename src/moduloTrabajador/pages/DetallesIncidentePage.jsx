@@ -2,7 +2,7 @@ import { Button, Grid, Paper, Typography } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { axiosPostRequest, formatFecha, showAlertMessage } from "../../helpers";
+import { axiosPostRequest, formatFecha, getImagenes, showAlertMessage } from "../../helpers";
 import axios from "axios";
 import { getApiUrl } from "../helpers";
 import ReactImageGallery from "react-image-gallery";
@@ -36,31 +36,12 @@ export const DetallesIncidentePage = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const promesasImagenes = rutasImagenes.map(async ({ nombreImagen }) => {
-          const response = await axios.post(
-            `${getApiUrl()}/reporte-incidente-imagen`,
-            {
-              idReporteIncidente,
-              rutaImagen: nombreImagen,
-            },
-            {
-              responseType: "arraybuffer",
-            }
-          );
-          const blob = new Blob([response.data]);
-          return URL.createObjectURL(blob);
-        });
-
-        const imagenesObtenidas = await Promise.all(promesasImagenes);
-        const imagenesParaGallery = imagenesObtenidas.map((url, index) => ({
-          original: url,
-          thumbnail: url,
-        }));
-        setImagenes(imagenesParaGallery);
-      } catch (error) {
-        console.error(error);
-      }
+      const imagenesParaGallery = await getImagenes(
+        rutasImagenes,
+        getApiUrl(),
+        idReporteIncidente
+      );
+      setImagenes(imagenesParaGallery);
     })();
   }, []);
 

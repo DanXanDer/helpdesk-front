@@ -120,7 +120,7 @@ export const CrearUsuarioPage = () => {
     <HelpDeskLayout>
       <Grid
         container
-        spacing={2}
+        spacing={1}
         sx={{
           alignItems: "center",
         }}

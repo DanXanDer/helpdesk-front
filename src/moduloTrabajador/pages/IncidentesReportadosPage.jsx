@@ -3,7 +3,7 @@ import { HelpDeskLayout } from "../../ui/layout";
 import { useNavigate } from "react-router-dom";
 import { axiosGetRequest } from "../../helpers";
 import { getApiUrl } from "../helpers";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
 import { TableColumnsIncidentes } from "../components";
@@ -30,26 +30,27 @@ export const IncidentesReportadosPage = () => {
 
   return (
     <HelpDeskLayout>
-      <Box sx={{ height: 700 }}>
-        <DataGrid
-          disableRowSelectionOnClick
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          columns={TableColumnsIncidentes()}
-          rows={reportesIncidentes}
-          slots={{
-            toolbar: GridToolbar,
-            noRowsOverlay: CustomNoRowsOverlay,
-            noResultsOverlay: CustomNoRowsOverlay,
-          }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-            },
-          }}
-        />
-      </Box>
+      
+        <Box sx={{ height: 780 }}>
+          <DataGrid
+            disableRowSelectionOnClick
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            columns={TableColumnsIncidentes()}
+            rows={reportesIncidentes}
+            slots={{
+              toolbar: GridToolbar,
+              noRowsOverlay: CustomNoRowsOverlay,
+              noResultsOverlay: CustomNoRowsOverlay,
+            }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+              },
+            }}
+          />
+        </Box>
     </HelpDeskLayout>
   );
 };

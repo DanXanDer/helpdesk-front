@@ -18,6 +18,7 @@ import { getApiUrl } from "../helpers";
 import { useNavigate } from "react-router-dom";
 
 export const FormClave = () => {
+
   const {
     register,
     handleSubmit,
@@ -49,7 +50,7 @@ export const FormClave = () => {
         "Éxito",
         "Clave actualizada correctamente"
       );
-      navigate("/bienvenida");
+      navigate("/");
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);

@@ -8,8 +8,11 @@ import {
 } from "../../helpers";
 import { getApiUrl } from "../helpers";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const FormDatos = () => {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -45,6 +48,7 @@ export const FormDatos = () => {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);
     }
+    navigate("/");
   };
 
   return (

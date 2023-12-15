@@ -1,52 +1,64 @@
+import { useNavigate } from "react-router-dom";
+import { axiosGetRequest } from "../../helpers";
+import { getApiUrl } from "../helpers";
 import { Details } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { axiosGetRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
 
 const columnOptions = {
   headerAlign: "left",
   align: "left",
+  width: 250,
 };
 
-export const TableColumnsTickets = () => {
+export const TablesColumnsMisReportes = () => {
   const navigate = useNavigate();
 
   const columns = [
     {
       field: "nombreIncidente",
       headerName: "Incidente",
-      width: 350,
       ...columnOptions,
     },
     {
       field: "descripcion",
       headerName: "Descripcion",
-      width: 480,
       ...columnOptions,
     },
     {
       field: "nivel",
       headerName: "Nivel",
-      width: 100,
       ...columnOptions,
     },
     {
-      field: "fecha",
-      headerName: "Fecha",
-      width: 200,
+      field: "fechaReporte",
+      headerName: "Fecha reportada",
+      ...columnOptions,
+    },
+
+    {
+      field: "trabajador",
+      headerName: "Trabajador asignado",
+      ...columnOptions,
+    },
+    {
+      field: "estado",
+      headerName: "Estado",
+      ...columnOptions,
+    },
+    {
+      field: "fechaCreacion",
+      headerName: "Fecha de creacion ticket",
       ...columnOptions,
     },
     {
       field: "detalles",
       headerName: "Ver detalles",
-      width: 150,
       ...columnOptions,
       renderCell: ({ row }) => {
-        const handleTicketDetalles = async () => {
+        const handleMiReporteDetalles = async () => {
           try {
-            const {data} = await axiosGetRequest(
-              `${getApiUrl()}/tickets/${row.id}`
+            const { data } = await axiosGetRequest(
+              `${getApiUrl()}/reportes/${row.id}`
             );
             navigate("detalles", {
               state: data,
@@ -57,11 +69,15 @@ export const TableColumnsTickets = () => {
           }
         };
 
+        const isEnEspera = row.estado === "En espera";
+        const isDisabled = isEnEspera; 
+
         return (
           <Button
             variant="contained"
             startIcon={<Details />}
-            onClick={handleTicketDetalles}
+            onClick={handleMiReporteDetalles}
+            disabled={isDisabled}
           >
             Detalles
           </Button>

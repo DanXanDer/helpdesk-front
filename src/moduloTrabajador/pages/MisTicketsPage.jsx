@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HelpDeskLayout } from "../../ui/layout";
-import { axiosGetRequest } from "../../helpers";
+import { axiosGetRequest, formatFecha } from "../../helpers";
 import { getApiUrl } from "../helpers";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
@@ -15,6 +15,7 @@ export const MisTicketsPage = () => {
       const { data } = await axiosGetRequest(`${getApiUrl()}/tickets`);
       const dataWithId = data.map((ticket) => ({
         ...ticket,
+        fecha: formatFecha(ticket.fecha),
         id: ticket.idTicket,
       }));
       setTicketsAsignados(dataWithId);
@@ -23,7 +24,7 @@ export const MisTicketsPage = () => {
 
   return (
     <HelpDeskLayout>
-      <Box sx={{ height: 700 }}>
+      <Box sx={{ height: 750 }}>
         <DataGrid
           disableRowSelectionOnClick
           disableColumnFilter

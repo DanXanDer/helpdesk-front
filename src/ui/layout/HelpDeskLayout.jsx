@@ -20,7 +20,8 @@ export const HelpDeskLayout = ({ children }) => {
         <Box
           component={Paper}
           sx={{
-            height: "100%",
+            minHeight: "875px",
+            maxHeight: "100%",
             width: "100%",
             backgroundColor: "white",
             padding: 2,

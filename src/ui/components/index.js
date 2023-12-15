@@ -5,4 +5,6 @@ export * from "./SideBarList";
 export * from "./SideBarListItem";
 export * from "./CustomIcon";
 export * from "./CheckingSesion";
-export * from "./CustomNoRowsOverlay"
+export * from "./CustomNoRowsOverlay";
+export * from "./ModalTextField";
+export * from "./ModalTable";
