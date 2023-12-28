@@ -1,12 +1,11 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { ModuloSeguridadLayout } from "../layout";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LinkGrid } from "../components";
 import { Controller, useForm } from "react-hook-form";
-import { axiosPostRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { showAlertMessage } from "../../helpers";
+import api from "../../services/instance";
 
-//TODO: Proteccion de ruta
 export const ConfirmarDatosPage = () => {
   const {
     register,
@@ -19,11 +18,14 @@ export const ConfirmarDatosPage = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const {data} = await axiosPostRequest(`${getApiUrl()}/validar-datos-usuario`, formData);
-      const {idUsuario, preguntaSeguridad} = data;
+      const { data } = await api.post(
+        "/seguridad/validar-datos-usuario",
+        formData
+      );
+      const { idUsuario, preguntaSeguridad } = data;
       navigate("/pregunta-seguridad", {
-        state: {idUsuario, preguntaSeguridad},
-      })
+        state: { idUsuario, preguntaSeguridad },
+      });
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);

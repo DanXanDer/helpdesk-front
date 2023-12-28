@@ -16,12 +16,10 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
-  axiosGetRequest,
-  axiosPostRequest,
-  showAlertMessage,
+  showAlertMessage
 } from "../../helpers";
 import { useModuloSeguridadStore } from "../../hooks";
-import { getApiUrl } from "../helpers";
+import api from "../../services/instance";
 
 export const AutenticacionPage = () => {
   const navigate = useNavigate();
@@ -39,26 +37,21 @@ export const AutenticacionPage = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const { data } = await axiosPostRequest(
-        `${getApiUrl()}/check-primer-login`,
+      const { data } = await api.post(
+        "/seguridad/check-primer-login",
         formData
       );
-
       const { idUsuario, primerLogin } = data;
-
       if (primerLogin === 1) {
-        const { data } = await axiosGetRequest(`${getApiUrl()}/preguntas-seguridad`);
+        const { data } = await api.get("/seguridad/preguntas-seguridad");
         const { preguntasSeguridad } = data;
         navigate("/completar-datos", {
           state: { idUsuario, preguntasSeguridad },
         });
       } else {
-        const { data } = await axiosPostRequest(
-          `${getApiUrl()}/logear-usuario`,
-          idUsuario
-        );
+        const { data } = await api.post("/seguridad/logear-usuario", idUsuario);
         handleUsuarioLogin(data);
-        navigate("/bienvenida")
+        navigate("/bienvenida");
       }
     } catch (error) {
       const { mensaje } = error.response.data.error;

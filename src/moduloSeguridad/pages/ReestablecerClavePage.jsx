@@ -11,13 +11,12 @@ import {
 import { ModuloSeguridadLayout } from "../layout";
 import { LinkGrid } from "../components";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
-import { axiosPostRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { useLocation, useNavigate } from "react-router-dom";
+import { showAlertMessage } from "../../helpers";
+import api from "../../services/instance";
 
-//TODO: Proteccion de ruta
 export const ReestablecerClavePage = () => {
   const {
     register,
@@ -31,6 +30,12 @@ export const ReestablecerClavePage = () => {
   const [showRePassword, setReShowPassword] = useState(false);
 
   const { state } = useLocation();
+
+  const navigate = useNavigate();
+
+  if (!state) {
+    return window.location.replace("/mensaje-sistema");
+  }
 
   const { idUsuario } = state;
 
@@ -46,17 +51,14 @@ export const ReestablecerClavePage = () => {
     watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
 
   const onSubmit = async (formData) => {
-    console.log(formData, idUsuario);
     const formDataWithIdUsuario = {
       ...formData,
       idUsuario,
     };
     try {
-      await axiosPostRequest(
-        `${getApiUrl()}/reestablecer-clave`,
-        formDataWithIdUsuario
-      );
+      await api.post("/seguridad/reestablecer-clave", formDataWithIdUsuario);
       showAlertMessage("success", "Éxito", "Clave reestablecida correctamente");
+      navigate("/autenticacion");
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);

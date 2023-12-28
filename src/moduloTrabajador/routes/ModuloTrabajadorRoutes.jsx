@@ -9,6 +9,8 @@ import {
 import { BienvenidaPage } from "../../moduloSeguridad/pages";
 
 export const ModuloTrabajadorRoutes = () => {
+
+  console.log("ModuloTrabajadorRoutes")
   return (
     <Routes>
       <Route path="/bienvenida" element={<BienvenidaPage />} />

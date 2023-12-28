@@ -17,14 +17,11 @@ import { HelpDeskLayout } from "../../ui/layout";
 import { PersonAdd, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import {
-  axiosGetRequest,
-  axiosPostRequest,
-  showAlertMessage,
-} from "../../helpers";
+import { axiosGetRequest, showAlertMessage } from "../../helpers";
 import { getApiUrl } from "../helpers";
 import { FormCliente, FormTrabajador } from "../components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const tipoUsuario = [
   {
@@ -83,19 +80,19 @@ export const CrearUsuarioPage = () => {
   };
 
   const onSubmit = async (data) => {
-    const privilegiosTrabajador = [5, 6, 7];
+    const privilegiosTrabajador = [5, 6];
     const privilegiosCliente = [1, 3, 4];
     let formData;
     let apiUrl;
     const { tipo } = data;
     if (tipo === "Trabajador") {
-      apiUrl = `${getApiUrl()}/crear-trabajador`;
+      apiUrl = `http://localhost:8080/api/gestion-sistema/crear-trabajador`;
       formData = {
         ...data,
         privilegios: privilegiosTrabajador,
       };
     } else {
-      apiUrl = `${getApiUrl()}/crear-cliente`;
+      apiUrl = `http://localhost:8080/api/gestion-sistema/crear-cliente`;
       formData = {
         privilegios: privilegiosCliente,
         idArea: data.area,
@@ -103,7 +100,7 @@ export const CrearUsuarioPage = () => {
       };
     }
     try {
-      await axiosPostRequest(apiUrl, formData);
+      await axios.post(apiUrl, formData);
       showAlertMessage(
         "success",
         "Usuario creado",

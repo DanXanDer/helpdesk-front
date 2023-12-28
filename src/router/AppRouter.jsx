@@ -5,22 +5,22 @@ import { useModuloSeguridadStore } from "../hooks";
 import { ModuloTrabajadorRoutes } from "../moduloTrabajador/routes";
 import { ModuloAdministradorRoutes } from "../moduloAdministrador/routes";
 import { ModuloClienteRoutes } from "../moduloCliente/routes";
-import { axiosGetRequest, showAlertMessage } from "../helpers";
+import { showAlertMessage } from "../helpers";
 import { CheckingSesion } from "../ui/components";
-import { getApiUrl } from "../moduloSeguridad/helpers/getApiUrl";
+import { MensajeSistemaPage } from "../ui/pages/MensajeSistemaPage";
+import api from "../services/instance";
 
 export const AppRouter = () => {
-
-  const { status, usuario, handleUsuarioLogin, handleUsuarioLogout } = useModuloSeguridadStore();
+  const { status, usuario, handleUsuarioLogin, handleUsuarioLogout } =
+    useModuloSeguridadStore();
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { data } = await axiosGetRequest(`${getApiUrl()}/usuario-activo`);
+        const { data } = await api.get("/seguridad/usuario-activo");
         if (data.idUsuario !== 0) {
           handleUsuarioLogin(data);
-        }
-        else{
+        } else {
           handleUsuarioLogout();
         }
       } catch (error) {
@@ -31,7 +31,7 @@ export const AppRouter = () => {
     getUser();
   }, [status]);
 
-  if(status === "checking") return (<CheckingSesion/>);
+  if (status === "checking") return <CheckingSesion />;
 
   return (
     <Routes>
@@ -48,7 +48,10 @@ export const AppRouter = () => {
           )}
         </>
       ) : (
-        <Route path="/*" element={<ModuloSeguridadRoutes />} />
+        <>
+          <Route path="/mensaje-sistema" element={<MensajeSistemaPage />} />
+          <Route path="/*" element={<ModuloSeguridadRoutes />} />
+        </>
       )}
     </Routes>
   );

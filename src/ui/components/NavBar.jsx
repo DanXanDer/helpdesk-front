@@ -1,20 +1,16 @@
-import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import { Logout, Menu } from "@mui/icons-material";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
-import { axiosPostRequest } from "../../helpers";
-import { useNavigate } from "react-router-dom";
-import { getApiUrl } from "../../moduloSeguridad/helpers/getApiUrl";
+import api from "../../services/instance";
 
 export const NavBar = ({ drawerWidth }) => {
   const { usuario, handleUsuarioLogout } = useModuloSeguridadStore();
 
   const { handleDrawerToggle } = useUiStore();
 
-  const navigate = useNavigate();
-
   const onUsuarioLogout = async () => {
     handleUsuarioLogout();
-    await axiosPostRequest(`${getApiUrl()}/logout-usuario`, null);
+    await api.post("/seguridad/logout-usuario");
   };
 
   return (

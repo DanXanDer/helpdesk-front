@@ -1,1 +1,1 @@
-export * from "./MensajeSistema";
+export * from "./MensajeSistemaPage";

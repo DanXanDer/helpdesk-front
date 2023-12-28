@@ -1,8 +1,13 @@
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { axiosPostRequest, formatFecha, getImagenes, showAlertMessage } from "../../helpers";
+import {
+  axiosPostRequest,
+  formatFecha,
+  getImagenes,
+  showAlertMessage,
+} from "../../helpers";
 import axios from "axios";
 import { getApiUrl } from "../helpers";
 import ReactImageGallery from "react-image-gallery";
@@ -13,7 +18,7 @@ import { ConfirmationNumber } from "@mui/icons-material";
 export const DetallesIncidentePage = () => {
   const [imagenes, setImagenes] = useState(null);
   const { state } = useLocation();
-
+  const navigate = useNavigate();
   const { rutasImagenes, reporteIncidente } = state;
 
   const { nombreIncidente, descripcion, fecha, nivel, idReporteIncidente } =
@@ -28,6 +33,7 @@ export const DetallesIncidentePage = () => {
         estado: "En atención",
       });
       showAlertMessage("success", "Exito", "Ticket creado correctamente");
+      navigate("/");
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);

@@ -3,14 +3,13 @@ import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { getUsuarios } from "../helpers";
-import { TableColumns } from "../components";
+import { TableColumnUsuarios } from "../components";
 import { useNavigate } from "react-router-dom";
 import { PersonAdd } from "@mui/icons-material";
 import { CustomNoRowsOverlay } from "../../ui/components";
 
 export const GestionarUsuariosPage = () => {
   const [usuarios, setUsuarios] = useState([]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export const GestionarUsuariosPage = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
-          columns={TableColumns(handleUpdateUsuarios)}
+          columns={TableColumnUsuarios(handleUpdateUsuarios)}
           rows={usuarios}
           slots={{
             toolbar: GridToolbar,

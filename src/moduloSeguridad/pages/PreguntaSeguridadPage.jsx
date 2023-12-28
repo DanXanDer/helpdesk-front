@@ -3,21 +3,23 @@ import { ModuloSeguridadLayout } from "../layout";
 import { LinkGrid } from "../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { axiosPostRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { showAlertMessage } from "../../helpers";
+import api from "../../services/instance";
 
 //TODO: Proteccion de ruta
 export const PreguntaSeguridadPage = () => {
+  const { state } = useLocation();
+  const navigate = useNavigate();
+
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
   } = useForm();
 
-  const navigate = useNavigate();
-
-  const { state } = useLocation();
+  if (!state) {
+    return window.location.replace("/mensaje-sistema");
+  }
 
   const { idUsuario, preguntaSeguridad } = state;
 
@@ -27,10 +29,7 @@ export const PreguntaSeguridadPage = () => {
       idUsuario,
     };
     try {
-      await axiosPostRequest(
-        `${getApiUrl()}/validar-rpta-secreta`,
-        formDataWithIdUsuario
-      );
+      await api.post("/seguridad/validar-rpta-secreta", formDataWithIdUsuario);
       navigate("/reestablecer-clave", {
         state: { idUsuario },
       });

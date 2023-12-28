@@ -15,11 +15,10 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { SelectAll, Visibility, VisibilityOff } from "@mui/icons-material";
-import { axiosPostRequest, showAlertMessage } from "../../helpers";
-import axios from "axios";
-import { getApiUrl } from "../helpers";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { showAlertMessage } from "../../helpers";
 import { useModuloSeguridadStore } from "../../hooks";
+import api from "../../services/instance";
 
 export const CompletarDatosPage = () => {
   const {
@@ -62,15 +61,11 @@ export const CompletarDatosPage = () => {
     };
 
     try {
-      await axiosPostRequest(
-        `${getApiUrl()}/completar-datos`,
-        formDataWithIdUsuario
-      );
-      const { data } = await axiosPostRequest(
-        `${getApiUrl()}/logear-usuario`,
+      await api.post("/seguridad/completar-datos", formDataWithIdUsuario);
+      const { data } = await api.post(
+        "/seguridad/logear-usuario",
         state.idUsuario
       );
-      console.log(data);
       handleUsuarioLogin(data);
       navigate("/");
     } catch (error) {
