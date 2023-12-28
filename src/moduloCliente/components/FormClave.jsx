@@ -13,12 +13,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { axiosPostRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { showAlertMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/instance";
 
 export const FormClave = () => {
-
   const {
     register,
     handleSubmit,
@@ -44,12 +43,8 @@ export const FormClave = () => {
 
   const onSubmit = async (formData) => {
     try {
-      await axiosPostRequest(`${getApiUrl()}/cambiar-clave-cliente`, formData);
-      showAlertMessage(
-        "success",
-        "Éxito",
-        "Clave actualizada correctamente"
-      );
+      await api.post("/modulo-cliente/cambiar-clave-cliente", formData);
+      showAlertMessage("success", "Éxito", "Clave actualizada correctamente");
       navigate("/");
     } catch (error) {
       const { mensaje } = error.response.data.error;

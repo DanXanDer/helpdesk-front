@@ -8,12 +8,16 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { axiosGetRequest } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { Controller } from "react-hook-form";
+import api from "../../services/instance";
 
-export const FormCliente = ({ empresas, control, errors, setValue, clearErrors }) => {
-
+export const FormCliente = ({
+  empresas,
+  control,
+  errors,
+  setValue,
+  clearErrors,
+}) => {
   const [selectEmpresa, setSelectEmpresa] = useState("");
   const [sedes, setSedes] = useState([]);
   const [selectSede, setSelectSede] = useState("");
@@ -25,12 +29,8 @@ export const FormCliente = ({ empresas, control, errors, setValue, clearErrors }
     setSelectEmpresa(value);
     setValue("empresa", value);
     clearErrors("empresa");
-    const { data } = await axiosGetRequest(
-      `${getApiUrl()}/sedes?idEmpresa=${value}`
-    );
+    const { data } = await api.get(`/gestion-sistema/sedes?idEmpresa=${value}`);
     setSedes(data.sedes);
-
-    // Limpiar los campos de sede y area
     setSelectSede("");
     setSelectArea("");
     setValue("sede", "");
@@ -43,12 +43,8 @@ export const FormCliente = ({ empresas, control, errors, setValue, clearErrors }
     setSelectSede(value);
     setValue("sede", value);
     clearErrors("sede");
-    const { data } = await axiosGetRequest(
-      `${getApiUrl()}/areas?idSede=${value}`
-    );
+    const { data } = await api.get(`/gestion-sistema/areas?idSede=${value}`);
     setAreas(data.areas);
-
-    // Limpiar el campo de area
     setSelectArea("");
     setValue("area", "");
   };
@@ -62,7 +58,7 @@ export const FormCliente = ({ empresas, control, errors, setValue, clearErrors }
 
   return (
     <Grid container justifyContent="space-between">
-      <Grid item xs={12} md={5.8}>
+      <Grid item xs={12}>
         <Controller
           defaultValue=""
           name="anydesk"
@@ -86,7 +82,7 @@ export const FormCliente = ({ empresas, control, errors, setValue, clearErrors }
           }}
         />
       </Grid>
-      <Grid item xs={12} md={5.8}>
+      <Grid item xs={12}>
         <Controller
           defaultValue=""
           name="teamviewer"

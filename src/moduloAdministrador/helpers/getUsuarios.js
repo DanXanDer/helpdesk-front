@@ -1,9 +1,9 @@
-import { axiosGetRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "./getApiUrl";
+import { showAlertMessage } from "../../helpers";
+import api from "../../services/instance";
 
 export const getUsuarios = async () => {
   try {
-    const { data } = await axiosGetRequest(`${getApiUrl()}/usuarios`);
+    const { data } = await api.get("/gestion-sistema/usuarios");
     const usuariosFetch = data.usuarios.map((usuario) => {
       const {
         idUsuario,

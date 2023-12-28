@@ -2,13 +2,11 @@ import { Update } from "@mui/icons-material";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import {
-  axiosGetRequest,
-  axiosPostRequest,
-  showAlertMessage,
+  showAlertMessage
 } from "../../helpers";
-import { getApiUrl } from "../helpers";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/instance";
 
 export const FormDatos = () => {
   const navigate = useNavigate();
@@ -25,7 +23,7 @@ export const FormDatos = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axiosGetRequest(`${getApiUrl()}/datos-cliente`);
+        const { data } = await api.get("/modulo-cliente/datos-cliente");
         const { anydesk, teamviewer, correo } = data;
         setValue("anydesk", anydesk);
         setValue("teamviewer", teamviewer);
@@ -39,10 +37,7 @@ export const FormDatos = () => {
 
   const onSubmit = async (formData) => {
     try {
-      await axiosPostRequest(
-        `${getApiUrl()}/actualizar-datos-cliente`,
-        formData
-      );
+      await api.post("/modulo-cliente/actualizar-datos-cliente", formData);
       showAlertMessage("success", "Éxito", "Datos actualizados correctamente");
     } catch (error) {
       const { mensaje } = error.response.data.error;

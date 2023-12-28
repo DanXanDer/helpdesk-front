@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { HelpDeskLayout } from "../../ui/layout";
-import { axiosGetRequest, formatFecha } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { formatFecha } from "../../helpers";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import { TableColumnsTickets } from "../components/TableColumnsTickets";
 import { CustomNoRowsOverlay } from "../../ui/components";
+import api from "../../services/instance";
 
 export const MisTicketsPage = () => {
   const [ticketsAsignados, setTicketsAsignados] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const { data } = await axiosGetRequest(`${getApiUrl()}/tickets`);
+      const { data } = await api.get("/modulo-trabajador/tickets");
       const dataWithId = data.map((ticket) => ({
         ...ticket,
         fecha: formatFecha(ticket.fecha),

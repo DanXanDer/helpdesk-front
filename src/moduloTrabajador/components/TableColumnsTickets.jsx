@@ -1,8 +1,8 @@
 import { Details } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { axiosGetRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { showAlertMessage } from "../../helpers";
+import api from "../../services/instance";
 
 const columnOptions = {
   headerAlign: "left",
@@ -45,8 +45,8 @@ export const TableColumnsTickets = () => {
       renderCell: ({ row }) => {
         const handleTicketDetalles = async () => {
           try {
-            const {data} = await axiosGetRequest(
-              `${getApiUrl()}/tickets/${row.id}`
+            const { data } = await api.get(
+              `modulo-trabajador/tickets/${row.id}`
             );
             navigate("detalles", {
               state: data,

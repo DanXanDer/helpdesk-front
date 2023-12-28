@@ -10,9 +10,8 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/instance";
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
@@ -31,11 +30,10 @@ export const ReportarIncidentePage = () => {
       formData.append("nombreIncidente", data.nombreIncidente);
       formData.append("descripcion", data.descripcion);
       data.imagenes.forEach((imagen) => formData.append("imagenes", imagen));
-      await axios.post(`${getApiUrl()}/reportar-incidente`, formData, {
+      await api.post("/modulo-cliente/reportar-incidente", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        withCredentials: true,
       });
       showAlertMessage("success", "Exito", "Incidente reportado correctamente");
       navigate("/bienvenida");

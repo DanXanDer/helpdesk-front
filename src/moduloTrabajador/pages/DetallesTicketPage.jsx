@@ -2,18 +2,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { HelpDeskLayout } from "../../ui/layout";
 import { Grid, Paper, TextField, Typography } from "@mui/material";
 import {
-  axiosGetRequest,
-  axiosPostRequest,
   formatFecha,
   getImagenes,
-  showAlertMessage,
+  showAlertMessage
 } from "../../helpers";
 import { useEffect, useState } from "react";
 import ReactImageGallery from "react-image-gallery";
-import { getApiUrl } from "../helpers";
 import { Person, Report } from "@mui/icons-material";
 import { ModalTable, ModalTextField } from "../../ui/components";
 import { useModuloSeguridadStore } from "../../hooks";
+import api from "../../services/instance";
 
 export const DetallesTicketPage = () => {
   const navigate = useNavigate();
@@ -51,17 +49,18 @@ export const DetallesTicketPage = () => {
   const fechaFormateada = formatFecha(fecha);
 
   useEffect(() => {
+    const baseUrl = import.meta.env.VITE_BACKEND_API_URL + "/modulo-trabajador";
     (async () => {
       const imagenesParaGallery = await getImagenes(
         rutasImagenes,
-        getApiUrl(),
+        baseUrl,
         idReporteIncidente
       );
       setImagenes(imagenesParaGallery);
     })();
     (async () => {
-      const { data } = await axiosGetRequest(
-        `${getApiUrl()}/tickets/${idTicket}/mensajes`
+      const { data } = await api.get(
+        `modulo-trabajador/tickets/${idTicket}/mensajes`
       );
       const mensajesForTable = data.map((mensaje) => ({
         id: mensaje.idMensaje,
@@ -90,7 +89,7 @@ export const DetallesTicketPage = () => {
 
   const onSubmitMensaje = async (dataForm) => {
     const { mensaje } = dataForm;
-    await axiosPostRequest(`${getApiUrl()}/tickets/mensaje`, {
+    await api.post(`/modulo-trabajador/tickets/mensaje`, {
       idTicket,
       emisor: usuario.nombres,
       receptor: nombres,
@@ -98,8 +97,8 @@ export const DetallesTicketPage = () => {
     });
     showAlertMessage("success", "Éxito", "Mensaje enviado correctamente");
     handleCloseModalCliente();
-    const { data } = await axiosGetRequest(
-      `${getApiUrl()}/tickets/${idTicket}/mensajes`
+    const { data } = await api.get(
+      `modulo-trabajador/tickets/${idTicket}/mensajes`
     );
     const mensajesForTable = data.map((mensaje) => ({
       id: mensaje.idMensaje,
@@ -111,11 +110,11 @@ export const DetallesTicketPage = () => {
 
   const onSubmitCambioEstado = async (data) => {
     const { mensaje } = data;
-    await axiosPostRequest(`${getApiUrl()}/tickets/cambiar-estado-ticket`, {
+    await api.post(`/modulo-trabajador/tickets/cambiar-estado-ticket`, {
       idTicket,
-      idReporteIncidente,
+      emisor: usuario.nombres,
+      receptor: nombres,
       mensaje,
-      estado: "Por confirmar atención",
     });
     showAlertMessage("success", "Éxito", "El ticket se marcó como atendido");
     handleCloseModalMarcarAtendido();

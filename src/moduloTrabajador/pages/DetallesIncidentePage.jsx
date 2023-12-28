@@ -3,17 +3,15 @@ import { HelpDeskLayout } from "../../ui/layout";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  axiosPostRequest,
   formatFecha,
   getImagenes,
-  showAlertMessage,
+  showAlertMessage
 } from "../../helpers";
-import axios from "axios";
-import { getApiUrl } from "../helpers";
 import ReactImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./styles.css";
 import { ConfirmationNumber } from "@mui/icons-material";
+import api from "../../services/instance";
 
 export const DetallesIncidentePage = () => {
   const [imagenes, setImagenes] = useState(null);
@@ -28,7 +26,7 @@ export const DetallesIncidentePage = () => {
 
   const handleCrearTicket = async () => {
     try {
-      await axiosPostRequest(`${getApiUrl()}/crear-ticket`, {
+      await api.post(`modulo-trabajador/crear-ticket`, {
         idReporteIncidente,
         estado: "En atención",
       });
@@ -41,10 +39,11 @@ export const DetallesIncidentePage = () => {
   };
 
   useEffect(() => {
+    const baseUrl = import.meta.env.VITE_BACKEND_API_URL + "/modulo-trabajador";
     (async () => {
       const imagenesParaGallery = await getImagenes(
         rutasImagenes,
-        getApiUrl(),
+        baseUrl,
         idReporteIncidente
       );
       setImagenes(imagenesParaGallery);

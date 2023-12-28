@@ -27,6 +27,6 @@ export const getImagenes = async (
     }));
     return imagenesParaGallery;
   } catch (error) {
-    console.log(error);
+    return window.location.replace("/mensaje-sistema");
   }
 };

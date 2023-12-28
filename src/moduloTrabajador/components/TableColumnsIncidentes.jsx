@@ -1,8 +1,8 @@
 import { Details } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { axiosGetRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { showAlertMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/instance";
 
 const columnOptions = {
   headerAlign: "left",
@@ -45,8 +45,8 @@ export const TableColumnsIncidentes = () => {
       renderCell: ({ row }) => {
         const handleReporteDetalles = async () => {
           try {
-            const { data } = await axiosGetRequest(
-              `${getApiUrl()}/reportes-incidentes/${row.id}`
+            const { data } = await api.get(
+              `/modulo-trabajador/reportes-incidentes/${row.id}`
             );
             navigate("detalles", {
               state: data,

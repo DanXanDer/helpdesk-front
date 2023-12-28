@@ -18,9 +18,9 @@ import {
 import { ConfirmationNumber } from "@mui/icons-material";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { axiosPostRequest, showAlertMessage } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { showAlertMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/instance";
 
 const conformidad = [
   {
@@ -55,7 +55,6 @@ export const ModalConfirmarAtencion = ({ idTicket, idReporteIncidente }) => {
 
   const onSubmit = async (data) => {
     const { estado, mensaje } = data;
-    console.log(estado, mensaje);
     let formData;
     if (estado === "Conforme") {
       formData = {
@@ -74,10 +73,7 @@ export const ModalConfirmarAtencion = ({ idTicket, idReporteIncidente }) => {
         mensaje,
       };
     }
-    await axiosPostRequest(
-      `${getApiUrl()}/reportes/cambiar-estado-ticket`,
-      formData
-    );
+    await api.post("/modulo-cliente/cambiar-estado-ticket", formData);
     showAlertMessage("success", "Éxito", "Se ha enviado su conformidad");
     reset();
     handleClose();

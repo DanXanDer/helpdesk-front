@@ -4,9 +4,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
 import { CustomNoRowsOverlay } from "../../ui/components";
 import { useEffect, useState } from "react";
-import { axiosGetRequest, formatFecha } from "../../helpers";
-import { getApiUrl } from "../helpers";
+import { formatFecha } from "../../helpers";
 import { TablesColumnsMisReportes } from "../components";
+import api from "../../services/instance";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,7 +42,7 @@ export const MisReportesPage = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axiosGetRequest(`${getApiUrl()}/reportes`);
+      const {data} = await api.get("/modulo-cliente/reportes");
       const dataReportes = data.map((reporte) => {
         const { fechaCreacion, trabajador, reporteIncidente } = reporte;
         const { fecha } = reporteIncidente;

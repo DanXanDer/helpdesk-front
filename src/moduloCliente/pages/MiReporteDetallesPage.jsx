@@ -1,20 +1,15 @@
 import { useLocation } from "react-router-dom";
 import { HelpDeskLayout } from "../../ui/layout/HelpDeskLayout";
-import { Box, Button, Grid, Paper, Typography } from "@mui/material";
-import {
-  axiosGetRequest,
-  axiosPostRequest,
-  formatFecha,
-  showAlertMessage,
-} from "../../helpers";
-import { ConfirmationNumber, Mail, Report } from "@mui/icons-material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
+import { formatFecha, showAlertMessage } from "../../helpers";
+import { Report } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { getApiUrl } from "../helpers";
 import { DataGrid } from "@mui/x-data-grid";
 import { TableColumnsHistorialMensajes } from "../../moduloTrabajador/components";
 import { CustomNoRowsOverlay, ModalTextField } from "../../ui/components";
 import { useModuloSeguridadStore } from "../../hooks";
 import { ModalConfirmarAtencion } from "../components";
+import api from "../../services/instance";
 
 export const MiReporteDetallesPage = () => {
   const [mensajes, setMensajes] = useState([]);
@@ -41,16 +36,14 @@ export const MiReporteDetallesPage = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axiosGetRequest(
-        `${getApiUrl()}/reportes/${idTicket}/mensajes`
+      const { data } = await api.get(
+        `/modulo-cliente/reportes/${idTicket}/mensajes`
       );
-      const mensajesForTable = data.map((mensaje) =>
-        ({
-          id: mensaje.idMensaje,
-          fechaMensaje: formatFecha(mensaje.fecha),
-          ...mensaje,
-        })
-      );
+      const mensajesForTable = data.map((mensaje) => ({
+        id: mensaje.idMensaje,
+        fechaMensaje: formatFecha(mensaje.fecha),
+        ...mensaje,
+      }));
       setMensajes(mensajesForTable);
     })();
   }, []);
@@ -65,17 +58,15 @@ export const MiReporteDetallesPage = () => {
 
   const onSubmitMensaje = async (data) => {
     const { mensaje } = data;
-    await axiosPostRequest(`${getApiUrl()}/reportes/mensaje`, {
+    await api.post("/modulo-cliente/reportes/mensaje", {
       idTicket,
       emisor: usuario.nombres,
       receptor: nombreTrabajador,
       mensaje,
     });
-    showAlertMessage("success", "Éxito", "Mensaje enviado correctamente");
 
-    const { data: mensajes } = await axiosGetRequest(
-      `${getApiUrl()}/reportes/${idTicket}/mensajes`
-    );
+    showAlertMessage("success", "Éxito", "Mensaje enviado correctamente");
+    const { data: mensajes } = await api.get(`/modulo-cliente/reportes/${idTicket}/mensajes`);
     const mensajesForTable = mensajes.map((mensaje) => ({
       id: mensaje.idMensaje,
       fecha: formatFecha(mensaje.fecha),

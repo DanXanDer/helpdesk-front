@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { axiosGetRequest } from "../../helpers";
-import { getApiUrl } from "../helpers";
 import { Details } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import api from "../../services/instance";
 
 const columnOptions = {
   headerAlign: "left",
@@ -57,9 +56,7 @@ export const TablesColumnsMisReportes = () => {
       renderCell: ({ row }) => {
         const handleMiReporteDetalles = async () => {
           try {
-            const { data } = await axiosGetRequest(
-              `${getApiUrl()}/reportes/${row.id}`
-            );
+            const {data} = await api.get(`/modulo-cliente/reportes/${row.id}`);
             navigate("detalles", {
               state: data,
             });
@@ -70,7 +67,7 @@ export const TablesColumnsMisReportes = () => {
         };
 
         const isEnEspera = row.estado === "En espera";
-        const isDisabled = isEnEspera; 
+        const isDisabled = isEnEspera;
 
         return (
           <Button

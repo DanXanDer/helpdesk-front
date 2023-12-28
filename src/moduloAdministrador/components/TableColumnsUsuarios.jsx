@@ -1,7 +1,8 @@
 import { Block, CheckCircle } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
-import { axiosPostRequest, showConfirmationMessage } from "../../helpers";
-import { getApiUrl, getUsuarios } from "../helpers";
+import { showConfirmationMessage } from "../../helpers";
+import { getUsuarios } from "../helpers";
+import api from "../../services/instance";
 
 const columnOptions = {
   headerAlign: "left",
@@ -57,10 +58,7 @@ export const TableColumnUsuarios = (handleUpdateUsuarios) => {
           const { estado, id: idUsuario } = row;
           const nuevoEstado = estado === 1 ? 0 : 1;
           const formData = { idUsuario, estado: nuevoEstado };
-          await axiosPostRequest(
-            `${getApiUrl()}/cambiar-estado-usuario`,
-            formData
-          );
+          await api.post("/gestion-sistema/cambiar-estado-usuario", formData);
           const { usuarios } = await getUsuarios();
           handleUpdateUsuarios(usuarios);
         };

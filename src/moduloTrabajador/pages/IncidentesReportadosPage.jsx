@@ -1,24 +1,19 @@
 import { useEffect, useState } from "react";
 import { HelpDeskLayout } from "../../ui/layout";
-import { useNavigate } from "react-router-dom";
-import { axiosGetRequest } from "../../helpers";
-import { getApiUrl } from "../helpers";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
 import { TableColumnsIncidentes } from "../components";
 import { CustomNoRowsOverlay } from "../../ui/components";
+import api from "../../services/instance";
 
 export const IncidentesReportadosPage = () => {
   const [reportesIncidentes, setReportesIncidentes] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const { data } = await axiosGetRequest(
-        `${getApiUrl()}/reportes-incidentes`
-      );
+      const { data } = await api.get("/modulo-trabajador/reportes-incidentes");
       const { reportesIncidentes } = data;
-
       const reportesIncidentesWithId = reportesIncidentes.map((reporte) => {
         const { idReporteIncidente } = reporte;
         const fecha = new Date(reporte.fecha).toLocaleString("es-ES");
@@ -30,27 +25,26 @@ export const IncidentesReportadosPage = () => {
 
   return (
     <HelpDeskLayout>
-      
-        <Box sx={{ height: 780 }}>
-          <DataGrid
-            disableRowSelectionOnClick
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            columns={TableColumnsIncidentes()}
-            rows={reportesIncidentes}
-            slots={{
-              toolbar: GridToolbar,
-              noRowsOverlay: CustomNoRowsOverlay,
-              noResultsOverlay: CustomNoRowsOverlay,
-            }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-              },
-            }}
-          />
-        </Box>
+      <Box sx={{ height: 780 }}>
+        <DataGrid
+          disableRowSelectionOnClick
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          columns={TableColumnsIncidentes()}
+          rows={reportesIncidentes}
+          slots={{
+            toolbar: GridToolbar,
+            noRowsOverlay: CustomNoRowsOverlay,
+            noResultsOverlay: CustomNoRowsOverlay,
+          }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
+        />
+      </Box>
     </HelpDeskLayout>
   );
 };
