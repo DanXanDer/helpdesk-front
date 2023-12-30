@@ -113,7 +113,6 @@ export const ReestablecerClavePage = () => {
             <FormHelperText error>Las claves no coinciden</FormHelperText>
           ) : null}
         </FormControl>
-
         <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel
             htmlFor="outlined-adornment-reClave"

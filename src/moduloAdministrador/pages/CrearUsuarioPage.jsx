@@ -17,10 +17,7 @@ import { HelpDeskLayout } from "../../ui/layout";
 import { PersonAdd, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import {
-  showAlertMessage,
-  showConfirmationMessage
-} from "../../helpers";
+import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { FormCliente, FormTrabajador } from "../components";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
@@ -45,16 +42,26 @@ export const CrearUsuarioPage = () => {
     setValue,
     clearErrors,
     unregister,
+    watch,
+    getValues,
   } = useForm();
 
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showRePassword, setShowRePassword] = useState(false);
   const [selectTipoUsuario, setSelectTipoUsuario] = useState("");
   const [empresas, setEmpresas] = useState([]);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleClickShowRePassword = () => {
+    setShowRePassword(!showRePassword);
+  };
+
+  let passwordMatch =
+    watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
 
   const handleSeleccionTipo = async ({ target }) => {
     const { value } = target;
@@ -196,6 +203,47 @@ export const CrearUsuarioPage = () => {
               {errors?.clave && (
                 <FormHelperText error>{errors?.clave?.message}</FormHelperText>
               )}
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl variant="outlined" fullWidth margin="normal">
+              <InputLabel
+                htmlFor="outlined-adornment-reClave"
+                error={!!errors.reClave || passwordMatch}
+              >
+                Confirma la clave
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-reClave"
+                type={showRePassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClickShowRePassword} edge="end">
+                      {showRePassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                error={!!errors.reClave || passwordMatch}
+                label="Confirma tu nueva clave"
+                {...register("reClave", {
+                  required: "La confirmación de la clave es requerida",
+                  minLength: {
+                    value: 8,
+                    message: "La clave debe tener al menos 8 caracteres",
+                  },
+                  maxLength: {
+                    value: 16,
+                    message: "La clave debe tener máximo 16 caracteres",
+                  },
+                })}
+              />
+              {errors?.reClave ? (
+                <FormHelperText error>
+                  {errors?.reClave?.message}
+                </FormHelperText>
+              ) : passwordMatch ? (
+                <FormHelperText error>Las claves no coinciden</FormHelperText>
+              ) : null}
             </FormControl>
           </Grid>
           <Grid item xs={12}>
