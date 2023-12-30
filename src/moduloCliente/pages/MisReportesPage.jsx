@@ -42,7 +42,7 @@ export const MisReportesPage = () => {
 
   useEffect(() => {
     (async () => {
-      const {data} = await api.get("/modulo-cliente/reportes");
+      const { data } = await api.get("/modulo-cliente/reportes");
       const dataReportes = data.map((reporte) => {
         const { fechaCreacion, trabajador, reporteIncidente } = reporte;
         const { fecha } = reporteIncidente;
@@ -101,7 +101,7 @@ export const MisReportesPage = () => {
           </Tabs>
         </Box>
       </Box>
-      <Box sx={{ height: 750 }} mt={3}>
+      <Box sx={{ height: "90%" }} mt={3}>
         <DataGrid
           disableRowSelectionOnClick
           disableColumnFilter

@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { Details } from "@mui/icons-material";
+import { Info } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import api from "../../services/instance";
 
 const columnOptions = {
   headerAlign: "left",
   align: "left",
-  width: 250,
+  minWidth: 200,
 };
 
 export const TablesColumnsMisReportes = () => {
@@ -16,16 +16,13 @@ export const TablesColumnsMisReportes = () => {
     {
       field: "nombreIncidente",
       headerName: "Incidente",
+      flex: 1.2,
       ...columnOptions,
     },
     {
       field: "descripcion",
       headerName: "Descripcion",
-      ...columnOptions,
-    },
-    {
-      field: "nivel",
-      headerName: "Nivel",
+      flex: 1.2,
       ...columnOptions,
     },
     {
@@ -45,18 +42,15 @@ export const TablesColumnsMisReportes = () => {
       ...columnOptions,
     },
     {
-      field: "fechaCreacion",
-      headerName: "Fecha de creacion ticket",
-      ...columnOptions,
-    },
-    {
       field: "detalles",
-      headerName: "Ver detalles",
+      headerName: "Acción",
       ...columnOptions,
       renderCell: ({ row }) => {
         const handleMiReporteDetalles = async () => {
           try {
-            const {data} = await api.get(`/modulo-cliente/reportes/${row.id}`);
+            const { data } = await api.get(
+              `/modulo-cliente/reportes/${row.id}`
+            );
             navigate("detalles", {
               state: data,
             });
@@ -71,8 +65,8 @@ export const TablesColumnsMisReportes = () => {
 
         return (
           <Button
-            variant="contained"
-            startIcon={<Details />}
+            variant="outlined"
+            startIcon={<Info />}
             onClick={handleMiReporteDetalles}
             disabled={isDisabled}
           >

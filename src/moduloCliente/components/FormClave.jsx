@@ -9,6 +9,7 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Paper,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -53,121 +54,128 @@ export const FormClave = () => {
   };
 
   return (
-    <Box
-      component="form"
-      noValidate
-      sx={{ mt: 1, width: "100%" }}
-      method="POST"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <Grid container>
-        <Password
-          sx={{
-            mr: 1,
-          }}
-        />
-        <Typography component="h3" variant="span" mb={2}>
-          Cambiar clave
-        </Typography>
-        <Grid container justifyContent="space-between">
-          <Grid item xs={12}>
-            <FormControl variant="outlined" fullWidth margin="normal">
-              <InputLabel
-                htmlFor="outlined-adornment-clave"
-                error={!!errors.clave || passwordMatch}
-              >
-                Ingresa tu nueva clave
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-clave"
-                type={showPassword ? "text" : "password"}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleClickShowPassword} edge="end">
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                error={!!errors.clave || passwordMatch}
-                label="Ingresa tu nueva clave"
-                {...register("clave", {
-                  required: "La nueva clave es requerida",
-                  minLength: {
-                    value: 8,
-                    message: "La clave debe tener al menos 8 caracteres",
-                  },
-                  maxLength: {
-                    value: 16,
-                    message: "La clave debe tener máximo 16 caracteres",
-                  },
-                })}
-              />
-              {errors?.clave ? (
-                <FormHelperText error>{errors?.clave?.message}</FormHelperText>
-              ) : passwordMatch ? (
-                <FormHelperText error>Las claves no coinciden</FormHelperText>
-              ) : null}
-            </FormControl>
+    <Box component={Paper} p={2} elevation={5} height="45%">
+      <Box
+        component="form"
+        noValidate
+        sx={{ mt: 1, width: "100%" }}
+        method="POST"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Grid container>
+          <Password
+            sx={{
+              mr: 1,
+            }}
+          />
+          <Typography component="h3" variant="span" mb={2}>
+            Cambiar clave
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <FormControl variant="outlined" fullWidth margin="normal">
+                <InputLabel
+                  htmlFor="outlined-adornment-clave"
+                  error={!!errors.clave || passwordMatch}
+                >
+                  Ingresa tu nueva clave
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-clave"
+                  type={showPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleClickShowPassword} edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  error={!!errors.clave || passwordMatch}
+                  label="Ingresa tu nueva clave"
+                  {...register("clave", {
+                    required: "La nueva clave es requerida",
+                    minLength: {
+                      value: 8,
+                      message: "La clave debe tener al menos 8 caracteres",
+                    },
+                    maxLength: {
+                      value: 16,
+                      message: "La clave debe tener máximo 16 caracteres",
+                    },
+                  })}
+                />
+                {errors?.clave ? (
+                  <FormHelperText error>
+                    {errors?.clave?.message}
+                  </FormHelperText>
+                ) : passwordMatch ? (
+                  <FormHelperText error>Las claves no coinciden</FormHelperText>
+                ) : null}
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl variant="outlined" fullWidth margin="normal">
+                <InputLabel
+                  htmlFor="outlined-adornment-reClave"
+                  error={!!errors.reClave || passwordMatch}
+                >
+                  Confirma tu nueva clave
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-reClave"
+                  type={showRePassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleClickShowRePassword}
+                        edge="end"
+                      >
+                        {showRePassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  error={!!errors.reClave || passwordMatch}
+                  label="Confirma tu nueva clave"
+                  {...register("reClave", {
+                    required: "La confirmación de la clave es requerida",
+                    minLength: {
+                      value: 8,
+                      message: "La clave debe tener al menos 8 caracteres",
+                    },
+                    maxLength: {
+                      value: 16,
+                      message: "La clave debe tener máximo 16 caracteres",
+                    },
+                  })}
+                />
+                {errors?.reClave ? (
+                  <FormHelperText error>
+                    {errors?.reClave?.message}
+                  </FormHelperText>
+                ) : passwordMatch ? (
+                  <FormHelperText error>Las claves no coinciden</FormHelperText>
+                ) : null}
+              </FormControl>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <FormControl variant="outlined" fullWidth margin="normal">
-              <InputLabel
-                htmlFor="outlined-adornment-reClave"
-                error={!!errors.reClave || passwordMatch}
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginTop: 4,
+                }}
+                startIcon={<Password />}
               >
-                Confirma tu nueva clave
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-reClave"
-                type={showRePassword ? "text" : "password"}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleClickShowRePassword} edge="end">
-                      {showRePassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                error={!!errors.reClave || passwordMatch}
-                label="Confirma tu nueva clave"
-                {...register("reClave", {
-                  required: "La confirmación de la clave es requerida",
-                  minLength: {
-                    value: 8,
-                    message: "La clave debe tener al menos 8 caracteres",
-                  },
-                  maxLength: {
-                    value: 16,
-                    message: "La clave debe tener máximo 16 caracteres",
-                  },
-                })}
-              />
-              {errors?.reClave ? (
-                <FormHelperText error>
-                  {errors?.reClave?.message}
-                </FormHelperText>
-              ) : passwordMatch ? (
-                <FormHelperText error>Las claves no coinciden</FormHelperText>
-              ) : null}
-            </FormControl>
+                Aceptar
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid container justifyContent="center">
-          <Grid item>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginTop: 4,
-              }}
-              startIcon={<Password />}
-            >
-              Aceptar
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
+      </Box>
     </Box>
   );
 };

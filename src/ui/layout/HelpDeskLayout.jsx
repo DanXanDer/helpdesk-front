@@ -23,6 +23,7 @@ export const HelpDeskLayout = ({ children }) => {
           sx={{
             position: "relative",
             minHeight: "100%",
+            height: "100%",
             width: "100%",
             backgroundColor: "white",
             padding: 2,
