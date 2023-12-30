@@ -6,14 +6,19 @@ import { Report } from "@mui/icons-material";
 import { FilePond, registerPlugin } from "react-filepond";
 import { useRef } from "react";
 import "filepond/dist/filepond.min.css";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import { showAlertMessage } from "../../helpers";
+import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
 
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+registerPlugin(
+  FilePondPluginFileValidateType,
+  FilePondPluginImageExifOrientation,
+  FilePondPluginImagePreview
+);
 
 export const ReportarIncidentePage = () => {
   const {
@@ -25,6 +30,12 @@ export const ReportarIncidentePage = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    const isConfirmed = await showConfirmationMessage(
+      "Reportar incidente",
+      "¿Está seguro de reportar el incidente?",
+      "warning"
+    );
+    if (!isConfirmed) return;
     try {
       const formData = new FormData();
       formData.append("nombreIncidente", data.nombreIncidente);
@@ -48,7 +59,7 @@ export const ReportarIncidentePage = () => {
       <Typography component="h3" variant="span">
         Reportar incidente
       </Typography>
-      <Typography component="h5" variant="span">
+      <Typography component="span" variant="span">
         Detalle el incidente que presenta. De ser necesario, adjunte imágenes
       </Typography>
       <Box
@@ -92,7 +103,7 @@ export const ReportarIncidentePage = () => {
               sx={{
                 mb: 4,
               }}
-              label="Detalle el incidente a reportar"
+              label="Detalle el incidente"
               margin="normal"
               multiline
               rows={8}
@@ -110,36 +121,43 @@ export const ReportarIncidentePage = () => {
             },
           }}
         />
-        <Controller
-          name="imagenes"
-          control={control}
-          defaultValue={[]}
-          render={({ field }) => (
-            <FilePond
-              ref={filePondRef}
-              files={field.value}
-              onupdatefiles={(fileItems) => {
-                field.onChange(fileItems.map((fileItem) => fileItem.file));
-              }}
-              allowMultiple={true}
-              maxFiles={3}
-              credits={false}
-              labelIdle='Arrastre y suelte sus archivos (máximo 3) o <span class="filepond--label-action"> Examinar </span>'
-            />
-          )}
-        />
-        <Grid container justifyContent="center">
+        <Grid>
+          <Controller
+            name="imagenes"
+            control={control}
+            defaultValue={[]}
+            render={({ field }) => (
+              <FilePond
+                ref={filePondRef}
+                files={field.value}
+                onupdatefiles={(fileItems) => {
+                  field.onChange(fileItems.map((fileItem) => fileItem.file));
+                }}
+                allowMultiple={true}
+                allowReorder={true}
+                allowDrop={false}
+                allowImagePreview={false}
+                maxFiles={3}
+                credits={false}
+                labelIdle='<span class="filepond--label-action"> Seleccione las imagenes a adjuntar</span> (3 imágenes como máximo)'
+                acceptedFileTypes={["image/*"]}
+              />
+            )}
+          />
+        </Grid>
+        <Grid
+          container
+          justifyContent="center"
+          sx={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            mb: 2,
+            width: "100%",
+          }}
+        >
           <Grid item>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginTop: 4,
-              }}
-              startIcon={<Report />}
-            >
+            <Button type="submit" variant="contained" startIcon={<Report />}>
               Reportar
             </Button>
           </Grid>
