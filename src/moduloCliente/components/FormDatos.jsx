@@ -1,7 +1,7 @@
 import { Update } from "@mui/icons-material";
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { showAlertMessage } from "../../helpers";
+import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
@@ -34,6 +34,12 @@ export const FormDatos = () => {
   }, [setValue]);
 
   const onSubmit = async (formData) => {
+    const isConfirmed = await showConfirmationMessage(
+      "¿Está seguro?",
+      "Se actualizarán sus datos",
+      "warning"
+    );
+    if (!isConfirmed) return;
     try {
       await api.post("/modulo-cliente/actualizar-datos-cliente", formData);
       showAlertMessage("success", "Éxito", "Datos actualizados correctamente");

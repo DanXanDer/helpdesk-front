@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { showAlertMessage } from "../../helpers";
+import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
 
@@ -43,6 +43,12 @@ export const FormClave = () => {
     watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
 
   const onSubmit = async (formData) => {
+    const isConfirmed = await showConfirmationMessage(
+      "¿Está seguro",
+      "Se actualizará su clave",
+      "warning"
+    );
+    if (!isConfirmed) return;
     try {
       await api.post("/modulo-cliente/cambiar-clave-cliente", formData);
       showAlertMessage("success", "Éxito", "Clave actualizada correctamente");
