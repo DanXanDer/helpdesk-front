@@ -8,3 +8,4 @@ export * from "./CheckingSesion";
 export * from "./CustomNoRowsOverlay";
 export * from "./ModalTextField";
 export * from "./ModalTable";
+export * from "./LoadingRowsOverlay";

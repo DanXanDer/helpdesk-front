@@ -5,7 +5,6 @@ export const SideBarContent = () => {
   return (
     <div>
       <Toolbar />
-      <Divider />
       <SideBarList />
     </div>
   );

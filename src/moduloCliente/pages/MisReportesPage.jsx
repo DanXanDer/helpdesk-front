@@ -1,8 +1,8 @@
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { DataGrid } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
-import { CustomNoRowsOverlay } from "../../ui/components";
+import { CustomNoRowsOverlay, LoadingRowsOverlay } from "../../ui/components";
 import { useEffect, useState } from "react";
 import { formatFecha } from "../../helpers";
 import { TablesColumnsMisReportes } from "../components";
@@ -38,6 +38,7 @@ function a11yProps(index) {
 export const MisReportesPage = () => {
   const [misReportesPorEstado, setMisReportesPorEstado] = useState([]);
   const [misReportes, setMisReportes] = useState([]);
+  const [loadingRows, setLoadingRows] = useState(true);
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -56,11 +57,15 @@ export const MisReportesPage = () => {
       });
       setMisReportes(dataReportes);
       setMisReportesPorEstado(dataReportes);
+      setTimeout(() => {
+        setLoadingRows(false);
+      }, 1000);
     })();
   }, []);
 
   const handleChange = (event, newValue) => {
     let dataReportesTable = [];
+    setLoadingRows(true);
     if (newValue === 1) {
       dataReportesTable = misReportes.filter(
         (reporte) => reporte.estado === "En espera"
@@ -82,24 +87,25 @@ export const MisReportesPage = () => {
     }
     setMisReportesPorEstado(dataReportesTable);
     setValue(newValue);
+    setTimeout(() => {
+      setLoadingRows(false);
+    }, 500);
   };
 
   return (
     <HelpDeskLayout>
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="Todos" {...a11yProps(0)} />
-            <Tab label="En espera" {...a11yProps(0)} />
-            <Tab label="En atención" {...a11yProps(1)} />
-            <Tab label="Por confirmar atención" {...a11yProps(2)} />
-            <Tab label="Atendidos" {...a11yProps(2)} />
-          </Tabs>
-        </Box>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="Todos" {...a11yProps(0)} />
+          <Tab label="En espera" {...a11yProps(0)} />
+          <Tab label="En atención" {...a11yProps(1)} />
+          <Tab label="Por confirmar atención" {...a11yProps(2)} />
+          <Tab label="Atendidos" {...a11yProps(2)} />
+        </Tabs>
       </Box>
       <Box sx={{ height: "90%" }} mt={3}>
         <DataGrid
@@ -111,7 +117,9 @@ export const MisReportesPage = () => {
           rows={misReportesPorEstado}
           slots={{
             toolbar: GridToolbar,
-            noRowsOverlay: CustomNoRowsOverlay,
+            noRowsOverlay: loadingRows
+              ? LoadingRowsOverlay
+              : CustomNoRowsOverlay,
             noResultsOverlay: CustomNoRowsOverlay,
           }}
           slotProps={{

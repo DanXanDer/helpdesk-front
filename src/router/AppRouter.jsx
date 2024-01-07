@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { ModuloSeguridadRoutes } from "../moduloSeguridad/routes";
-import { useModuloSeguridadStore } from "../hooks";
+import { useModuloSeguridadStore, useUiStore } from "../hooks";
 import { ModuloTrabajadorRoutes } from "../moduloTrabajador/routes";
 import { ModuloAdministradorRoutes } from "../moduloAdministrador/routes";
 import { ModuloClienteRoutes } from "../moduloCliente/routes";
@@ -14,6 +14,8 @@ export const AppRouter = () => {
   const { status, usuario, handleUsuarioLogin, handleUsuarioLogout } =
     useModuloSeguridadStore();
 
+  const { handleActiveRoute } = useUiStore();
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -21,6 +23,7 @@ export const AppRouter = () => {
         if (data.idUsuario !== 0) {
           handleUsuarioLogin(data);
         } else {
+          handleActiveRoute(null);
           handleUsuarioLogout();
         }
       } catch (error) {

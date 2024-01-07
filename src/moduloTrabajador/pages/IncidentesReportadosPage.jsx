@@ -9,6 +9,7 @@ import api from "../../services/instance";
 
 export const IncidentesReportadosPage = () => {
   const [reportesIncidentes, setReportesIncidentes] = useState([]);
+  const [loadingRows, setLoadingRows] = useState(true);
 
   useEffect(() => {
     (async () => {

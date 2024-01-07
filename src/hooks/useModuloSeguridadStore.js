@@ -10,7 +10,6 @@ export const useModuloSeguridadStore = () => {
   const dispatch = useDispatch();
 
   const handleUsuarioLogin = (data) => {
-    
     dispatch(setUsuarioLogin(data));
   };
 

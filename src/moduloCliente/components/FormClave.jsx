@@ -60,7 +60,7 @@ export const FormClave = () => {
   };
 
   return (
-    <Box component={Paper} p={2} elevation={5} height="45%">
+    <Box component={Paper} p={2} elevation={5} height="41%">
       <Box
         component="form"
         noValidate
@@ -77,7 +77,7 @@ export const FormClave = () => {
           <Typography component="h3" variant="span" mb={2}>
             Cambiar clave
           </Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item xs={12}>
               <FormControl variant="outlined" fullWidth margin="normal">
                 <InputLabel
@@ -172,7 +172,7 @@ export const FormClave = () => {
                 sx={{
                   marginLeft: "auto",
                   marginRight: "auto",
-                  marginTop: 4,
+                  marginTop: 2.5,
                 }}
                 startIcon={<Password />}
               >
