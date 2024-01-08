@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { FormClave, FormDatos } from "../components";
 
@@ -7,12 +7,12 @@ export const ActualizarInformacionPage = () => {
     <HelpDeskLayout>
       <Box
         display="flex"
-        justifyContent="space-between"
+        justifyContent="space-around"
         flexDirection="column"
         height="100%"
-        p={1}
       >
         <FormDatos />
+        <Divider />
         <FormClave />
       </Box>
     </HelpDeskLayout>

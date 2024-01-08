@@ -1,12 +1,8 @@
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  formatFecha,
-  getImagenes,
-  showAlertMessage
-} from "../../helpers";
+import { formatFecha, getImagenes, showAlertMessage } from "../../helpers";
 import ReactImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./styles.css";
@@ -15,6 +11,7 @@ import api from "../../services/instance";
 
 export const DetallesIncidentePage = () => {
   const [imagenes, setImagenes] = useState(null);
+  const { incidenteId } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
   const { rutasImagenes, reporteIncidente } = state;
@@ -48,7 +45,7 @@ export const DetallesIncidentePage = () => {
       );
       setImagenes(imagenesParaGallery);
     })();
-  }, []);
+  }, [incidenteId]);
 
   return (
     <HelpDeskLayout>

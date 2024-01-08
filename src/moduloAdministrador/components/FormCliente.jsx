@@ -58,7 +58,7 @@ export const FormCliente = ({
 
   return (
     <Grid container justifyContent="space-between">
-      <Grid item xs={12}>
+      <Grid item xs={12} md={5.8}>
         <Controller
           defaultValue=""
           name="anydesk"
@@ -82,7 +82,7 @@ export const FormCliente = ({
           }}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} md={5.8}>
         <Controller
           defaultValue=""
           name="teamviewer"

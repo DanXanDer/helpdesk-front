@@ -89,7 +89,7 @@ export const MisReportesPage = () => {
     setValue(newValue);
     setTimeout(() => {
       setLoadingRows(false);
-    }, 500);
+    }, 1000);
   };
 
   return (
@@ -98,6 +98,8 @@ export const MisReportesPage = () => {
         <Tabs
           value={value}
           onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
           aria-label="basic tabs example"
         >
           <Tab label="Todos" {...a11yProps(0)} />
@@ -109,6 +111,7 @@ export const MisReportesPage = () => {
       </Box>
       <Box sx={{ height: "90%" }} mt={3}>
         <DataGrid
+          autoPageSize
           disableRowSelectionOnClick
           disableColumnFilter
           disableColumnSelector

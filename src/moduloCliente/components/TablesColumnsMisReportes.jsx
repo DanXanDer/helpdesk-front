@@ -22,7 +22,7 @@ export const TablesColumnsMisReportes = () => {
     {
       field: "descripcion",
       headerName: "Descripcion",
-      flex: 1.2,
+      flex: 1.5,
       ...columnOptions,
     },
     {
@@ -65,12 +65,12 @@ export const TablesColumnsMisReportes = () => {
 
         return (
           <Button
-            variant="outlined"
+            variant="contained"
             startIcon={<Info />}
             onClick={handleMiReporteDetalles}
             disabled={isDisabled}
           >
-            Detalles
+            Abrir
           </Button>
         );
       },

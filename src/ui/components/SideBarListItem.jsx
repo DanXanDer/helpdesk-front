@@ -4,7 +4,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React, { useState } from "react";
 import { CustomIcon } from "./CustomIcon";
 import { useNavigate } from "react-router-dom";
 import { useUiStore } from "../../hooks";

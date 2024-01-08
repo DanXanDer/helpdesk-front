@@ -18,7 +18,7 @@ import { PersonAdd, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
-import { FormCliente, FormTrabajador } from "../components";
+import { FormCliente } from "../components";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
 
@@ -137,7 +137,7 @@ export const CrearUsuarioPage = () => {
         </Grid>
         <Grid item>
           <Typography component="h3" variant="span">
-            Complete los campos
+            Crear usuario
           </Typography>
         </Grid>
       </Grid>
@@ -171,7 +171,7 @@ export const CrearUsuarioPage = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={5.8} >
             <FormControl variant="outlined" fullWidth margin="normal">
               <InputLabel
                 htmlFor="outlined-adornment-clave"
@@ -205,7 +205,7 @@ export const CrearUsuarioPage = () => {
               )}
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={5.8}>
             <FormControl variant="outlined" fullWidth margin="normal">
               <InputLabel
                 htmlFor="outlined-adornment-reClave"
@@ -360,13 +360,6 @@ export const CrearUsuarioPage = () => {
         {selectTipoUsuario === "Cliente" ? (
           <FormCliente
             empresas={empresas}
-            errors={errors}
-            control={control}
-            setValue={setValue}
-            clearErrors={clearErrors}
-          />
-        ) : selectTipoUsuario === "Trabajador" ? (
-          <FormTrabajador
             errors={errors}
             control={control}
             setValue={setValue}

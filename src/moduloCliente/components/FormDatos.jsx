@@ -51,11 +51,11 @@ export const FormDatos = () => {
   };
 
   return (
-    <Box component={Paper} p={2} elevation={5} height="53%">
+    <Box component={Paper} p={2} elevation={5}>
       <Box
         component="form"
         noValidate
-        sx={{ mt: 1, width: "100%" }}
+        sx={{ width: "100%" }}
         method="POST"
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -68,8 +68,8 @@ export const FormDatos = () => {
           <Typography component="h3" variant="span" mb={2}>
             Actualizar informacion
           </Typography>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
+          <Grid container spacing={1} justifyContent="space-between">
+            <Grid item xs={12} md={5.8}>
               <Controller
                 defaultValue={getValues("anydesk") || ""}
                 name="anydesk"
@@ -94,7 +94,7 @@ export const FormDatos = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={5.8}>
               <Controller
                 defaultValue={getValues("teamviewer") || ""}
                 name="teamviewer"

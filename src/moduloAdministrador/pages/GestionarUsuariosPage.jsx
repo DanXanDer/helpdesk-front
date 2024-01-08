@@ -1,21 +1,24 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { getUsuarios } from "../helpers";
 import { TableColumnUsuarios } from "../components";
 import { useNavigate } from "react-router-dom";
-import { PersonAdd } from "@mui/icons-material";
-import { CustomNoRowsOverlay } from "../../ui/components";
+import { ManageAccounts, PersonAdd } from "@mui/icons-material";
+import { CustomNoRowsOverlay, LoadingRowsOverlay } from "../../ui/components";
 
 export const GestionarUsuariosPage = () => {
   const [usuarios, setUsuarios] = useState([]);
-  const navigate = useNavigate();
+  const [loadingRows, setLoadingRows] = useState(true);
 
   useEffect(() => {
     (async () => {
       const { usuarios } = await getUsuarios();
       setUsuarios(usuarios);
+      setTimeout(() => {
+        setLoadingRows(false);
+      }, 1000);
     })();
   }, []);
 
@@ -23,24 +26,28 @@ export const GestionarUsuariosPage = () => {
     setUsuarios(usuarios);
   };
 
-  const handleCrearUsuarioNavigate = () => {
-    navigate("/gestionar-usuarios/crear-usuario");
-  };
-
   return (
     <HelpDeskLayout>
-      <Button
-        variant="contained"
+      <Grid
+        container
+        spacing={1}
         sx={{
-          mb: 2,
+          alignItems: "center",
         }}
-        startIcon={<PersonAdd />}
-        onClick={handleCrearUsuarioNavigate}
+        mb={2}
       >
-        Crear usuario
-      </Button>
-      <Box sx={{ height: 700 }}>
+        <Grid item>
+          <ManageAccounts />
+        </Grid>
+        <Grid item>
+          <Typography component="h3" variant="span">
+            Gestionar usuarios
+          </Typography>
+        </Grid>
+      </Grid>
+      <Box sx={{ height: "80%" }}>
         <DataGrid
+          autoPageSize
           disableRowSelectionOnClick
           disableColumnFilter
           disableColumnSelector
@@ -49,7 +56,9 @@ export const GestionarUsuariosPage = () => {
           rows={usuarios}
           slots={{
             toolbar: GridToolbar,
-            noRowsOverlay: CustomNoRowsOverlay,
+            noRowsOverlay: loadingRows
+              ? LoadingRowsOverlay
+              : CustomNoRowsOverlay,
             noResultsOverlay: CustomNoRowsOverlay,
           }}
           slotProps={{

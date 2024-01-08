@@ -60,11 +60,11 @@ export const FormClave = () => {
   };
 
   return (
-    <Box component={Paper} p={2} elevation={5} height="41%">
+    <Box component={Paper} p={2} elevation={5}>
       <Box
         component="form"
         noValidate
-        sx={{ mt: 1, width: "100%" }}
+        sx={{ width: "100%" }}
         method="POST"
         onSubmit={handleSubmit(onSubmit)}
       >

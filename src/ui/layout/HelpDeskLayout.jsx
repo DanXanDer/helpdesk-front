@@ -22,7 +22,6 @@ export const HelpDeskLayout = ({ children }) => {
           component={Paper}
           sx={{
             position: "relative",
-            minHeight: "100%",
             height: "100%",
             width: "100%",
             backgroundColor: "white",
