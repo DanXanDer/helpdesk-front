@@ -1,39 +1,18 @@
-import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
-import { DataGrid } from "@mui/x-data-grid";
-import { GridToolbar } from "@mui/x-data-grid";
-import { CustomNoRowsOverlay, LoadingRowsOverlay } from "../../ui/components";
+import { DataGridTable } from "../../ui/components";
 import { useEffect, useState } from "react";
 import { formatFecha } from "../../helpers";
 import { TablesColumnsMisReportes } from "../components";
 import api from "../../services/instance";
+import { TableTabs } from "../../ui/components/TableTabs";
 
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+const tabsLabels = [
+  "Todos",
+  "En espera",
+  "En atención",
+  "Por confirmar atención",
+  "Atendidos",
+];
 
 export const MisReportesPage = () => {
   const [misReportesPorEstado, setMisReportesPorEstado] = useState([]);
@@ -64,74 +43,38 @@ export const MisReportesPage = () => {
   }, []);
 
   const handleChange = (event, newValue) => {
-    let dataReportesTable = [];
     setLoadingRows(true);
-    if (newValue === 1) {
-      dataReportesTable = misReportes.filter(
-        (reporte) => reporte.estado === "En espera"
-      );
-    } else if (newValue === 2) {
-      dataReportesTable = misReportes.filter(
-        (reporte) => reporte.estado === "En atención"
-      );
-    } else if (newValue === 3) {
-      dataReportesTable = misReportes.filter(
-        (reporte) => reporte.estado === "Por confirmar atención"
-      );
-    } else if (newValue === 4) {
-      dataReportesTable = misReportes.filter(
-        (reporte) => reporte.estado === "Atendido"
-      );
-    } else {
-      dataReportesTable = misReportes;
-    }
+    const estadosFiltrados = {
+      1: "En espera",
+      2: "En atención",
+      3: "Por confirmar atención",
+      4: "Atendido",
+    };
+    const estadoFiltrado = estadosFiltrados[newValue];
+    const dataReportesTable = estadoFiltrado
+      ? misReportes.filter((reporte) => reporte.estado === estadoFiltrado)
+      : misReportes;
     setMisReportesPorEstado(dataReportesTable);
     setValue(newValue);
     setTimeout(() => {
       setLoadingRows(false);
-    }, 1000);
+    }, 300);
   };
 
   return (
     <HelpDeskLayout>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="basic tabs example"
-        >
-          <Tab label="Todos" {...a11yProps(0)} />
-          <Tab label="En espera" {...a11yProps(0)} />
-          <Tab label="En atención" {...a11yProps(1)} />
-          <Tab label="Por confirmar atención" {...a11yProps(2)} />
-          <Tab label="Atendidos" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <Box sx={{ height: "90%" }} mt={3}>
-        <DataGrid
-          autoPageSize
-          disableRowSelectionOnClick
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          columns={TablesColumnsMisReportes()}
-          rows={misReportesPorEstado}
-          slots={{
-            toolbar: GridToolbar,
-            noRowsOverlay: loadingRows
-              ? LoadingRowsOverlay
-              : CustomNoRowsOverlay,
-            noResultsOverlay: CustomNoRowsOverlay,
-          }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-            },
-          }}
-        />
-      </Box>
+      <TableTabs
+        tabsLabels={tabsLabels}
+        value={value}
+        handleChange={handleChange}
+      />
+      <DataGridTable
+        height="80%"
+        columnsTable={TablesColumnsMisReportes}
+        paramValue={() => {}}
+        rows={misReportesPorEstado}
+        loadingRows={loadingRows}
+      />
     </HelpDeskLayout>
   );
 };

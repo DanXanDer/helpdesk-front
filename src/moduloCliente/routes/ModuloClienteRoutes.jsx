@@ -8,9 +8,6 @@ import {
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 import { useEffect } from "react";
 
-//TODO: Correción de ruta de detalle de reporte de incidente
-//TODO: Agregar funcionalidad para adjuntar imagenes en el intercambio de mensajes con el trabajador
-//TODO: Agregar funcionalidad para permitir que un cliente gerente pueda visualizar el historial de tickets de sus subordinados
 export const ModuloClienteRoutes = () => {
   const { handleActiveRoute } = useUiStore();
   const { usuario } = useModuloSeguridadStore();
@@ -37,7 +34,10 @@ export const ModuloClienteRoutes = () => {
       />
       <Route path="mis-reportes" element={<MisReportesPage />} />
       <Route path="reportar-incidente" element={<ReportarIncidentePage />} />
-      <Route path="mis-reportes/detalles" element={<MiReporteDetallesPage />} />
+      <Route
+        path="mis-reportes/:idReporteIncidente"
+        element={<MiReporteDetallesPage />}
+      />
     </Routes>
   );
 };

@@ -3,7 +3,7 @@ import api from "../../services/instance";
 
 export const getUsuarios = async () => {
   try {
-    const { data } = await api.get("/gestion-sistema/usuarios");
+    const { data } = await api.get("/modulo-administrador/usuarios");
     const usuariosFetch = data.usuarios.map((usuario) => {
       const {
         idUsuario,

@@ -1,17 +1,22 @@
 import { Update } from "@mui/icons-material";
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
+import { TitleWithIcon } from "../../ui/components";
+import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 
 export const FormDatos = () => {
   const navigate = useNavigate();
+  const { handleActiveRoute } = useUiStore();
+  const {
+    usuario: { privilegios },
+  } = useModuloSeguridadStore();
 
   const {
     handleSubmit,
-    register,
     formState: { errors },
     control,
     setValue,
@@ -21,7 +26,7 @@ export const FormDatos = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get("/modulo-cliente/datos-cliente");
+        const { data } = await api.get("/modulo-cliente/informacion/datos");
         const { anydesk, teamviewer, correo } = data;
         setValue("anydesk", anydesk);
         setValue("teamviewer", teamviewer);
@@ -41,13 +46,14 @@ export const FormDatos = () => {
     );
     if (!isConfirmed) return;
     try {
-      await api.post("/modulo-cliente/actualizar-datos-cliente", formData);
+      await api.post("/modulo-cliente/informacion/actualizar-datos", formData);
       showAlertMessage("success", "Éxito", "Datos actualizados correctamente");
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);
     }
-    navigate("/");
+    handleActiveRoute(privilegios[0].idPrivilegio);
+    navigate("/reportar-incidente");
   };
 
   return (
@@ -60,14 +66,7 @@ export const FormDatos = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Grid container>
-          <Update
-            sx={{
-              mr: 1,
-            }}
-          />
-          <Typography component="h3" variant="span" mb={2}>
-            Actualizar informacion
-          </Typography>
+          <TitleWithIcon icon={<Update />} title="Actualizar información" />
           <Grid container spacing={1} justifyContent="space-between">
             <Grid item xs={12} md={5.8}>
               <Controller

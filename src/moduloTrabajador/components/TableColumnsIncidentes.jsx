@@ -29,6 +29,7 @@ export const TableColumnsIncidentes = () => {
     {
       field: "fecha",
       headerName: "Fecha",
+      flex: 1.1,
       ...columnOptions,
     },
     {
@@ -36,20 +37,9 @@ export const TableColumnsIncidentes = () => {
       headerName: "Acción",
       ...columnOptions,
       renderCell: ({ row }) => {
-        const handleReporteDetalles = async () => {
-          try {
-            const { data } = await api.get(
-              `/modulo-trabajador/reportes-incidentes/${row.id}`
-            );
-            navigate(`${row.id}`, {
-              state: data,
-            });
-          } catch (error) {
-            const { mensaje } = error.response.data.error;
-            showAlertMessage("error", "Error", mensaje);
-          }
+        const handleReporteDetalles = () => {
+          navigate(`${row.id}`);
         };
-
         return (
           <Button
             variant="contained"

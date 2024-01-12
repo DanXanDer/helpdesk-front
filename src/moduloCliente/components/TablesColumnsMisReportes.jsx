@@ -46,18 +46,8 @@ export const TablesColumnsMisReportes = () => {
       headerName: "Acción",
       ...columnOptions,
       renderCell: ({ row }) => {
-        const handleMiReporteDetalles = async () => {
-          try {
-            const { data } = await api.get(
-              `/modulo-cliente/reportes/${row.id}`
-            );
-            navigate("detalles", {
-              state: data,
-            });
-          } catch (error) {
-            const { mensaje } = error.response.data.error;
-            showAlertMessage("error", "Error", mensaje);
-          }
+        const handleMiReporteDetalles = () => {
+          navigate(`${row.id}`);
         };
 
         const isEnEspera = row.estado === "En espera";

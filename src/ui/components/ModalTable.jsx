@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Dialog,
+  DialogActions,
   DialogTitle,
   Grid,
   Typography,
@@ -12,35 +13,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { TableColumnsHistorialMensajes } from "../../moduloTrabajador/components/TableColumnsHistorialMensajes";
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
 
-export const ModalTable = ({ mensajes }) => {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = async () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export const ModalTable = ({ mensajes, idTicket, open, handleClose }) => {
   return (
     <Box>
-      <Button
-        variant="contained"
-        sx={{
-          marginLeft: "auto",
-          marginTop: 4,
-        }}
-        startIcon={<CustomIcon icon="history" />}
-        onClick={handleClickOpen}
-      >
-        Historial de mensajes
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        maxWidth="md"
-      >
+      <Dialog open={open} onClose={handleClose} maxWidth="md">
         <DialogTitle>
           <Grid container spacing={1}>
             <Grid item>
@@ -48,17 +24,18 @@ export const ModalTable = ({ mensajes }) => {
             </Grid>
             <Grid item>
               <Typography component="h5" variant="span">
-                Historial de mensajes
+                Mensajes
               </Typography>
             </Grid>
           </Grid>
           <Box mt={2} height="400px">
             <DataGrid
+              autoPageSize
               disableRowSelectionOnClick
               disableColumnFilter
               disableColumnSelector
               disableDensitySelector
-              columns={TableColumnsHistorialMensajes()}
+              columns={TableColumnsHistorialMensajes(idTicket, true)}
               rows={mensajes}
               slots={{
                 noRowsOverlay: CustomNoRowsOverlay,
@@ -72,6 +49,9 @@ export const ModalTable = ({ mensajes }) => {
             />
           </Box>
         </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose}>Cerrar</Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );

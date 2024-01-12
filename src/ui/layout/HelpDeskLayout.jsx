@@ -11,7 +11,7 @@ export const HelpDeskLayout = ({ children }) => {
       <Box
         component="main"
         sx={{
-          minHeight: "calc(100vh - 64px)",
+          height: "calc(100vh - 64px)",
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
@@ -26,6 +26,7 @@ export const HelpDeskLayout = ({ children }) => {
             width: "100%",
             backgroundColor: "white",
             padding: 2,
+            overflow: "auto",
           }}
         >
           {children}

@@ -8,7 +8,7 @@ const columnOptions = {
   width: 200,
 };
 
-export const TableColumnsTickets = () => {
+export const TableColumnsTicketsAdministrador = () => {
   const navigate = useNavigate();
 
   const columns = [
@@ -42,26 +42,7 @@ export const TableColumnsTickets = () => {
       headerName: "Fecha de creación",
       ...columnOptions,
     },
-    {
-      field: "detalles",
-      headerName: "Acción",
-      ...columnOptions,
-      renderCell: ({ row }) => {
-        const handleTicketDetalles = () => {
-          navigate(`${row.id}`);
-        };
-
-        return (
-          <Button
-            variant="contained"
-            startIcon={<Info />}
-            onClick={handleTicketDetalles}
-          >
-            Abrir
-          </Button>
-        );
-      },
-    },
+    
   ];
 
   return columns;

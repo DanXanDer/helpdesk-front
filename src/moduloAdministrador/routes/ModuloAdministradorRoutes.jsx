@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { CrearUsuarioPage, GestionarUsuariosPage } from "../pages";
+import {
+  CrearUsuarioPage,
+  GestionarUsuariosPage,
+  VerTicketsPage,
+} from "../pages";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 
-//TODO: Agregar funcionalidad para que un administrador pueda visualizar el historial de tickets de sus subordinados
 export const ModuloAdministradorRoutes = () => {
   const { handleActiveRoute } = useUiStore();
   const { usuario } = useModuloSeguridadStore();
@@ -16,6 +19,8 @@ export const ModuloAdministradorRoutes = () => {
       handleActiveRoute(privilegios[0].idPrivilegio);
     } else if (currentRoute === "crear-usuario") {
       handleActiveRoute(privilegios[1].idPrivilegio);
+    } else if (currentRoute === "ver-tickets") {
+      handleActiveRoute(privilegios[2].idPrivilegio);
     }
   }, []);
 
@@ -24,6 +29,7 @@ export const ModuloAdministradorRoutes = () => {
       <Route path="/*" element={<Navigate to="/gestionar-usuarios" />} />
       <Route path="/gestionar-usuarios" element={<GestionarUsuariosPage />} />
       <Route path="/crear-usuario" element={<CrearUsuarioPage />} />
+      <Route path="/ver-tickets" element={<VerTicketsPage />} />
     </Routes>
   );
 };

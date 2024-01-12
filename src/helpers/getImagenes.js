@@ -1,22 +1,14 @@
 import axios from "axios";
 
-export const getImagenes = async (
-  rutasImagenes,
-  apiURL,
-  idReporteIncidente
-) => {
+export const getImagenes = async (rutasImagenes, apiURL) => {
   try {
     const promesasImagenes = rutasImagenes.map(async ({ nombreImagen }) => {
-      const response = await axios.post(
-        `${apiURL}/reporte-incidente-imagen`,
-        {
-          idReporteIncidente,
+      const response = await axios.get(apiURL, {
+        params: {
           rutaImagen: nombreImagen,
         },
-        {
-          responseType: "arraybuffer",
-        }
-      );
+        responseType: "arraybuffer",
+      });
       const blob = new Blob([response.data]);
       return URL.createObjectURL(blob);
     });
@@ -27,6 +19,6 @@ export const getImagenes = async (
     }));
     return imagenesParaGallery;
   } catch (error) {
-    return window.location.replace("/mensaje-sistema");
+    console.log(error.response);
   }
 };

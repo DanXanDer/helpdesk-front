@@ -58,7 +58,7 @@ export const TableColumnUsuarios = (handleUpdateUsuarios) => {
           const { estado, id: idUsuario } = row;
           const nuevoEstado = estado === 1 ? 0 : 1;
           const formData = { idUsuario, estado: nuevoEstado };
-          await api.post("/gestion-sistema/cambiar-estado-usuario", formData);
+          await api.post("/modulo-administrador/usuarios/cambiar-estado", formData);
           const { usuarios } = await getUsuarios();
           handleUpdateUsuarios(usuarios);
         };

@@ -29,7 +29,7 @@ export const FormCliente = ({
     setSelectEmpresa(value);
     setValue("empresa", value);
     clearErrors("empresa");
-    const { data } = await api.get(`/gestion-sistema/sedes?idEmpresa=${value}`);
+    const { data } = await api.get(`/modulo-administrador/sedes?idEmpresa=${value}`);
     setSedes(data.sedes);
     setSelectSede("");
     setSelectArea("");
@@ -43,7 +43,7 @@ export const FormCliente = ({
     setSelectSede(value);
     setValue("sede", value);
     clearErrors("sede");
-    const { data } = await api.get(`/gestion-sistema/areas?idSede=${value}`);
+    const { data } = await api.get(`/modulo-administrador/areas?idSede=${value}`);
     setAreas(data.areas);
     setSelectArea("");
     setValue("area", "");

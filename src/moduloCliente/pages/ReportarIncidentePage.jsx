@@ -3,22 +3,12 @@ import { HelpDeskLayout } from "../../ui/layout";
 import { Controller, useForm } from "react-hook-form";
 import { Box } from "@mui/system";
 import { Report } from "@mui/icons-material";
-import { FilePond, registerPlugin } from "react-filepond";
-import { useRef } from "react";
-import "filepond/dist/filepond.min.css";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
-
-registerPlugin(
-  FilePondPluginFileValidateType,
-  FilePondPluginImageExifOrientation,
-  FilePondPluginImagePreview
-);
+import { FileUploader } from "../../ui/components";
+import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 
 export const ReportarIncidentePage = () => {
   const {
@@ -28,6 +18,10 @@ export const ReportarIncidentePage = () => {
   } = useForm();
   const filePondRef = useRef(null);
   const navigate = useNavigate();
+  const { handleActiveRoute } = useUiStore();
+  const {
+    usuario: { privilegios },
+  } = useModuloSeguridadStore();
 
   const onSubmit = async (data) => {
     const isConfirmed = await showConfirmationMessage(
@@ -41,13 +35,14 @@ export const ReportarIncidentePage = () => {
       formData.append("nombreIncidente", data.nombreIncidente);
       formData.append("descripcion", data.descripcion);
       data.imagenes.forEach((imagen) => formData.append("imagenes", imagen));
-      await api.post("/modulo-cliente/reportar-incidente", formData, {
+      await api.post("/modulo-cliente/reportes/reportar-incidente", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       showAlertMessage("success", "Exito", "Incidente reportado correctamente");
-      navigate("/bienvenida");
+      handleActiveRoute(privilegios[1].idPrivilegio);
+      navigate("/mis-reportes");
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);
@@ -127,21 +122,7 @@ export const ReportarIncidentePage = () => {
             control={control}
             defaultValue={[]}
             render={({ field }) => (
-              <FilePond
-                ref={filePondRef}
-                files={field.value}
-                onupdatefiles={(fileItems) => {
-                  field.onChange(fileItems.map((fileItem) => fileItem.file));
-                }}
-                allowMultiple={true}
-                allowReorder={true}
-                allowDrop={false}
-                allowImagePreview={false}
-                maxFiles={3}
-                credits={false}
-                labelIdle='<span class="filepond--label-action"> Seleccione las imagenes a adjuntar</span> (3 imágenes como máximo)'
-                acceptedFileTypes={["image/*"]}
-              />
+              <FileUploader filePondRef={filePondRef} field={field} />
             )}
           />
         </Grid>

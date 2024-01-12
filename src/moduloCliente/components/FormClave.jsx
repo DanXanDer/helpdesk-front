@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
+import { TitleWithIcon } from "../../ui/components";
+import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 
 export const FormClave = () => {
   const {
@@ -30,6 +32,10 @@ export const FormClave = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setReShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { handleActiveRoute } = useUiStore();
+  const {
+    usuario: { privilegios },
+  } = useModuloSeguridadStore();
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -50,12 +56,12 @@ export const FormClave = () => {
     );
     if (!isConfirmed) return;
     try {
-      await api.post("/modulo-cliente/cambiar-clave-cliente", formData);
+      await api.post("/modulo-cliente/informacion/actualizar-clave", formData);
       showAlertMessage("success", "Éxito", "Clave actualizada correctamente");
-      navigate("/");
+      handleActiveRoute(privilegios[0].idPrivilegio);
+      navigate("/reportar-incidente");
     } catch (error) {
-      const { mensaje } = error.response.data.error;
-      showAlertMessage("error", "Error", mensaje);
+      showAlertMessage("error", "Error", "Hubo un error, intente nuevamente");
     }
   };
 
@@ -69,14 +75,7 @@ export const FormClave = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Grid container>
-          <Password
-            sx={{
-              mr: 1,
-            }}
-          />
-          <Typography component="h3" variant="span" mb={2}>
-            Cambiar clave
-          </Typography>
+          <TitleWithIcon icon={<Password />} title="Cambiar clave" />
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <FormControl variant="outlined" fullWidth margin="normal">

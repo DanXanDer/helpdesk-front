@@ -1,12 +1,9 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { getUsuarios } from "../helpers";
 import { TableColumnUsuarios } from "../components";
-import { useNavigate } from "react-router-dom";
-import { ManageAccounts, PersonAdd } from "@mui/icons-material";
-import { CustomNoRowsOverlay, LoadingRowsOverlay } from "../../ui/components";
+import { ManageAccounts } from "@mui/icons-material";
+import { DataGridTable, TitleWithIcon } from "../../ui/components";
 
 export const GestionarUsuariosPage = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -28,46 +25,14 @@ export const GestionarUsuariosPage = () => {
 
   return (
     <HelpDeskLayout>
-      <Grid
-        container
-        spacing={1}
-        sx={{
-          alignItems: "center",
-        }}
-        mb={2}
-      >
-        <Grid item>
-          <ManageAccounts />
-        </Grid>
-        <Grid item>
-          <Typography component="h3" variant="span">
-            Gestionar usuarios
-          </Typography>
-        </Grid>
-      </Grid>
-      <Box sx={{ height: "80%" }}>
-        <DataGrid
-          autoPageSize
-          disableRowSelectionOnClick
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          columns={TableColumnUsuarios(handleUpdateUsuarios)}
-          rows={usuarios}
-          slots={{
-            toolbar: GridToolbar,
-            noRowsOverlay: loadingRows
-              ? LoadingRowsOverlay
-              : CustomNoRowsOverlay,
-            noResultsOverlay: CustomNoRowsOverlay,
-          }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-            },
-          }}
-        />
-      </Box>
+      <TitleWithIcon icon={<ManageAccounts />} title="Gestionar usuarios" />
+      <DataGridTable
+        height="80%"
+        columnsTable={TableColumnUsuarios}
+        paramValue={handleUpdateUsuarios}
+        rows={usuarios}
+        loadingRows={loadingRows}
+      />
     </HelpDeskLayout>
   );
 };

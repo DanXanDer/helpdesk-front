@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import { HelpDeskLayout } from "../../ui/layout";
-import { formatFecha } from "../../helpers";
-import { TableColumnsTickets } from "../components/TableColumnsTickets";
-import { DataGridTable } from "../../ui/components";
 import api from "../../services/instance";
+import { useEffect, useState } from "react";
 import { TableTabs } from "../../ui/components/TableTabs";
+import { DataGridTable } from "../../ui/components";
+import { formatFecha } from "../../helpers";
+import { TableColumnsTicketsAdministrador } from "../components/TableColumnsTicketsAdministrador";
 
 const tabsLabels = [
   "Todos",
@@ -14,28 +14,28 @@ const tabsLabels = [
   "No conformes",
 ];
 
-export const MisTicketsPage = () => {
-  const [ticketsAsignados, setTicketsAsignados] = useState([]);
+export const VerTicketsPage = () => {
+  const [tickets, setTickets] = useState([]);
+  const [ticketsPorEstado, setTicketsPorEstado] = useState([]);
   const [value, setValue] = useState(0);
   const [loadingRows, setLoadingRows] = useState(true);
-  const [ticketsAsignadosPorEstado, setTicketsAsignadosPorEstado] = useState(
-    []
-  );
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get("/modulo-trabajador/tickets");
-      const dataWithId = data.map((ticket) => ({
-        cliente: ticket.nombres + " " + ticket.apellidos,
+      const { data } = await api.get("/modulo-administrador/tickets");
+      console.log(data);
+      const ticketsWithId = data.tickets.map((ticket) => ({
+        cliente: ticket.nombresCliente + " " + ticket.apellidosCliente,
+        trabajador: ticket.nombresTrabajador + " " + ticket.apellidosTrabajador,
         fechaFormateada: formatFecha(ticket.fecha),
         id: ticket.idTicket,
         ...ticket,
       }));
-      setTicketsAsignados(dataWithId);
-      setTicketsAsignadosPorEstado(dataWithId);
+      setTickets(ticketsWithId);
+      setTicketsPorEstado(ticketsWithId);
       setTimeout(() => {
         setLoadingRows(false);
-      }, 1000);
+      }, 300);
     })();
   }, []);
 
@@ -48,10 +48,10 @@ export const MisTicketsPage = () => {
       4: "No conforme",
     };
     const estadoFiltrado = estadosFiltrados[newValue];
-    const ticketsAsignadosTable = estadoFiltrado
-      ? ticketsAsignados.filter((ticket) => ticket.estado === estadoFiltrado)
-      : ticketsAsignados;
-    setTicketsAsignadosPorEstado(ticketsAsignadosTable);
+    const ticketsTable = estadoFiltrado
+      ? tickets.filter((ticket) => ticket.estado === estadoFiltrado)
+      : tickets;
+    setTicketsPorEstado(ticketsTable);
     setValue(newValue);
     setTimeout(() => {
       setLoadingRows(false);
@@ -67,8 +67,8 @@ export const MisTicketsPage = () => {
       />
       <DataGridTable
         height="80%"
-        columnsTable={TableColumnsTickets}
-        rows={ticketsAsignadosPorEstado}
+        columnsTable={TableColumnsTicketsAdministrador}
+        rows={ticketsPorEstado}
         loadingRows={loadingRows}
       />
     </HelpDeskLayout>

@@ -10,8 +10,7 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
-  TextField,
-  Typography,
+  TextField
 } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { PersonAdd, Visibility, VisibilityOff } from "@mui/icons-material";
@@ -21,6 +20,7 @@ import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { FormCliente } from "../components";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
+import { TitleWithIcon } from "../../ui/components";
 
 const tipoUsuario = [
   {
@@ -70,7 +70,7 @@ export const CrearUsuarioPage = () => {
     clearErrors("tipo");
 
     if (value === "Cliente") {
-      const { data } = await api.get("/gestion-sistema/empresas");
+      const { data } = await api.get("/modulo-administrador/empresas");
       unregister("nivel");
       setEmpresas(data.empresas);
     } else {
@@ -93,16 +93,16 @@ export const CrearUsuarioPage = () => {
     const privilegiosTrabajador = [5, 6];
     const privilegiosCliente = [1, 3, 4];
     let formData;
-    let apiUrl = "/gestion-sistema";
+    let apiUrl = "/modulo-administrador";
     const { tipo } = data;
     if (tipo === "Trabajador") {
-      apiUrl += "/crear-trabajador";
+      apiUrl += "/usuarios/crear-trabajador";
       formData = {
         ...data,
         privilegios: privilegiosTrabajador,
       };
     } else {
-      apiUrl += "/crear-cliente";
+      apiUrl += "/usuarios/crear-cliente";
       formData = {
         privilegios: privilegiosCliente,
         idArea: data.area,
@@ -125,22 +125,7 @@ export const CrearUsuarioPage = () => {
 
   return (
     <HelpDeskLayout>
-      <Grid
-        container
-        spacing={1}
-        sx={{
-          alignItems: "center",
-        }}
-      >
-        <Grid item>
-          <PersonAdd />
-        </Grid>
-        <Grid item>
-          <Typography component="h3" variant="span">
-            Crear usuario
-          </Typography>
-        </Grid>
-      </Grid>
+      <TitleWithIcon icon={<PersonAdd />} title="Crear usuario" />
       <Box
         component="form"
         noValidate
