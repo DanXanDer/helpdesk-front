@@ -10,7 +10,7 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
-  TextField
+  TextField,
 } from "@mui/material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { PersonAdd, Visibility, VisibilityOff } from "@mui/icons-material";
@@ -84,6 +84,7 @@ export const CrearUsuarioPage = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data)
     const isConfirmed = await showConfirmationMessage(
       "Crear usuario",
       "¿Está seguro de crear el usuario?",
@@ -118,8 +119,12 @@ export const CrearUsuarioPage = () => {
       );
       navigate("/gestionar-usuarios");
     } catch (error) {
-      const { mensaje } = error.response.data.error;
-      showAlertMessage("error", "Error", mensaje);
+      const { mensaje: errorMsg } = error.response.data.error;
+      showAlertMessage(
+        "error",
+        "Error",
+        errorMsg,
+      );
     }
   };
 
@@ -156,7 +161,7 @@ export const CrearUsuarioPage = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={5.8} >
+          <Grid item xs={12} md={5.8}>
             <FormControl variant="outlined" fullWidth margin="normal">
               <InputLabel
                 htmlFor="outlined-adornment-clave"

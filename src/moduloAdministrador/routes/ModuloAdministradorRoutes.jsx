@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
+  AgregarEmpresaPage,
   CrearUsuarioPage,
   GestionarUsuariosPage,
   VerTicketsPage,
@@ -21,6 +22,8 @@ export const ModuloAdministradorRoutes = () => {
       handleActiveRoute(privilegios[1].idPrivilegio);
     } else if (currentRoute === "ver-tickets") {
       handleActiveRoute(privilegios[2].idPrivilegio);
+    } else if (currentRoute === "agregar-empresa") {
+      handleActiveRoute(privilegios[3].idPrivilegio);
     }
   }, []);
 
@@ -30,6 +33,7 @@ export const ModuloAdministradorRoutes = () => {
       <Route path="/gestionar-usuarios" element={<GestionarUsuariosPage />} />
       <Route path="/crear-usuario" element={<CrearUsuarioPage />} />
       <Route path="/ver-tickets" element={<VerTicketsPage />} />
+      <Route path="/agregar-empresa" element={<AgregarEmpresaPage />} />
     </Routes>
   );
 };

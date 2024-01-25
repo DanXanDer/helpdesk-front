@@ -86,9 +86,9 @@ export const FormDatos = () => {
                 rules={{
                   required: "El número de AnyDesk es requerido",
                   pattern: {
-                    value: /^[0-9]{9}$/,
+                    value: /^[0-9]+$/,
                     message:
-                      "El número de AnyDesk debe contener 9 caracteres numéricos",
+                      "El AnyDesk solo debe contener caracteres numéricos",
                   },
                 }}
               />
@@ -111,11 +111,11 @@ export const FormDatos = () => {
                 rules={{
                   required: "El número de TeamViewer es requerido",
                   pattern: {
-                    value: /^[0-9]{9}$/,
-                    message:
-                      "El número de TeamViewer debe contener 9 caracteres numéricos",
+                    value: /^[0-9]+$/,
+                    message: "El TeamViewer solo deebe contener números",
                   },
                 }}
+                
               />
             </Grid>
             <Grid item xs={12}>

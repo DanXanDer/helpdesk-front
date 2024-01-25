@@ -19,6 +19,12 @@ export const TableColumnsTicketsAdministrador = () => {
       ...columnOptions,
     },
     {
+      field: "trabajador",
+      headerName: "Trabajador",
+      flex: 1,
+      ...columnOptions,
+    },
+    {
       field: "nombreIncidente",
       headerName: "Incidente",
       flex: 1.2,
@@ -42,7 +48,6 @@ export const TableColumnsTicketsAdministrador = () => {
       headerName: "Fecha de creación",
       ...columnOptions,
     },
-    
   ];
 
   return columns;

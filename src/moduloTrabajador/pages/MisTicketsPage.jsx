@@ -25,8 +25,9 @@ export const MisTicketsPage = () => {
   useEffect(() => {
     (async () => {
       const { data } = await api.get("/modulo-trabajador/tickets");
+      console.log(data);
       const dataWithId = data.map((ticket) => ({
-        cliente: ticket.nombres + " " + ticket.apellidos,
+        cliente: ticket.nombresCliente + " " + ticket.apellidosCliente,
         fechaFormateada: formatFecha(ticket.fecha),
         id: ticket.idTicket,
         ...ticket,
