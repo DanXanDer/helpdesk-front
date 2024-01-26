@@ -7,7 +7,7 @@ import api from "../../services/instance";
 const columnOptions = {
   headerAlign: "left",
   align: "left",
-  width: 200,
+  minWidth: 200,
 };
 
 export const TableColumnsIncidentes = () => {
@@ -15,16 +15,31 @@ export const TableColumnsIncidentes = () => {
 
   const columns = [
     {
-      field: "nombreIncidente",
-      headerName: "Incidente",
-      flex: 1.2,
+      field: "datosCliente",
+      headerName: "Cliente",
+      flex: 1.1,
       ...columnOptions,
     },
     {
-      field: "descripcion",
-      headerName: "Descripcion",
-      flex: 1.2,
+      field: "nombreIncidente",
+      headerName: "Incidente",
+      flex: 1.1,
       ...columnOptions,
+    },
+    {
+      field: "nombreEmpresa",
+      headerName: "Empresa",
+      ...columnOptions
+    },
+    {
+      field: "nombreSede",
+      headerName: "Sede",
+      ...columnOptions
+    },
+    {
+      field: "nombreArea",
+      headerName: "Área",
+      ...columnOptions
     },
     {
       field: "fecha",

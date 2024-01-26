@@ -44,8 +44,7 @@ export const ReportarIncidentePage = () => {
       handleActiveRoute(privilegios[1].idPrivilegio);
       navigate("/mis-reportes");
     } catch (error) {
-      const { mensaje } = error.response.data.error;
-      showAlertMessage("error", "Error", mensaje);
+      showAlertMessage("error", "Error", "Hubo un error inesperado. Intente nuevamente");
     }
   };
 

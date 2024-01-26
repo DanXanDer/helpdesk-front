@@ -26,7 +26,8 @@ export const VerTicketsPage = () => {
       const ticketsWithId = data.tickets.map((ticket) => ({
         cliente: ticket.nombresCliente + " " + ticket.apellidosCliente,
         trabajador: ticket.nombresTrabajador + " " + ticket.apellidosTrabajador,
-        fechaFormateada: formatFecha(ticket.fecha),
+        ticketFechaFormateada: formatFecha(ticket.ticketFecha),
+        reporteFechaFormateada: formatFecha(ticket.reporteFecha),
         id: ticket.idTicket,
         ...ticket,
       }));

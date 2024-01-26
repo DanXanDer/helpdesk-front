@@ -27,10 +27,11 @@ export const MisTicketsPage = () => {
       const { data } = await api.get("/modulo-trabajador/tickets");
       console.log(data);
       const dataWithId = data.map((ticket) => ({
-        cliente: ticket.nombresCliente + " " + ticket.apellidosCliente,
-        fechaFormateada: formatFecha(ticket.fecha),
-        id: ticket.idTicket,
         ...ticket,
+        datosCliente: ticket.nombresCliente + " " + ticket.apellidosCliente,
+        reporteFecha: formatFecha(ticket.reporteFecha),
+        ticketFecha: formatFecha(ticket.ticketFecha),
+        id: ticket.idTicket,
       }));
       setTicketsAsignados(dataWithId);
       setTicketsAsignadosPorEstado(dataWithId);

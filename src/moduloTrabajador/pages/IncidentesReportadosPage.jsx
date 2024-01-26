@@ -16,8 +16,9 @@ export const IncidentesReportadosPage = () => {
       const reportesIncidentesWithId = reportesIncidentes.map((reporte) => {
         const { idReporteIncidente } = reporte;
         const fecha = new Date(reporte.fecha).toLocaleString("es-ES");
-        return { ...reporte, id: idReporteIncidente, fecha };
+        return { ...reporte, id: idReporteIncidente, fecha, datosCliente: reporte.nombres + " " + reporte.apellidos };
       });
+      console.log(reportesIncidentesWithId);
       setReportesIncidentes(reportesIncidentesWithId);
       setTimeout(() => {
         setLoadingRows(false);

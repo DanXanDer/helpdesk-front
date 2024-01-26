@@ -13,33 +13,35 @@ export const TableColumnsTickets = () => {
 
   const columns = [
     {
-      field: "cliente",
+      field: "datosCliente",
       headerName: "Cliente",
-      flex: 1,
+      flex: 1.1,
       ...columnOptions,
     },
     {
       field: "nombreIncidente",
       headerName: "Incidente",
-      flex: 1.2,
+      flex: 1.1,
       ...columnOptions,
     },
     {
-      field: "descripcion",
-      headerName: "Descripcion",
-      flex: 1.2,
-      ...columnOptions,
+      field: "nombreEmpresa",
+      headerName: "Empresa",
+      ...columnOptions
     },
     {
       field: "estado",
       headerName: "Estado",
-      flex: 1,
       ...columnOptions,
     },
     {
-      field: "fechaFormateada",
-      flex: 1.1,
-      headerName: "Fecha de creación",
+      field: "reporteFecha",
+      headerName: "Fecha de reporte",
+      ...columnOptions,
+    },
+    {
+      field: "ticketFecha",
+      headerName: "Fecha de creación de ticket",
       ...columnOptions,
     },
     {

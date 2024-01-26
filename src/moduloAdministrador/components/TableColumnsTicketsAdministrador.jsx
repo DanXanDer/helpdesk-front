@@ -5,12 +5,10 @@ import { useNavigate } from "react-router-dom";
 const columnOptions = {
   headerAlign: "left",
   align: "left",
-  width: 200,
+  minWidth: 200,
 };
 
 export const TableColumnsTicketsAdministrador = () => {
-  const navigate = useNavigate();
-
   const columns = [
     {
       field: "cliente",
@@ -43,11 +41,35 @@ export const TableColumnsTicketsAdministrador = () => {
       ...columnOptions,
     },
     {
-      field: "fechaFormateada",
-      flex: 1.1,
-      headerName: "Fecha de creación",
+      field: "nombreEmpresa",
+      headerName: "Empresa",
+      flex: 1,
       ...columnOptions,
     },
+    {
+      field: "nombreSede",
+      headerName: "Sede",
+      flex: 1,
+      ...columnOptions,
+    },
+    {
+      field: "nombreArea",
+      headerName: "Area",
+      flex: 1,
+      ...columnOptions,
+    },
+    {
+      field: "reporteFechaFormateada",
+      flex: 1.1,
+      headerName: "Fecha de reporte",
+      ...columnOptions,
+    },
+    {
+      field: "ticketFechaFormateada",
+      flex: 1.1,
+      headerName: "Fecha de creación de ticket",
+      ...columnOptions,
+    }
   ];
 
   return columns;
