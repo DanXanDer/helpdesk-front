@@ -1,3 +1,5 @@
-export * from "./TableColumnsUsuarios";
+export * from "./TableColumnsTrabajadores";
 export * from "./FormCliente";
-export * from "./AddAreaModal";
+export * from "./SedesArray";
+export * from "./AreasArray";
+export * from "./TableColumnsClientes";

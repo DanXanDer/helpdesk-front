@@ -1,8 +1,7 @@
 import { HelpDeskLayout } from "../../ui/layout";
 import api from "../../services/instance";
 import { useEffect, useState } from "react";
-import { TableTabs } from "../../ui/components/TableTabs";
-import { DataGridTable } from "../../ui/components";
+import { DataGridTable, TableTabs } from "../../ui/components";
 import { formatFecha } from "../../helpers";
 import { TableColumnsTicketsAdministrador } from "../components/TableColumnsTicketsAdministrador";
 

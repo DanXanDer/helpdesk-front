@@ -17,3 +17,4 @@ export * from "./FileUploader";
 export * from "./DataGridTable";
 export * from "./TitleWithIcon";
 export * from "./ModalCambiarEstadoTicket";
+export * from "./TableTabs";
