@@ -29,12 +29,6 @@ export const TableColumnsTicketsAdministrador = () => {
       ...columnOptions,
     },
     {
-      field: "descripcion",
-      headerName: "Descripcion",
-      flex: 1.2,
-      ...columnOptions,
-    },
-    {
       field: "estado",
       headerName: "Estado",
       flex: 1,

@@ -4,7 +4,6 @@ import { getClientes, getTrabajadores } from "../helpers";
 import { TableColumnsClientes, TableColumnsTrabajadores } from "../components";
 import { ManageAccounts } from "@mui/icons-material";
 import { DataGridTable, TitleWithIcon, TableTabs } from "../../ui/components";
-import api from "../../services/instance";
 const tabsLabels = [
   "Trabajadores",
   "Clientes",
