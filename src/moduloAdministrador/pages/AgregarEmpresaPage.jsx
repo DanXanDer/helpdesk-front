@@ -35,7 +35,7 @@ export const AgregarEmpresaPage = () => {
     defaultValues,
   });
   const { handleActiveRoute } = useUiStore();
-  const { usuario: { privilegios } } = useModuloSeguridadStore();
+  const { user: { privilegios } } = useModuloSeguridadStore();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {

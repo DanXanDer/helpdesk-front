@@ -13,7 +13,7 @@ export const handleUsuarioEstadoChange = async (
 ) => {
   const isConfirmed = await showConfirmationMessage(
     text,
-    `¿Está seguro de ${subText} el usuario ${nombreUsuario}?`,
+    `¿Está seguro de ${subText} el user ${nombreUsuario}?`,
     "warning"
   );
   if (!isConfirmed) return;

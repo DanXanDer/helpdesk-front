@@ -86,8 +86,8 @@ export const CrearUsuarioPage = () => {
   const onSubmit = async (data) => {
     console.log(data)
     const isConfirmed = await showConfirmationMessage(
-      "Crear usuario",
-      "¿Está seguro de crear el usuario?",
+      "Crear user",
+      "¿Está seguro de crear el user?",
       "warning"
     );
     if (!isConfirmed) return;
@@ -115,7 +115,7 @@ export const CrearUsuarioPage = () => {
       showAlertMessage(
         "success",
         "Usuario creado",
-        "El usuario se creó correctamente"
+        "El user se creó correctamente"
       );
       navigate("/gestionar-usuarios");
     } catch (error) {
@@ -130,7 +130,7 @@ export const CrearUsuarioPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TitleWithIcon icon={<PersonAdd />} title="Crear usuario" />
+      <TitleWithIcon icon={<PersonAdd />} title="Crear user" />
       <Box
         component="form"
         noValidate
@@ -147,7 +147,7 @@ export const CrearUsuarioPage = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Ingresa nombre de usuario"
+                  label="Ingresa nombre de user"
                   margin="normal"
                   fullWidth
                   autoComplete="nombreUsuario"
@@ -157,7 +157,7 @@ export const CrearUsuarioPage = () => {
                 />
               )}
               rules={{
-                required: "El usuario es requerido",
+                required: "El user es requerido",
               }}
             />
           </Grid>
@@ -313,7 +313,7 @@ export const CrearUsuarioPage = () => {
           <Grid item xs={12}>
             <FormControl fullWidth margin="normal">
               <InputLabel id="select-tipo-label" error={!!errors.tipo}>
-                Tipo de usuario
+                Tipo de user
               </InputLabel>
               <Controller
                 name="tipo"
@@ -326,7 +326,7 @@ export const CrearUsuarioPage = () => {
                     labelId="select-tipo-label"
                     id="select-tipo"
                     value={selectTipoUsuario}
-                    label="Tipo de usuario"
+                    label="Tipo de user"
                     error={!!errors.tipo}
                   >
                     {tipoUsuario.map(({ id, nombreTipoUsuario }) => (
@@ -337,7 +337,7 @@ export const CrearUsuarioPage = () => {
                   </Select>
                 )}
                 rules={{
-                  required: "El tipo de usuario es requerido",
+                  required: "El tipo de user es requerido",
                 }}
               />
               {errors?.tipo ? (
@@ -368,7 +368,7 @@ export const CrearUsuarioPage = () => {
               }}
               startIcon={<PersonAdd />}
             >
-              Crear usuario
+              Crear user
             </Button>
           </Grid>
         </Grid>

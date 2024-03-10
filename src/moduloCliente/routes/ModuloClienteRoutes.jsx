@@ -10,12 +10,12 @@ import { useEffect } from "react";
 
 export const ModuloClienteRoutes = () => {
   const { handleActiveRoute } = useUiStore();
-  const { usuario } = useModuloSeguridadStore();
+  const { user } = useModuloSeguridadStore();
 
   useEffect(() => {
     const currentPath = window.location.pathname;
     const currentRoute = currentPath.split("/")[1];
-    const { privilegios } = usuario;
+    const { privilegios } = user;
     if (currentRoute === "reportar-incidente") {
       handleActiveRoute(privilegios[0].idPrivilegio);
     } else if (currentRoute === "mis-reportes") {

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   status: "checking", // no-autenticado, autenticado, autenticando
-  usuario: null /* {
+  user: null /* {
     idUsuario: null,
     nombres: null,
     tipo: null,
@@ -14,18 +14,18 @@ export const moduloSeguridadSlice = createSlice({
   name: "moduloSeguridadSlice",
   initialState,
   reducers: {
-    setUsuarioLogin: (state, action) => {
+    setUserLogin: (state, action) => {
       state.status = "autenticado";
-      state.usuario = { ...action.payload };
+      state.user = { ...action.payload };
     },
-    setUsuarioLogout: (state) => {
+    setUserLogout: (state) => {
       state.status = "no-autenticado";
-      state.usuario = null;
+      state.user = null;
     },
   },
 });
 
-export const { setUsuarioLogin, setUsuarioLogout } =
+export const { setUserLogin, setUserLogout } =
   moduloSeguridadSlice.actions;
 
 export default moduloSeguridadSlice.reducer;

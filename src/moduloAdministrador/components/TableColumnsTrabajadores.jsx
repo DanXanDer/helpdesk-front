@@ -41,7 +41,7 @@ export const TableColumnsTrabajadores = (handleUpdateUsuarios) => {
       renderCell: ({ row }) => {
         const { estado, nombreUsuario } = row;
         const text =
-          estado === 1 ? "Deshabilitar usuario" : "Habilitar usuario";
+          estado === 1 ? "Deshabilitar user" : "Habilitar user";
         const subText = estado === 1 ? "deshabilitar" : "habilitar";
         const color = estado === 1 ? "error" : "success";
         return (

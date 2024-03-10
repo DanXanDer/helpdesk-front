@@ -4,13 +4,13 @@ import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 import api from "../../services/instance";
 
 export const NavBar = ({ drawerWidth }) => {
-  const { usuario, handleUsuarioLogout } = useModuloSeguridadStore();
+  const { user, handleUserLogout } = useModuloSeguridadStore();
 
   const { handleDrawerToggle } = useUiStore();
 
   const onUsuarioLogout = async () => {
-    handleUsuarioLogout();
-    await api.post("/seguridad/logout-usuario");
+    handleUserLogout();
+    await api.post("/seguridad/logout-user");
   };
 
   return (
@@ -37,7 +37,7 @@ export const NavBar = ({ drawerWidth }) => {
           <Menu />
         </IconButton>
         <Typography variant="h6" noWrap component="div">
-          Bienvenido! {usuario.nombres}
+          Bienvenido! {user.nombres}
         </Typography>
         <IconButton
           sx={{

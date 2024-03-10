@@ -11,42 +11,44 @@ import { MensajeSistemaPage } from "../ui/pages/MensajeSistemaPage";
 import api from "../services/instance";
 
 export const AppRouter = () => {
-  const { status, usuario, handleUsuarioLogin, handleUsuarioLogout } =
-    useModuloSeguridadStore();
-
+  const { status, user, handleUserLogin, handleUserLogout } = useModuloSeguridadStore();
+  useModuloSeguridadStore();
   const { handleActiveRoute } = useUiStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { data } = await api.get("/seguridad/usuario-activo");
-        if (data.idUsuario !== 0) {
-          handleUsuarioLogin(data);
+        const { data: isAuthenticated } = await api.get("/home/check-login");
+        if (!!isAuthenticated) {
+          const { data } = await api.get("/home/active-user");
+          handleUserLogin(data);
         } else {
           handleActiveRoute(null);
-          handleUsuarioLogout();
+          handleUserLogout();
+          navigate("/")
         }
-      } catch (error) {
-        const { mensaje } = error.response.data.error;
-        showAlertMessage("error", "Error", mensaje);
+      } catch ({ response }) {
+        const { message } = response.data;
+        showAlertMessage("error", "Error", message);
       }
     };
     getUser();
-  }, [status]);
+  }, []);
 
   if (status === "checking") return <CheckingSesion />;
 
   return (
     <Routes>
-      {usuario ? (
+      {user ? (
         <>
-          {usuario.tipo === "Trabajador" && (
+          {user.type === "Trabajador" && (
             <Route path="/*" element={<ModuloTrabajadorRoutes />} />
           )}
-          {usuario.tipo === "Administrador" && (
+          {user.type === "Superadministrador" && (
             <Route path="/*" element={<ModuloAdministradorRoutes />} />
           )}
-          {usuario.tipo === "Cliente" && (
+          {user.type === "Cliente" && (
             <Route path="/*" element={<ModuloClienteRoutes />} />
           )}
         </>

@@ -52,7 +52,7 @@ export const ModalCambiarEstadoTicket = ({
   } = useForm();
 
   const filePondRef = useRef(null);
-  const { usuario } = useModuloSeguridadStore();
+  const { user } = useModuloSeguridadStore();
   const { handleActiveRoute } = useUiStore();
   const navigate = useNavigate();
 
@@ -71,7 +71,7 @@ export const ModalCambiarEstadoTicket = ({
       let estadoTicket = "Por confirmar atención";
       let estadoReporteIncidente = "Por confirmar atención";
       formData.append("idReporteIncidente", ticket.idReporteIncidente);
-      formData.append("emisor", `${usuario.nombres} ${usuario.apellidos}`);
+      formData.append("emisor", `${user.nombres} ${user.apellidos}`);
       formData.append("mensaje", mensaje);
       if (!!estado) {
         if (estado === "Conforme") {
@@ -96,7 +96,7 @@ export const ModalCambiarEstadoTicket = ({
       reset();
       showAlertMessage("success", "Éxito", alertDescription);
       handleClose();
-      handleActiveRoute(usuario.privilegios[0].idPrivilegio);
+      handleActiveRoute(user.privilegios[0].idPrivilegio);
       navigate("/reportar-incidente");
     } catch (error) {
       showAlertMessage("error", "Error", "Hubo un error, intente nuevamente");

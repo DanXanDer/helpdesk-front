@@ -3,11 +3,11 @@ import { SideBarListItem } from "./SideBarListItem";
 import { useModuloSeguridadStore } from "../../hooks";
 
 export const SideBarList = () => {
-  const { usuario } = useModuloSeguridadStore();
+  const { user } = useModuloSeguridadStore();
 
   return (
     <List>
-      {usuario.privilegios.map(({ idPrivilegio, ...privilegio }) => {
+      {user.privilegios.map(({ idPrivilegio, ...privilegio }) => {
         return (
           <SideBarListItem
             key={idPrivilegio}

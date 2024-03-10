@@ -32,15 +32,15 @@ export const CompletarDatosPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setReShowPassword] = useState(false);
-  const [preguntasSeguridad, setPreguntasSeguridad] = useState([]);
+  const [secretQuestions, setSecretQuestions] = useState([]);
   const navigate = useNavigate();
   const { state } = useLocation();
+  const { secretQuestions: secretQuestionsData, userDetails } = state;
 
-  const { handleUsuarioLogin } = useModuloSeguridadStore();
+  const { handleUserLogin } = useModuloSeguridadStore();
 
   useEffect(() => {
-    const { preguntasSeguridad } = state;
-    setPreguntasSeguridad(preguntasSeguridad);
+    setSecretQuestions(secretQuestionsData);
   }, []);
 
   const handleClickShowPassword = () => {
@@ -52,26 +52,34 @@ export const CompletarDatosPage = () => {
   };
 
   let passwordMatch =
-    watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
+    watch("password") !== watch("rePassword") && getValues("rePassword") ? true : false;
 
   const onSubmit = async (formData) => {
-    const formDataWithIdUsuario = {
+    try {
+      formData.firstLogin = false;
+      await api.put(`/users/${userDetails.idUser}/complete-registration`, formData);
+      handleUserLogin(userDetails);
+    } catch ({ response }) {
+      const { message } = response.data;
+      showAlertMessage("error", "Error", message);
+    }
+    /* const formDataWithIdUsuario = {
       ...formData,
-      idUsuario: state.idUsuario,
+      idUser: state.userDetails.idUser,
     };
 
     try {
       await api.post("/seguridad/completar-datos", formDataWithIdUsuario);
       const { data } = await api.post(
-        "/seguridad/logear-usuario",
+        "/seguridad/logear-user",
         state.idUsuario
       );
-      handleUsuarioLogin(data);
+      handleUserLogin(data);
       navigate("/");
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);
-    }
+    } */
   };
 
   return (
@@ -89,12 +97,12 @@ export const CompletarDatosPage = () => {
         <FormControl fullWidth margin="normal">
           <InputLabel
             id="select-pregunta-seguridad-label"
-            error={!!errors.preguntaSeguridad}
+            error={!!errors.secretQuestion}
           >
             Pregunta de seguridad
           </InputLabel>
           <Controller
-            name="preguntaSeguridad"
+            name="secretQuestion"
             control={control}
             defaultValue=""
             render={({ field }) => (
@@ -103,16 +111,16 @@ export const CompletarDatosPage = () => {
                 labelId="select-pregunta-seguridad-label"
                 id="select-pregunta-seguridad"
                 label="Pregunta de seguridad"
-                error={!!errors.preguntaSeguridad}
+                error={!!errors.secretQuestion}
                 autoFocus
               >
-                {preguntasSeguridad.map(
-                  ({ idPreguntaSeguridad, nombrePreguntaSeguridad }) => (
+                {secretQuestions.map(
+                  ({ idSecretQuestion, name }) => (
                     <MenuItem
-                      key={idPreguntaSeguridad}
-                      value={idPreguntaSeguridad}
+                      key={idSecretQuestion}
+                      value={idSecretQuestion}
                     >
-                      {nombrePreguntaSeguridad}
+                      {name}
                     </MenuItem>
                   )
                 )}
@@ -122,9 +130,9 @@ export const CompletarDatosPage = () => {
               required: "La pregunta de seguridad es requerida",
             }}
           />
-          {errors?.preguntaSeguridad ? (
+          {errors?.secretQuestion ? (
             <FormHelperText error>
-              {errors?.preguntaSeguridad?.message}
+              {errors?.secretQuestion?.message}
             </FormHelperText>
           ) : null}
           <FormHelperText></FormHelperText>
@@ -132,7 +140,7 @@ export const CompletarDatosPage = () => {
 
         <Controller
           defaultValue=""
-          name="rptaSecreta"
+          name="secretAnswer"
           control={control}
           render={({ field }) => (
             <TextField
@@ -140,9 +148,9 @@ export const CompletarDatosPage = () => {
               label="Ingresa tu respuesta secreta"
               margin="normal"
               fullWidth
-              autoComplete="rptaSecreta"
-              error={!!errors.rptaSecreta}
-              helperText={errors?.rptaSecreta?.message}
+              autoComplete="secretAnswer"
+              error={!!errors.secretAnswer}
+              helperText={errors?.secretAnswer?.message}
             />
           )}
           rules={{
@@ -153,7 +161,7 @@ export const CompletarDatosPage = () => {
         <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel
             htmlFor="outlined-adornment-clave"
-            error={!!errors.clave || passwordMatch}
+            error={!!errors.password || passwordMatch}
           >
             Ingresa tu nueva clave
           </InputLabel>
@@ -167,9 +175,9 @@ export const CompletarDatosPage = () => {
                 </IconButton>
               </InputAdornment>
             }
-            error={!!errors.clave || passwordMatch}
+            error={!!errors.password || passwordMatch}
             label="Ingresa tu nueva clave"
-            {...register("clave", {
+            {...register("password", {
               required: "La nueva clave es requerida",
               minLength: {
                 value: 8,
@@ -181,8 +189,8 @@ export const CompletarDatosPage = () => {
               },
             })}
           />
-          {errors?.clave ? (
-            <FormHelperText error>{errors?.clave?.message}</FormHelperText>
+          {errors?.password ? (
+            <FormHelperText error>{errors?.password?.message}</FormHelperText>
           ) : passwordMatch ? (
             <FormHelperText error>Las claves no coinciden</FormHelperText>
           ) : null}
@@ -190,13 +198,13 @@ export const CompletarDatosPage = () => {
 
         <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel
-            htmlFor="outlined-adornment-reClave"
-            error={!!errors.reClave || passwordMatch}
+            htmlFor="outlined-adornment-rePassword"
+            error={!!errors.rePassword || passwordMatch}
           >
             Confirma tu nueva clave
           </InputLabel>
           <OutlinedInput
-            id="outlined-adornment-reClave"
+            id="outlined-adornment-rePassword"
             type={showRePassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -205,9 +213,9 @@ export const CompletarDatosPage = () => {
                 </IconButton>
               </InputAdornment>
             }
-            error={!!errors.reClave || passwordMatch}
+            error={!!errors.rePassword || passwordMatch}
             label="Confirma tu nueva clave"
-            {...register("reClave", {
+            {...register("rePassword", {
               required: "La confirmación de la clave es requerida",
               minLength: {
                 value: 8,
@@ -219,8 +227,8 @@ export const CompletarDatosPage = () => {
               },
             })}
           />
-          {errors?.reClave ? (
-            <FormHelperText error>{errors?.reClave?.message}</FormHelperText>
+          {errors?.rePassword ? (
+            <FormHelperText error>{errors?.rePassword?.message}</FormHelperText>
           ) : passwordMatch ? (
             <FormHelperText error>Las claves no coinciden</FormHelperText>
           ) : null}

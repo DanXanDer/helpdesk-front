@@ -31,7 +31,7 @@ export const MiReporteDetallesPage = () => {
   const [openModalContactarTrabajador, setOpenModalContactarTrabajador] =
     useState(false);
   const { idReporteIncidente } = useParams();
-  const { usuario } = useModuloSeguridadStore();
+  const { user } = useModuloSeguridadStore();
 
   useEffect(() => {
     (async () => {
@@ -106,7 +106,7 @@ export const MiReporteDetallesPage = () => {
               open={openModalContactarTrabajador}
               handleClose={handleCloseModalContactarTrabajador}
               idTicket={dataReporteToShow.idTicket}
-              emisor={usuario.nombres + " " + usuario.apellidos}
+              emisor={user.nombres + " " + user.apellidos}
               receptor={dataReporteToShow.datosTrabajador}
               handleUpdateMsgTable={handleUpdateMsgTable}
             />

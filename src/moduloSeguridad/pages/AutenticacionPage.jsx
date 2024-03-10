@@ -33,30 +33,48 @@ export const AutenticacionPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { handleUsuarioLogin } = useModuloSeguridadStore();
+  const { handleUserLogin } = useModuloSeguridadStore();
 
   const onSubmit = async (formData) => {
     try {
-      const { data } = await api.post(
-        "/seguridad/check-primer-login",
+      const { data: userDetails } = await api.post("/home", formData);
+      if (!!userDetails.firstLogin) {
+        const { data: secretQuestions } = await api.get("/secret-questions");
+        navigate("/completar-datos", {
+          state: {
+            userDetails,
+            secretQuestions,
+          }
+        })
+      } else {
+        handleUserLogin(userDetails);
+        navigate("/bienvenida");
+      }
+    } catch ({ response }) {
+      const { message } = response.data;
+      showAlertMessage("error", "Error", message);
+    }
+    /* try {
+      const { data : userDetails } = await api.post(
+        "/home/check-first-login",
         formData
       );
       const { idUsuario, primerLogin } = data;
       if (primerLogin === 1) {
         const { data } = await api.get("/seguridad/preguntas-seguridad");
-        const { preguntasSeguridad } = data;
+        const { secretQuestions } = data;
         navigate("/completar-datos", {
-          state: { idUsuario, preguntasSeguridad },
+          state: { idUsuario, secretQuestions },
         });
       } else {
-        const { data } = await api.post("/seguridad/logear-usuario", idUsuario);
-        handleUsuarioLogin(data);
+        const { data } = await api.post("/seguridad/logear-user", idUsuario);
+        handleUserLogin(data);
         navigate("/bienvenida");
       }
     } catch (error) {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);
-    }
+    } */
   };
 
   const handleClickShowPassword = () => {
@@ -77,32 +95,32 @@ export const AutenticacionPage = () => {
       >
         <Controller
           defaultValue=""
-          name="nombreUsuario"
+          name="username"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tu nombre de usuario"
+              label="Ingresa tu nombre de user"
               margin="normal"
               fullWidth
-              autoComplete="nombreUsuario"
+              autoComplete="username"
               autoFocus
-              error={!!errors.nombreUsuario}
-              helperText={errors?.nombreUsuario?.message}
+              error={!!errors.username}
+              helperText={errors?.username?.message}
             />
           )}
           rules={{
-            required: "El usuario es requerido",
+            required: "El user es requerido",
           }}
         />
 
         <FormControl variant="outlined" fullWidth margin="normal">
-          <InputLabel htmlFor="outlined-adornment-clave" error={!!errors.clave}>
+          <InputLabel htmlFor="outlined-adornment-clave" error={!!errors.password}>
             Ingresa tu clave
           </InputLabel>
           <OutlinedInput
             defaultValue=""
-            id="outlined-adornment-clave"
+            id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -111,12 +129,12 @@ export const AutenticacionPage = () => {
                 </IconButton>
               </InputAdornment>
             }
-            error={!!errors.clave}
+            error={!!errors.password}
             label="Ingresa tu clave"
-            {...register("clave", { required: "La clave es requerida" })}
+            {...register("password", { required: "La clave es requerida" })}
           />
-          {errors?.clave && (
-            <FormHelperText error>{errors?.clave?.message}</FormHelperText>
+          {errors?.password && (
+            <FormHelperText error>{errors?.password?.message}</FormHelperText>
           )}
         </FormControl>
         <Button

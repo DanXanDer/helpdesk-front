@@ -19,7 +19,7 @@ export const ConfirmarDatosPage = () => {
   const onSubmit = async (formData) => {
     try {
       const { data } = await api.post(
-        "/seguridad/validar-datos-usuario",
+        "/seguridad/validar-datos-user",
         formData
       );
       const { idUsuario, preguntaSeguridad } = data;
@@ -50,7 +50,7 @@ export const ConfirmarDatosPage = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tu usuario"
+              label="Ingresa tu user"
               margin="normal"
               fullWidth
               autoComplete="nombreUsuario"
@@ -60,7 +60,7 @@ export const ConfirmarDatosPage = () => {
             />
           )}
           rules={{
-            required: "El usuario es requerido",
+            required: "El user es requerido",
           }}
         />
         <Controller

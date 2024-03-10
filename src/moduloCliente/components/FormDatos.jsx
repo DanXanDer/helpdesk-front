@@ -12,7 +12,7 @@ export const FormDatos = () => {
   const navigate = useNavigate();
   const { handleActiveRoute } = useUiStore();
   const {
-    usuario: { privilegios },
+    user: { privilegios },
   } = useModuloSeguridadStore();
 
   const {

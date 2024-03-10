@@ -4,11 +4,11 @@ import api from "../../services/instance";
 export const getTrabajadores = async () => {
   try {
     const { data } = await api.get("/modulo-administrador/trabajadores");
-    const trabajadoresFetch = data.trabajadores.map((usuario) => {
-      const { idUsuario } = usuario;
+    const trabajadoresFetch = data.trabajadores.map((user) => {
+      const { idUsuario } = user;
       return {
         id: idUsuario,
-        ...usuario,
+        ...user,
       };
     });
     return trabajadoresFetch;

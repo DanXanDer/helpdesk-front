@@ -17,7 +17,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
 
   const [mensajes, setMensajes] = useState([]);
 
-  const { usuario } = useModuloSeguridadStore();
+  const { user } = useModuloSeguridadStore();
 
   const handleClickOpenModalHistorialMensajes = () => {
     setOpenModalHistorialMensajes(true);
@@ -159,7 +159,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                     open={openModalComunicarseCliente}
                     handleClose={handleCloseModalComunicarseCliente}
                     idTicket={ticket.idTicket}
-                    emisor={usuario.nombres + " " + usuario.apellidos}
+                    emisor={user.nombres + " " + user.apellidos}
                     receptor={
                       datosCliente.nombres + " " + datosCliente.apellidos
                     }

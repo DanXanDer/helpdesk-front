@@ -1,29 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setUsuarioLogin,
-  setUsuarioLogout,
+  setUserLogin,
+  setUserLogout,
 } from "../store/moduloSeguridadSlice";
 
 export const useModuloSeguridadStore = () => {
-  const { usuario, status } = useSelector((state) => state.moduloSeguridadSlice);
+  const { user, status } = useSelector((state) => state.moduloSeguridadSlice);
 
   const dispatch = useDispatch();
 
-  const handleUsuarioLogin = (data) => {
-    dispatch(setUsuarioLogin(data));
+  const handleUserLogin = (data) => {
+    dispatch(setUserLogin(data));
   };
 
-  const handleUsuarioLogout = () => {
-    dispatch(setUsuarioLogout());
+  const handleUserLogout = () => {
+    dispatch(setUserLogout());
   };
 
   return {
     //Properties
-    usuario,
+    user,
     status,
 
     //Methods
-    handleUsuarioLogin,
-    handleUsuarioLogout,
+    handleUserLogin,
+    handleUserLogout,
   };
 };
