@@ -15,11 +15,11 @@ export const ModuloTrabajadorRoutes = () => {
   useEffect(() => {
     const currentPath = window.location.pathname;
     const currentRoute = currentPath.split("/")[1];
-    const { privilegios } = user;
+    const { authorities } = user;
     if (currentRoute === "incidentes-reportados") {
-      handleActiveRoute(privilegios[0].idPrivilegio);
+      handleActiveRoute(authorities[0].idPrivilege);
     } else if (currentRoute === "mis-tickets") {
-      handleActiveRoute(privilegios[1].idPrivilegio);
+      handleActiveRoute(authorities[1].idPrivilege);
     }
   }, []);
 

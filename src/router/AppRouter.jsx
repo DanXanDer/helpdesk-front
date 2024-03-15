@@ -28,9 +28,9 @@ export const AppRouter = () => {
           handleUserLogout();
           navigate("/")
         }
-      } catch ({ response }) {
-        const { message } = response.data;
-        showAlertMessage("error", "Error", message);
+      } catch (error) {
+        showAlertMessage("error", "Error", "Ha ocurrido un error inesperado");
+        
       }
     };
     getUser();
@@ -42,13 +42,13 @@ export const AppRouter = () => {
     <Routes>
       {user ? (
         <>
-          {user.type === "Trabajador" && (
+          {user.role === "Trabajador" && (
             <Route path="/*" element={<ModuloTrabajadorRoutes />} />
           )}
-          {user.type === "Superadministrador" && (
+          {user.role === "Administrador" && (
             <Route path="/*" element={<ModuloAdministradorRoutes />} />
           )}
-          {user.type === "Cliente" && (
+          {user.role === "Cliente" && (
             <Route path="/*" element={<ModuloClienteRoutes />} />
           )}
         </>

@@ -45,7 +45,7 @@ export const ConfirmarDatosPage = () => {
       >
         <Controller
           defaultValue=""
-          name="nombreUsuario"
+          name="username"
           control={control}
           render={({ field }) => (
             <TextField
@@ -53,10 +53,10 @@ export const ConfirmarDatosPage = () => {
               label="Ingresa tu user"
               margin="normal"
               fullWidth
-              autoComplete="nombreUsuario"
+              autoComplete="username"
               autoFocus
-              error={!!errors.nombreUsuario}
-              helperText={errors?.nombreUsuario?.message}
+              error={!!errors.username}
+              helperText={errors?.username?.message}
             />
           )}
           rules={{

@@ -52,7 +52,7 @@ export const MisReportesPage = () => {
     };
     const estadoFiltrado = estadosFiltrados[newValue];
     const dataReportesTable = estadoFiltrado
-      ? misReportes.filter((reporte) => reporte.estado === estadoFiltrado)
+      ? misReportes.filter((reporte) => reporte.enabled === estadoFiltrado)
       : misReportes;
     setMisReportesPorEstado(dataReportesTable);
     setValue(newValue);

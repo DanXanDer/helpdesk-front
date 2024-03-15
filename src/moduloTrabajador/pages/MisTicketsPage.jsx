@@ -25,7 +25,6 @@ export const MisTicketsPage = () => {
   useEffect(() => {
     (async () => {
       const { data } = await api.get("/modulo-trabajador/tickets");
-      console.log(data);
       const dataWithId = data.map((ticket) => ({
         ...ticket,
         datosCliente: ticket.nombresCliente + " " + ticket.apellidosCliente,
@@ -51,7 +50,7 @@ export const MisTicketsPage = () => {
     };
     const estadoFiltrado = estadosFiltrados[newValue];
     const ticketsAsignadosTable = estadoFiltrado
-      ? ticketsAsignados.filter((ticket) => ticket.estado === estadoFiltrado)
+      ? ticketsAsignados.filter((ticket) => ticket.enabled === estadoFiltrado)
       : ticketsAsignados;
     setTicketsAsignadosPorEstado(ticketsAsignadosTable);
     setValue(newValue);

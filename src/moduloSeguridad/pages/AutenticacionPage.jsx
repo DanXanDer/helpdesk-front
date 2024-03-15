@@ -38,7 +38,10 @@ export const AutenticacionPage = () => {
   const onSubmit = async (formData) => {
     try {
       const { data: userDetails } = await api.post("/home", formData);
-      if (!!userDetails.firstLogin) {
+      if (!userDetails.firstLogin) {
+        handleUserLogin(userDetails);
+        navigate("/");
+      } else {
         const { data: secretQuestions } = await api.get("/secret-questions");
         navigate("/completar-datos", {
           state: {
@@ -46,35 +49,11 @@ export const AutenticacionPage = () => {
             secretQuestions,
           }
         })
-      } else {
-        handleUserLogin(userDetails);
-        navigate("/bienvenida");
       }
     } catch ({ response }) {
       const { message } = response.data;
       showAlertMessage("error", "Error", message);
     }
-    /* try {
-      const { data : userDetails } = await api.post(
-        "/home/check-first-login",
-        formData
-      );
-      const { idUsuario, primerLogin } = data;
-      if (primerLogin === 1) {
-        const { data } = await api.get("/seguridad/preguntas-seguridad");
-        const { secretQuestions } = data;
-        navigate("/completar-datos", {
-          state: { idUsuario, secretQuestions },
-        });
-      } else {
-        const { data } = await api.post("/seguridad/logear-user", idUsuario);
-        handleUserLogin(data);
-        navigate("/bienvenida");
-      }
-    } catch (error) {
-      const { mensaje } = error.response.data.error;
-      showAlertMessage("error", "Error", mensaje);
-    } */
   };
 
   const handleClickShowPassword = () => {
@@ -100,7 +79,7 @@ export const AutenticacionPage = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tu nombre de user"
+              label="Ingresa tu Ingresar nombre de usuario"
               margin="normal"
               fullWidth
               autoComplete="username"

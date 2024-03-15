@@ -1,3 +1,3 @@
-export * from "./getTrabajadores";
+export * from "./getWorkers";
 export * from "./getClientes";
-export * from "./handleUsuarioEstadoChange";
+export * from "./handleUserStatusChange";

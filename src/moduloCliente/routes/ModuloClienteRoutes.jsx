@@ -15,13 +15,13 @@ export const ModuloClienteRoutes = () => {
   useEffect(() => {
     const currentPath = window.location.pathname;
     const currentRoute = currentPath.split("/")[1];
-    const { privilegios } = user;
+    const { authorities } = user;
     if (currentRoute === "reportar-incidente") {
-      handleActiveRoute(privilegios[0].idPrivilegio);
+      handleActiveRoute(authorities[0].idPrivilege);
     } else if (currentRoute === "mis-reportes") {
-      handleActiveRoute(privilegios[1].idPrivilegio);
+      handleActiveRoute(authorities[1].idPrivilege);
     } else if (currentRoute === "actualizar-informacion") {
-      handleActiveRoute(privilegios[2].idPrivilegio);
+      handleActiveRoute(authorities[2].idPrivilege);
     }
   }, []);
 

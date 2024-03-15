@@ -21,7 +21,7 @@ export const ReportTicketDescription = ({ data }) => {
           Fecha de reporte: {data.fechaFormateada}
         </Typography>
         <Typography component="h5" variant="span">
-          Estado: {data.estado}
+          Estado: {data.enabled}
         </Typography>
       </Grid>
     </Grid>

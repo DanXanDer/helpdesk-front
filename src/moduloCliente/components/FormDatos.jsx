@@ -12,7 +12,7 @@ export const FormDatos = () => {
   const navigate = useNavigate();
   const { handleActiveRoute } = useUiStore();
   const {
-    user: { privilegios },
+    user: { authorities },
   } = useModuloSeguridadStore();
 
   const {
@@ -52,7 +52,7 @@ export const FormDatos = () => {
       const { mensaje } = error.response.data.error;
       showAlertMessage("error", "Error", mensaje);
     }
-    handleActiveRoute(privilegios[0].idPrivilegio);
+    handleActiveRoute(authorities[0].idPrivilege);
     navigate("/reportar-incidente");
   };
 

@@ -20,7 +20,7 @@ export const ReportarIncidentePage = () => {
   const navigate = useNavigate();
   const { handleActiveRoute } = useUiStore();
   const {
-    user: { privilegios },
+    user: { authorities },
   } = useModuloSeguridadStore();
 
   const onSubmit = async (data) => {
@@ -41,7 +41,7 @@ export const ReportarIncidentePage = () => {
         },
       });
       showAlertMessage("success", "Exito", "Incidente reportado correctamente");
-      handleActiveRoute(privilegios[1].idPrivilegio);
+      handleActiveRoute(authorities[1].idPrivilege);
       navigate("/mis-reportes");
     } catch (error) {
       showAlertMessage("error", "Error", "Hubo un error inesperado. Intente nuevamente");

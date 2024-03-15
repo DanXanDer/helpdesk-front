@@ -6,7 +6,7 @@ const initialState = {
     idUsuario: null,
     nombres: null,
     tipo: null,
-    privilegios: [],
+    authorities: [],
   }, */,
 };
 

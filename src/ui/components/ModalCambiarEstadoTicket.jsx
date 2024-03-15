@@ -27,11 +27,11 @@ import { useNavigate } from "react-router-dom";
 const conformidad = [
   {
     id: 1,
-    estado: "Conforme",
+    enabled: "Conforme",
   },
   {
     id: 2,
-    estado: "No conforme",
+    enabled: "No conforme",
   },
 ];
 
@@ -40,7 +40,7 @@ export const ModalCambiarEstadoTicket = ({
   dialogContentText,
   buttonLabel,
   ticket,
-  tipoUsuario,
+  role,
   alertDescription,
 }) => {
   const [open, setOpen] = useState(false);
@@ -66,15 +66,15 @@ export const ModalCambiarEstadoTicket = ({
 
   const onSubmit = async (data) => {
     try {
-      const { mensaje, imagenes, estado } = data;
+      const { mensaje, imagenes, enabled } = data;
       const formData = new FormData();
       let estadoTicket = "Por confirmar atención";
       let estadoReporteIncidente = "Por confirmar atención";
       formData.append("idReporteIncidente", ticket.idReporteIncidente);
       formData.append("emisor", `${user.nombres} ${user.apellidos}`);
       formData.append("mensaje", mensaje);
-      if (!!estado) {
-        if (estado === "Conforme") {
+      if (!!enabled) {
+        if (enabled === "Conforme") {
           (estadoTicket = "Atendido"), (estadoReporteIncidente = "Atendido");
         } else {
           (estadoTicket = "No conforme"),
@@ -85,7 +85,7 @@ export const ModalCambiarEstadoTicket = ({
       formData.append("estadoReporteIncidente", estadoReporteIncidente);
       imagenes.forEach((imagen) => formData.append("imagenes", imagen));
       await api.post(
-        `/modulo-sistema/tickets/${ticket.idTicket}/cambiar-estado-ticket`,
+        `/modulo-sistema/tickets/${ticket.idTicket}/cambiar-enabled-ticket`,
         formData,
         {
           headers: {
@@ -96,7 +96,7 @@ export const ModalCambiarEstadoTicket = ({
       reset();
       showAlertMessage("success", "Éxito", alertDescription);
       handleClose();
-      handleActiveRoute(user.privilegios[0].idPrivilegio);
+      handleActiveRoute(user.authorities[0].idPrivilege);
       navigate("/reportar-incidente");
     } catch (error) {
       showAlertMessage("error", "Error", "Hubo un error, intente nuevamente");
@@ -105,9 +105,9 @@ export const ModalCambiarEstadoTicket = ({
 
   return (
     <Box>
-      {(ticket.estado === "En atención" ||
-        (tipoUsuario === "cliente" &&
-          ticket.estado === "Por confirmar atención")) && (
+      {(ticket.enabled === "En atención" ||
+        (role === "cliente" &&
+          ticket.enabled === "Por confirmar atención")) && (
         <Button
           variant="contained"
           onClick={handleClickOpen}
@@ -168,16 +168,16 @@ export const ModalCambiarEstadoTicket = ({
                 },
               }}
             />
-            {tipoUsuario === "cliente" && (
+            {role === "cliente" && (
               <FormControl fullWidth margin="normal">
                 <InputLabel
                   id="select-conformidad-label"
-                  error={!!errors.estado}
+                  error={!!errors.enabled}
                 >
                   Seleccione su conformidad
                 </InputLabel>
                 <Controller
-                  name="estado"
+                  name="enabled"
                   control={control}
                   defaultValue=""
                   render={({ field }) => (
@@ -186,23 +186,23 @@ export const ModalCambiarEstadoTicket = ({
                       labelId="select-conformidad-label"
                       id="select-conformidad"
                       label="Seleccione su conformidad"
-                      error={!!errors.estado}
+                      error={!!errors.enabled}
                       autoFocus
                     >
-                      {conformidad.map(({ id, estado }) => (
-                        <MenuItem key={id} value={estado}>
-                          {estado}
+                      {conformidad.map(({ id, enabled }) => (
+                        <MenuItem key={id} value={enabled}>
+                          {enabled}
                         </MenuItem>
                       ))}
                     </Select>
                   )}
                   rules={{
-                    required: "El estado es requerido",
+                    required: "El enabled es requerido",
                   }}
                 />
-                {errors?.estado ? (
+                {errors?.enabled ? (
                   <FormHelperText error>
-                    {errors?.estado?.message}
+                    {errors?.enabled?.message}
                   </FormHelperText>
                 ) : null}
                 <FormHelperText></FormHelperText>

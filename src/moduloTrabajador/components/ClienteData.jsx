@@ -136,8 +136,8 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                   }}
                 />
               </Grid>
-              {ticket.estado === "En atención" ||
-              ticket.estado === "Por confirmar atención" ? (
+              {ticket.enabled === "En atención" ||
+              ticket.enabled === "Por confirmar atención" ? (
                 <>
                   <SpeedDialComponent
                     handleClickOpenModalHistorialMensajes={

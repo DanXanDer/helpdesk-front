@@ -22,7 +22,6 @@ export const VerTicketsPage = () => {
   useEffect(() => {
     (async () => {
       const { data } = await api.get("/modulo-administrador/tickets");
-      console.log(data);
       const ticketsWithId = data.tickets.map((ticket) => ({
         cliente: ticket.nombresCliente + " " + ticket.apellidosCliente,
         trabajador: ticket.nombresTrabajador + " " + ticket.apellidosTrabajador,
@@ -49,7 +48,7 @@ export const VerTicketsPage = () => {
     };
     const estadoFiltrado = estadosFiltrados[newValue];
     const ticketsTable = estadoFiltrado
-      ? tickets.filter((ticket) => ticket.estado === estadoFiltrado)
+      ? tickets.filter((ticket) => ticket.enabled === estadoFiltrado)
       : tickets;
     setTicketsPorEstado(ticketsTable);
     setValue(newValue);

@@ -68,7 +68,7 @@ export const DetallesTicketPage = () => {
             dialogContentText="Detalle la atención realizada"
             buttonLabel="Marcar como atendido"
             ticket={detallesTicket}
-            tipoUsuario="trabajador"
+            role="trabajador"
             alertDescription="Se esperará la confirmación del cliente"
           />
         </Grid>

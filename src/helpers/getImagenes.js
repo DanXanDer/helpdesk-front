@@ -19,6 +19,5 @@ export const getImagenes = async (rutasImagenes, apiURL) => {
     }));
     return imagenesParaGallery;
   } catch (error) {
-    console.log(error.response);
   }
 };

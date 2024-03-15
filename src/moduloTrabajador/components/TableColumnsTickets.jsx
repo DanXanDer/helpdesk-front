@@ -30,7 +30,7 @@ export const TableColumnsTickets = () => {
       ...columnOptions
     },
     {
-      field: "estado",
+      field: "enabled",
       headerName: "Estado",
       ...columnOptions,
     },

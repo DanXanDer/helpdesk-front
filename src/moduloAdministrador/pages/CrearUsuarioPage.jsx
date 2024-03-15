@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
 import { TitleWithIcon } from "../../ui/components";
 
-const tipoUsuario = [
+const role = [
   {
     id: 2,
     nombreTipoUsuario: "Trabajador",
@@ -49,8 +49,8 @@ export const CrearUsuarioPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
-  const [selectTipoUsuario, setSelectTipoUsuario] = useState("");
-  const [empresas, setEmpresas] = useState([]);
+  //const [selectedRole, setSelectedRole] = useState("");
+  const [companies, setCompanies] = useState([]);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -60,33 +60,37 @@ export const CrearUsuarioPage = () => {
     setShowRePassword(!showRePassword);
   };
 
+  const selectedRole = watch("role");
+
   let passwordMatch =
     watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
 
+
+
   const handleSeleccionTipo = async ({ target }) => {
-    const { value } = target;
-    setSelectTipoUsuario(value);
-    setValue("tipo", value);
-    clearErrors("tipo");
+    console.log(selectedRole);
+    /* const { value } = target;
+    setSelectedRole(value);
+    setValue("role", value);
+    clearErrors("role");
 
     if (value === "Cliente") {
-      const { data } = await api.get("/modulo-administrador/empresas");
+      const { data } = await api.get("/modulo-administrador/companies");
       unregister("nivel");
-      setEmpresas(data.empresas);
+      setCompanies(data.companies);
     } else {
       unregister("empresa");
       unregister("sede");
       unregister("area");
       unregister("anydesk");
       unregister("teamviewer");
-      setEmpresas([]);
-    }
+      setCompanies([]);
+    } */
   };
 
   const onSubmit = async (data) => {
-    console.log(data)
     const isConfirmed = await showConfirmationMessage(
-      "Crear user",
+      "Crear usuario",
       "¿Está seguro de crear el user?",
       "warning"
     );
@@ -95,17 +99,17 @@ export const CrearUsuarioPage = () => {
     const privilegiosCliente = [1, 3, 4];
     let formData;
     let apiUrl = "/modulo-administrador";
-    const { tipo } = data;
-    if (tipo === "Trabajador") {
-      apiUrl += "/usuarios/crear-trabajador";
+    const { role } = data;
+    if (role === "Trabajador") {
+      apiUrl += "/users/crear-trabajador";
       formData = {
         ...data,
-        privilegios: privilegiosTrabajador,
+        authorities: privilegiosTrabajador,
       };
     } else {
-      apiUrl += "/usuarios/crear-cliente";
+      apiUrl += "/users/crear-cliente";
       formData = {
-        privilegios: privilegiosCliente,
+        authorities: privilegiosCliente,
         idArea: data.area,
         ...data,
       };
@@ -130,7 +134,7 @@ export const CrearUsuarioPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TitleWithIcon icon={<PersonAdd />} title="Crear user" />
+      <TitleWithIcon icon={<PersonAdd />} title="Crear usuario" />
       <Box
         component="form"
         noValidate
@@ -142,18 +146,18 @@ export const CrearUsuarioPage = () => {
           <Grid item xs={12}>
             <Controller
               defaultValue=""
-              name="nombreUsuario"
+              name="username"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Ingresa nombre de user"
+                  label="Ingresa Ingresar nombre de usuario"
                   margin="normal"
                   fullWidth
-                  autoComplete="nombreUsuario"
+                  autoComplete="username"
                   autoFocus
-                  error={!!errors.nombreUsuario}
-                  helperText={errors?.nombreUsuario?.message}
+                  error={!!errors.username}
+                  helperText={errors?.username?.message}
                 />
               )}
               rules={{
@@ -312,24 +316,24 @@ export const CrearUsuarioPage = () => {
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth margin="normal">
-              <InputLabel id="select-tipo-label" error={!!errors.tipo}>
-                Tipo de user
+              <InputLabel id="select-role-label" error={!!errors.role}>
+                Tipo de usuario
               </InputLabel>
               <Controller
-                name="tipo"
-                defaultValue={selectTipoUsuario}
+                name="role"
+                defaultValue={selectedRole}
                 control={control}
                 render={({ field }) => (
                   <Select
                     {...field}
                     onChange={handleSeleccionTipo}
-                    labelId="select-tipo-label"
-                    id="select-tipo"
-                    value={selectTipoUsuario}
-                    label="Tipo de user"
-                    error={!!errors.tipo}
+                    labelId="select-role-label"
+                    id="select-role"
+                    value={selectedRole}
+                    label="Tipo de usuario"
+                    error={!!errors.role}
                   >
-                    {tipoUsuario.map(({ id, nombreTipoUsuario }) => (
+                    {role.map(({ id, nombreTipoUsuario }) => (
                       <MenuItem key={id} value={nombreTipoUsuario}>
                         {nombreTipoUsuario}
                       </MenuItem>
@@ -337,19 +341,19 @@ export const CrearUsuarioPage = () => {
                   </Select>
                 )}
                 rules={{
-                  required: "El tipo de user es requerido",
+                  required: "El role de user es requerido",
                 }}
               />
-              {errors?.tipo ? (
-                <FormHelperText error>{errors?.tipo?.message}</FormHelperText>
+              {errors?.role ? (
+                <FormHelperText error>{errors?.role?.message}</FormHelperText>
               ) : null}
               <FormHelperText></FormHelperText>
             </FormControl>
           </Grid>
         </Grid>
-        {selectTipoUsuario === "Cliente" ? (
+        {selectedRole === "Cliente" ? (
           <FormCliente
-            empresas={empresas}
+            companies={companies}
             errors={errors}
             control={control}
             setValue={setValue}
@@ -368,7 +372,7 @@ export const CrearUsuarioPage = () => {
               }}
               startIcon={<PersonAdd />}
             >
-              Crear user
+              Crear usuario
             </Button>
           </Grid>
         </Grid>

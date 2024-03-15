@@ -7,12 +7,12 @@ export const SideBarList = () => {
 
   return (
     <List>
-      {user.privilegios.map(({ idPrivilegio, ...privilegio }) => {
+      {user.authorities.map(({ idPrivilege, ...authority }) => {
         return (
           <SideBarListItem
-            key={idPrivilegio}
-            idPrivilegio={idPrivilegio}
-            {...privilegio}
+            key={idPrivilege}
+            idPrivilege={idPrivilege}
+            {...authority}
           />
         );
       })}

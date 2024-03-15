@@ -1,7 +1,7 @@
 import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
-import { getClientes, getTrabajadores } from "../helpers";
-import { TableColumnsClientes, TableColumnsTrabajadores } from "../components";
+import { getClientes, getWorkers } from "../helpers";
+import { TableColumnsClientes, ColumnsTableWorkers } from "../components";
 import { ManageAccounts } from "@mui/icons-material";
 import { DataGridTable, TitleWithIcon, TableTabs } from "../../ui/components";
 const tabsLabels = [
@@ -10,14 +10,14 @@ const tabsLabels = [
 ]
 
 export const GestionarUsuariosPage = () => {
-  const [usuarios, setUsuarios] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loadingRows, setLoadingRows] = useState(true);
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const trabajadores = await getTrabajadores();
-      setUsuarios(trabajadores);
+      const workers = await getWorkers();
+      setUsers(workers);
       setTimeout(() => {
         setLoadingRows(false);
       }, 1000);
@@ -28,13 +28,13 @@ export const GestionarUsuariosPage = () => {
     setLoadingRows(true);
     if (newValue === 0) {
       (async () => {
-        const trabajadores = await getTrabajadores();
-        setUsuarios(trabajadores);
+        const workers = await getWorkers();
+        setUsers(workers);
       })();
     } else if (newValue === 1) {
       (async () => {
         const clientes = await getClientes();
-        setUsuarios(clientes);
+        setUsers(clientes);
       })();
     }
     setValue(newValue);
@@ -43,8 +43,8 @@ export const GestionarUsuariosPage = () => {
     }, 1000);
   }
 
-  const handleUpdateUsuarios = (usuarios) => {
-    setUsuarios(usuarios);
+  const handleUpdateUsers = (users) => {
+    setUsers(users);
   };
 
   return (
@@ -57,9 +57,9 @@ export const GestionarUsuariosPage = () => {
       />
       <DataGridTable
         height="90%"
-        columnsTable={value === 0 ? TableColumnsTrabajadores : TableColumnsClientes}
-        paramValue={handleUpdateUsuarios}
-        rows={usuarios}
+        columnsTable={value === 0 ? ColumnsTableWorkers : TableColumnsClientes}
+        paramValue={handleUpdateUsers}
+        rows={users}
         loadingRows={loadingRows}
       />
     </HelpDeskLayout>

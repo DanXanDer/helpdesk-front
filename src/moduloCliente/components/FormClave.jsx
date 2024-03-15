@@ -34,7 +34,7 @@ export const FormClave = () => {
   const navigate = useNavigate();
   const { handleActiveRoute } = useUiStore();
   const {
-    user: { privilegios },
+    user: { authorities },
   } = useModuloSeguridadStore();
 
   const handleClickShowPassword = () => {
@@ -58,7 +58,7 @@ export const FormClave = () => {
     try {
       await api.post("/modulo-cliente/informacion/actualizar-clave", formData);
       showAlertMessage("success", "Éxito", "Clave actualizada correctamente");
-      handleActiveRoute(privilegios[0].idPrivilegio);
+      handleActiveRoute(authorities[0].idPrivilege);
       navigate("/reportar-incidente");
     } catch (error) {
       showAlertMessage("error", "Error", "Hubo un error, intente nuevamente");

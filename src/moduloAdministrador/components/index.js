@@ -1,4 +1,4 @@
-export * from "./TableColumnsTrabajadores";
+export * from "./ColumnsTableWorkers";
 export * from "./FormCliente";
 export * from "./SedesArray";
 export * from "./AreasArray";

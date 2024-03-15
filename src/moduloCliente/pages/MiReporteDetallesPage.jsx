@@ -91,8 +91,8 @@ export const MiReporteDetallesPage = () => {
             />
           </Grid>
         </Grid>
-        {(dataReporteToShow.estado === "En atención" ||
-          dataReporteToShow.estado === "Por confirmar atención") && (
+        {(dataReporteToShow.enabled === "En atención" ||
+          dataReporteToShow.enabled === "Por confirmar atención") && (
           <Grid item xs={12}>
             <Button
               variant="contained"
@@ -112,13 +112,13 @@ export const MiReporteDetallesPage = () => {
             />
           </Grid>
         )}
-        {dataReporteToShow.estado === "Por confirmar atención" && (
+        {dataReporteToShow.enabled === "Por confirmar atención" && (
           <ModalCambiarEstadoTicket
             dialogTitle="Confirmar atención"
             dialogContentText="¿Qué le pareció la atención recibida?"
             buttonLabel="Confirmar atención"
             ticket={dataReporteToShow}
-            tipoUsuario="cliente"
+            role="cliente"
             alertDescription="Se ha enviado su conformidad"
           />
         )}

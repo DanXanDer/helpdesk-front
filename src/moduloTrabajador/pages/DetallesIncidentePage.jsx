@@ -22,7 +22,7 @@ export const DetallesIncidentePage = () => {
   const navigate = useNavigate();
   const { handleActiveRoute } = useUiStore();
   const {
-    user: { privilegios },
+    user: { authorities },
   } = useModuloSeguridadStore();
 
   const handleCrearTicket = async () => {
@@ -35,10 +35,10 @@ export const DetallesIncidentePage = () => {
     try {
       await api.post(`modulo-trabajador/crear-ticket`, {
         idReporteIncidente,
-        estado: "En atención",
+        enabled: "En atención",
       });
       showAlertMessage("success", "Exito", "Ticket creado correctamente");
-      handleActiveRoute(privilegios[1].idPrivilegio);
+      handleActiveRoute(authorities[1].idPrivilege);
       navigate("/mis-tickets");
     } catch (error) {
       const { mensaje } = error.response.data.error;

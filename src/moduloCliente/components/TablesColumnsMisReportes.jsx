@@ -37,7 +37,7 @@ export const TablesColumnsMisReportes = () => {
       ...columnOptions,
     },
     {
-      field: "estado",
+      field: "enabled",
       headerName: "Estado",
       ...columnOptions,
     },
@@ -50,7 +50,7 @@ export const TablesColumnsMisReportes = () => {
           navigate(`${row.id}`);
         };
 
-        const isEnEspera = row.estado === "En espera";
+        const isEnEspera = row.enabled === "En espera";
         const isDisabled = isEnEspera;
 
         return (

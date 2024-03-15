@@ -1,6 +1,6 @@
 import { Block, CheckCircle } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
-import { handleUsuarioEstadoChange } from "../helpers";
+import { handleUserStatusChange } from "../helpers";
 
 const columnOptions = {
     headerAlign: "left",
@@ -9,10 +9,10 @@ const columnOptions = {
 };
 
 
-export const TableColumnsClientes = (handleUpdateUsuarios) => {
+export const TableColumnsClientes = (handleUpdateUsers) => {
     const columns = [
         {
-            field: "nombreUsuario",
+            field: "username",
             headerName: "Usuario",
             ...columnOptions
         },
@@ -50,7 +50,7 @@ export const TableColumnsClientes = (handleUpdateUsuarios) => {
             ...columnOptions
         },
         {
-            field: "estado",
+            field: "enabled",
             headerName: "Estado",
             ...columnOptions,
             renderCell: ({ formattedValue }) => {
@@ -64,19 +64,19 @@ export const TableColumnsClientes = (handleUpdateUsuarios) => {
             headerName: "Acción",
             ...columnOptions,
             renderCell: ({ row }) => {
-                const { estado, nombreUsuario } = row;
+                const { enabled, username } = row;
                 const text =
-                    estado === 1 ? "Deshabilitar user" : "Habilitar user";
-                const subText = estado === 1 ? "deshabilitar" : "habilitar";
-                const color = estado === 1 ? "error" : "success";
+                    enabled === 1 ? "Deshabilitar user" : "Habilitar user";
+                const subText = enabled === 1 ? "deshabilitar" : "habilitar";
+                const color = enabled === 1 ? "error" : "success";
 
                 return (
                     <IconButton
                         color={color}
-                        onClick={() => handleUsuarioEstadoChange("cliente", text, subText, nombreUsuario, row, handleUpdateUsuarios)}
+                        onClick={() => handleUserStatusChange("cliente", text, subText, username, row, handleUpdateUsers)}
                         sx={{ mr: 1 }}
                     >
-                        {estado === 1 ? <Block /> : <CheckCircle />}
+                        {enabled === 1 ? <Block /> : <CheckCircle />}
                     </IconButton>
                 );
             },

@@ -57,7 +57,7 @@ export const CompletarDatosPage = () => {
   const onSubmit = async (formData) => {
     try {
       formData.firstLogin = false;
-      await api.put(`/users/${userDetails.idUser}/complete-registration`, formData);
+      await api.patch(`/users/${userDetails.id}/update`, formData);
       handleUserLogin(userDetails);
     } catch ({ response }) {
       const { message } = response.data;

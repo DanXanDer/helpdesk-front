@@ -8,21 +8,21 @@ import { CustomIcon } from "./CustomIcon";
 import { useNavigate } from "react-router-dom";
 import { useUiStore } from "../../hooks";
 
-export const SideBarListItem = ({ idPrivilegio, label, icon, path }) => {
+export const SideBarListItem = ({ idPrivilege, authority, icon, url }) => {
   const navigate = useNavigate();
   const { handleDrawerToggle, handleActiveRoute, activeRoute } = useUiStore();
 
   const handleEnrutamientoPrivilegio = () => {
-    handleActiveRoute(idPrivilegio);
-    navigate(`/${path}`);
+    handleActiveRoute(idPrivilege);
+    navigate(`/${url}`);
     handleDrawerToggle();
   };
 
   return (
-    <ListItem key={idPrivilegio} disablePadding>
+    <ListItem key={idPrivilege} disablePadding>
       <ListItemButton
         onClick={() => handleEnrutamientoPrivilegio()}
-        selected={activeRoute === idPrivilegio}
+        selected={activeRoute === idPrivilege}
         sx={{
           "&.Mui-selected": {
             backgroundColor: "#A3A3A3",
@@ -35,7 +35,7 @@ export const SideBarListItem = ({ idPrivilegio, label, icon, path }) => {
         <ListItemIcon>
           <CustomIcon icon={icon} />
         </ListItemIcon>
-        <ListItemText primary={label} />
+        <ListItemText primary={authority} />
       </ListItemButton>
     </ListItem>
   );

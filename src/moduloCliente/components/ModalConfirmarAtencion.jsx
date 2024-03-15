@@ -25,11 +25,11 @@ import api from "../../services/instance";
 const conformidad = [
   {
     id: 1,
-    estado: "Conforme",
+    enabled: "Conforme",
   },
   {
     id: 2,
-    estado: "No conforme",
+    enabled: "No conforme",
   },
 ];
 
@@ -54,9 +54,9 @@ export const ModalConfirmarAtencion = ({ idTicket, idReporteIncidente }) => {
   };
 
   const onSubmit = async (data) => {
-    const { estado, mensaje } = data;
+    const { enabled, mensaje } = data;
     let formData;
-    if (estado === "Conforme") {
+    if (enabled === "Conforme") {
       formData = {
         idTicket,
         idReporteIncidente,
@@ -73,7 +73,7 @@ export const ModalConfirmarAtencion = ({ idTicket, idReporteIncidente }) => {
         mensaje,
       };
     }
-    await api.post("/modulo-cliente/cambiar-estado-ticket", formData);
+    await api.post("/modulo-cliente/cambiar-enabled-ticket", formData);
     showAlertMessage("success", "Éxito", "Se ha enviado su conformidad");
     reset();
     handleClose();
@@ -143,11 +143,11 @@ export const ModalConfirmarAtencion = ({ idTicket, idReporteIncidente }) => {
               }}
             />
             <FormControl fullWidth margin="normal">
-              <InputLabel id="select-conformidad-label" error={!!errors.estado}>
+              <InputLabel id="select-conformidad-label" error={!!errors.enabled}>
                 Seleccione su conformidad
               </InputLabel>
               <Controller
-                name="estado"
+                name="enabled"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
@@ -156,22 +156,22 @@ export const ModalConfirmarAtencion = ({ idTicket, idReporteIncidente }) => {
                     labelId="select-conformidad-label"
                     id="select-conformidad"
                     label="Seleccione su conformidad"
-                    error={!!errors.estado}
+                    error={!!errors.enabled}
                     autoFocus
                   >
-                    {conformidad.map(({ id, estado }) => (
-                      <MenuItem key={id} value={estado}>
-                        {estado}
+                    {conformidad.map(({ id, enabled }) => (
+                      <MenuItem key={id} value={enabled}>
+                        {enabled}
                       </MenuItem>
                     ))}
                   </Select>
                 )}
                 rules={{
-                  required: "El estado es requerido",
+                  required: "El enabled es requerido",
                 }}
               />
-              {errors?.estado ? (
-                <FormHelperText error>{errors?.estado?.message}</FormHelperText>
+              {errors?.enabled ? (
+                <FormHelperText error>{errors?.enabled?.message}</FormHelperText>
               ) : null}
               <FormHelperText></FormHelperText>
             </FormControl>

@@ -35,7 +35,7 @@ export const AgregarEmpresaPage = () => {
     defaultValues,
   });
   const { handleActiveRoute } = useUiStore();
-  const { user: { privilegios } } = useModuloSeguridadStore();
+  const { user: { authorities } } = useModuloSeguridadStore();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -49,7 +49,7 @@ export const AgregarEmpresaPage = () => {
       await api.post("/modulo-administrador/agregar-empresa", data);
       showAlertMessage("success", "Exito", "Empresa agregada exitosamente");
       navigate("/gestionar-usuarios");
-      handleActiveRoute(privilegios[0].idPrivilegio);
+      handleActiveRoute(authorities[0].idPrivilege);
     } catch (error) {
       const { mensaje: errorMsg } = error.response.data.error;
       showAlertMessage("error", "Error", errorMsg);
@@ -96,7 +96,7 @@ export const AgregarEmpresaPage = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <SedesArray {...{ control, register, defaultValues, getValues, setValue, errors }} />
+            <SedesArray {...{ control, errors }} />
           </Grid>
         </Grid>
         <Grid item xs={12} textAlign="center">

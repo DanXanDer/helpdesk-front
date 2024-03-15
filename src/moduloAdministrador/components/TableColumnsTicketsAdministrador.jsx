@@ -29,7 +29,7 @@ export const TableColumnsTicketsAdministrador = () => {
       ...columnOptions,
     },
     {
-      field: "estado",
+      field: "enabled",
       headerName: "Estado",
       flex: 1,
       ...columnOptions,
