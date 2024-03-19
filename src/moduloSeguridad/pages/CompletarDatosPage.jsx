@@ -57,29 +57,15 @@ export const CompletarDatosPage = () => {
   const onSubmit = async (formData) => {
     try {
       formData.firstLogin = false;
+      formData.secretQuestion = {
+        idSecretQuestion: formData.secretQuestion,
+      }
       await api.patch(`/users/${userDetails.id}/update`, formData);
       handleUserLogin(userDetails);
     } catch ({ response }) {
       const { message } = response.data;
       showAlertMessage("error", "Error", message);
     }
-    /* const formDataWithIdUsuario = {
-      ...formData,
-      idUser: state.userDetails.idUser,
-    };
-
-    try {
-      await api.post("/seguridad/completar-datos", formDataWithIdUsuario);
-      const { data } = await api.post(
-        "/seguridad/logear-user",
-        state.idUsuario
-      );
-      handleUserLogin(data);
-      navigate("/");
-    } catch (error) {
-      const { mensaje } = error.response.data.error;
-      showAlertMessage("error", "Error", mensaje);
-    } */
   };
 
   return (
@@ -160,13 +146,13 @@ export const CompletarDatosPage = () => {
 
         <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel
-            htmlFor="outlined-adornment-clave"
+            htmlFor="outlined-adornment-password"
             error={!!errors.password || passwordMatch}
           >
-            Ingresa tu nueva clave
+            Ingresa tu nueva password
           </InputLabel>
           <OutlinedInput
-            id="outlined-adornment-clave"
+            id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -176,9 +162,9 @@ export const CompletarDatosPage = () => {
               </InputAdornment>
             }
             error={!!errors.password || passwordMatch}
-            label="Ingresa tu nueva clave"
+            label="Ingresa tu nueva password"
             {...register("password", {
-              required: "La nueva clave es requerida",
+              required: "La nueva password es requerida",
               minLength: {
                 value: 8,
                 message: "La clave debe tener al menos 8 caracteres",
@@ -201,7 +187,7 @@ export const CompletarDatosPage = () => {
             htmlFor="outlined-adornment-rePassword"
             error={!!errors.rePassword || passwordMatch}
           >
-            Confirma tu nueva clave
+            Confirma tu nueva password
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-rePassword"
@@ -214,7 +200,7 @@ export const CompletarDatosPage = () => {
               </InputAdornment>
             }
             error={!!errors.rePassword || passwordMatch}
-            label="Confirma tu nueva clave"
+            label="Confirma tu nueva password"
             {...register("rePassword", {
               required: "La confirmación de la clave es requerida",
               minLength: {

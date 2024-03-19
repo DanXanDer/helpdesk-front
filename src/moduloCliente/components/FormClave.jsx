@@ -46,7 +46,7 @@ export const FormClave = () => {
   };
 
   let passwordMatch =
-    watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
+    watch("password") !== watch("rePassword") && getValues("rePassword") ? true : false;
 
   const onSubmit = async (formData) => {
     const isConfirmed = await showConfirmationMessage(
@@ -56,7 +56,7 @@ export const FormClave = () => {
     );
     if (!isConfirmed) return;
     try {
-      await api.post("/modulo-cliente/informacion/actualizar-clave", formData);
+      await api.post("/modulo-cliente/informacion/actualizar-password", formData);
       showAlertMessage("success", "Éxito", "Clave actualizada correctamente");
       handleActiveRoute(authorities[0].idPrivilege);
       navigate("/reportar-incidente");
@@ -75,18 +75,18 @@ export const FormClave = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Grid container>
-          <TitleWithIcon icon={<Password />} title="Cambiar clave" />
+          <TitleWithIcon icon={<Password />} title="Cambiar password" />
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <FormControl variant="outlined" fullWidth margin="normal">
                 <InputLabel
-                  htmlFor="outlined-adornment-clave"
-                  error={!!errors.clave || passwordMatch}
+                  htmlFor="outlined-adornment-password"
+                  error={!!errors.password || passwordMatch}
                 >
-                  Ingresa tu nueva clave
+                  Ingresa tu nueva password
                 </InputLabel>
                 <OutlinedInput
-                  id="outlined-adornment-clave"
+                  id="outlined-adornment-password"
                   type={showPassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position="end">
@@ -95,10 +95,10 @@ export const FormClave = () => {
                       </IconButton>
                     </InputAdornment>
                   }
-                  error={!!errors.clave || passwordMatch}
-                  label="Ingresa tu nueva clave"
-                  {...register("clave", {
-                    required: "La nueva clave es requerida",
+                  error={!!errors.password || passwordMatch}
+                  label="Ingresa tu nueva password"
+                  {...register("password", {
+                    required: "La nueva password es requerida",
                     minLength: {
                       value: 8,
                       message: "La clave debe tener al menos 8 caracteres",
@@ -109,9 +109,9 @@ export const FormClave = () => {
                     },
                   })}
                 />
-                {errors?.clave ? (
+                {errors?.password ? (
                   <FormHelperText error>
-                    {errors?.clave?.message}
+                    {errors?.password?.message}
                   </FormHelperText>
                 ) : passwordMatch ? (
                   <FormHelperText error>Las claves no coinciden</FormHelperText>
@@ -121,13 +121,13 @@ export const FormClave = () => {
             <Grid item xs={12}>
               <FormControl variant="outlined" fullWidth margin="normal">
                 <InputLabel
-                  htmlFor="outlined-adornment-reClave"
-                  error={!!errors.reClave || passwordMatch}
+                  htmlFor="outlined-adornment-rePassword"
+                  error={!!errors.rePassword || passwordMatch}
                 >
-                  Confirma tu nueva clave
+                  Confirma tu nueva password
                 </InputLabel>
                 <OutlinedInput
-                  id="outlined-adornment-reClave"
+                  id="outlined-adornment-rePassword"
                   type={showRePassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position="end">
@@ -139,9 +139,9 @@ export const FormClave = () => {
                       </IconButton>
                     </InputAdornment>
                   }
-                  error={!!errors.reClave || passwordMatch}
-                  label="Confirma tu nueva clave"
-                  {...register("reClave", {
+                  error={!!errors.rePassword || passwordMatch}
+                  label="Confirma tu nueva password"
+                  {...register("rePassword", {
                     required: "La confirmación de la clave es requerida",
                     minLength: {
                       value: 8,
@@ -153,9 +153,9 @@ export const FormClave = () => {
                     },
                   })}
                 />
-                {errors?.reClave ? (
+                {errors?.rePassword ? (
                   <FormHelperText error>
-                    {errors?.reClave?.message}
+                    {errors?.rePassword?.message}
                   </FormHelperText>
                 ) : passwordMatch ? (
                   <FormHelperText error>Las claves no coinciden</FormHelperText>

@@ -12,46 +12,51 @@ import { Controller } from "react-hook-form";
 import api from "../../services/instance";
 
 export const FormCliente = ({
-  empresas,
+  companies,
   control,
   errors,
   setValue,
   clearErrors,
 }) => {
-  const [selectEmpresa, setSelectEmpresa] = useState("");
-  const [sedes, setSedes] = useState([]);
-  const [selectSede, setSelectSede] = useState("");
+  const [selectedCompany, setSelectedCompany] = useState("");
+  const [branches, setBranches] = useState([]);
+  const [selectedBranch, setSelectedBranch] = useState("");
   const [areas, setAreas] = useState([]);
-  const [selectArea, setSelectArea] = useState("");
+  const [selectedArea, setSelectedArea] = useState("");
 
-  const handleSeleccionEmpresa = async ({ target }) => {
-    const { value } = target;
-    setSelectEmpresa(value);
-    setValue("empresa", value);
-    clearErrors("empresa");
-    const { data } = await api.get(`/modulo-administrador/sedes?idEmpresa=${value}`);
-    setSedes(data.sedes);
-    setSelectSede("");
-    setSelectArea("");
-    setValue("sede", "");
+  const cleanBranchField = () => {
+    setSelectedBranch("");
+    setValue("branch", "");
+  }
+
+  const cleanAreaField = () => {
+    setSelectedArea("");
     setValue("area", "");
-    setAreas([]);
+  }
+
+  const handleCompanyChange = async ({ target }) => {
+    const { value } = target;
+    setSelectedCompany(value);
+    setValue("company", value);
+    clearErrors("company");
+    const { data: branches } = await api.get(`/company/${value}/branches`);
+    setBranches(branches);
+    cleanBranchField();
   };
 
-  const handleSeleccionSede = async ({ target }) => {
+  const handleBranchChange = async ({ target }) => {
     const { value } = target;
-    setSelectSede(value);
-    setValue("sede", value);
-    clearErrors("sede");
-    const { data } = await api.get(`/modulo-administrador/areas?idSede=${value}`);
-    setAreas(data.areas);
-    setSelectArea("");
-    setValue("area", "");
+    setSelectedBranch(value);
+    setValue("branch", value);
+    clearErrors("branch");
+    const { data: areas } = await api.get(`/branch/${value}/areas`);
+    setAreas(areas);
+    cleanAreaField();
   };
 
-  const handleSeleccionArea = ({ target }) => {
+  const handleAreaChange = ({ target }) => {
     const { value } = target;
-    setSelectArea(value);
+    setSelectedArea(value);
     setValue("area", value);
     clearErrors("area");
   };
@@ -108,26 +113,26 @@ export const FormCliente = ({
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth margin="normal">
-          <InputLabel id="select-empresa-label" error={!!errors.empresa}>
+          <InputLabel id="select-company-label" error={!!errors.company}>
             Selecciona la empresa
           </InputLabel>
           <Controller
-            name="empresa"
-            defaultValue={selectEmpresa}
+            name="company"
+            defaultValue={selectedCompany}
             control={control}
             render={({ field }) => (
               <Select
                 {...field}
-                onChange={handleSeleccionEmpresa}
-                labelId="select-empresa-label"
-                id="select-empresa"
-                value={selectEmpresa}
+                onChange={handleCompanyChange}
+                labelId="select-company-label"
+                id="select-company"
+                value={selectedCompany}
                 label="Selecciona la empresa"
-                error={!!errors.empresa}
+                error={!!errors.company}
               >
-                {empresas.map(({ idEmpresa, nombreEmpresa }) => (
-                  <MenuItem key={idEmpresa} value={idEmpresa}>
-                    {nombreEmpresa}
+                {companies.map(({ idCompany, name }) => (
+                  <MenuItem key={idCompany} value={idCompany}>
+                    {name}
                   </MenuItem>
                 ))}
               </Select>
@@ -136,8 +141,8 @@ export const FormCliente = ({
               required: "La empresa es requerida",
             }}
           />
-          {errors?.empresa ? (
-            <FormHelperText error>{errors?.empresa?.message}</FormHelperText>
+          {errors?.company ? (
+            <FormHelperText error>{errors?.company?.message}</FormHelperText>
           ) : null}
           <FormHelperText></FormHelperText>
         </FormControl>
@@ -145,30 +150,30 @@ export const FormCliente = ({
       <Grid
         item
         xs={12}
-        md={selectSede !== "" ? 5.8 : 12}
-        display={selectEmpresa !== "" ? "flex" : "none"}
+        md={selectedBranch !== "" ? 5.8 : 12}
+        display={selectedCompany !== "" ? "flex" : "none"}
       >
         <FormControl fullWidth margin="normal">
-          <InputLabel id="select-sede-label" error={!!errors.sede}>
+          <InputLabel id="select-branch-label" error={!!errors.branch}>
             Selecciona la sede
           </InputLabel>
           <Controller
-            name="sede"
-            defaultValue={selectSede}
+            name="branch"
+            defaultValue={selectedBranch}
             control={control}
             render={({ field }) => (
               <Select
                 {...field}
-                onChange={handleSeleccionSede}
-                labelId="select-sede-label"
-                id="select-sede"
-                value={selectSede}
+                onChange={handleBranchChange}
+                labelId="select-branch-label"
+                id="select-branch"
+                value={selectedBranch}
                 label="Selecciona la sede"
-                error={!!errors.sede}
+                error={!!errors.branch}
               >
-                {sedes.map(({ idSede, nombreSede }) => (
-                  <MenuItem key={idSede} value={idSede}>
-                    {nombreSede}
+                {branches.map(({ idBranch, name }) => (
+                  <MenuItem key={idBranch} value={idBranch}>
+                    {name}
                   </MenuItem>
                 ))}
               </Select>
@@ -177,34 +182,34 @@ export const FormCliente = ({
               required: "La sede es requerida",
             }}
           />
-          {errors?.sede ? (
-            <FormHelperText error>{errors?.sede?.message}</FormHelperText>
+          {errors?.branch ? (
+            <FormHelperText error>{errors?.branch?.message}</FormHelperText>
           ) : null}
           <FormHelperText></FormHelperText>
         </FormControl>
       </Grid>
-      <Grid item xs={12} md={5.8} display={selectSede !== "" ? "flex" : "none"}>
+      <Grid item xs={12} md={5.8} display={selectedBranch !== "" ? "flex" : "none"}>
         <FormControl fullWidth margin="normal">
           <InputLabel id="select-area-label" error={!!errors.area}>
             Selecciona el area
           </InputLabel>
           <Controller
             name="area"
-            defaultValue={selectArea}
+            defaultValue={selectedArea}
             control={control}
             render={({ field }) => (
               <Select
                 {...field}
-                onChange={handleSeleccionArea}
+                onChange={handleAreaChange}
                 labelId="select-area-label"
                 id="select-area"
-                value={selectArea}
+                value={selectedArea}
                 label="Selecciona el area"
                 error={!!errors.area}
               >
-                {areas.map(({ idArea, nombreArea }) => (
+                {areas.map(({ idArea, name }) => (
                   <MenuItem key={idArea} value={idArea}>
-                    {nombreArea}
+                    {name}
                   </MenuItem>
                 ))}
               </Select>

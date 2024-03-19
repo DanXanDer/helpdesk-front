@@ -27,10 +27,10 @@ export const FormDatos = () => {
     (async () => {
       try {
         const { data } = await api.get("/modulo-cliente/informacion/datos");
-        const { anydesk, teamviewer, correo } = data;
+        const { anydesk, teamviewer, email } = data;
         setValue("anydesk", anydesk);
         setValue("teamviewer", teamviewer);
-        setValue("correo", correo);
+        setValue("email", email);
       } catch (error) {
         const { mensaje } = error.response.data.error;
         showAlertMessage("error", "Error", mensaje);
@@ -120,24 +120,24 @@ export const FormDatos = () => {
             </Grid>
             <Grid item xs={12}>
               <Controller
-                defaultValue={getValues("correo") || ""}
-                name="correo"
+                defaultValue={getValues("email") || ""}
+                name="email"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    label="Ingresa el correo"
+                    label="Ingresa correo electrónico"
                     margin="normal"
                     fullWidth
-                    error={!!errors.correo}
-                    helperText={errors?.correo?.message}
+                    error={!!errors.email}
+                    helperText={errors?.email?.message}
                   />
                 )}
                 rules={{
-                  required: "El correo es requerido",
+                  required: "El correo electrónico es requerido",
                   pattern: {
                     value: /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/,
-                    message: "El correo no es válido",
+                    message: "El correo electrónico no es válido",
                   },
                 }}
               />

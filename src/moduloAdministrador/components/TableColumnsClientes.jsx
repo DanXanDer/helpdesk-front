@@ -23,29 +23,29 @@ export const TableColumnsClientes = (handleUpdateUsers) => {
             ...columnOptions
         },
         {
-            field: "apellidos",
+            field: "lastname",
             headerName: "Apellidos",
             flex: 1.1,
             ...columnOptions
         },
         {
-            field: "correo",
+            field: "email",
             headerName: "Correo",
             flex: 1.1,
             ...columnOptions
         },
         {
-            field: "nombreEmpresa",
+            field: "name",
             headerName: "Empresa",
             ...columnOptions
         },
         {
-            field: "nombreSede",
+            field: "name",
             headerName: "Sede",
             ...columnOptions
         },
         {
-            field: "nombreArea",
+            field: "name",
             headerName: "Area",
             ...columnOptions
         },

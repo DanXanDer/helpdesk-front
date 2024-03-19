@@ -48,7 +48,7 @@ export const ReestablecerClavePage = () => {
   };
 
   let passwordMatch =
-    watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
+    watch("password") !== watch("rePassword") && getValues("rePassword") ? true : false;
 
   const onSubmit = async (formData) => {
     const formDataWithIdUsuario = {
@@ -56,7 +56,7 @@ export const ReestablecerClavePage = () => {
       idUsuario,
     };
     try {
-      await api.post("/seguridad/reestablecer-clave", formDataWithIdUsuario);
+      await api.post("/seguridad/reestablecer-password", formDataWithIdUsuario);
       showAlertMessage("success", "Éxito", "Clave reestablecida correctamente");
       navigate("/autenticacion");
     } catch (error) {
@@ -67,8 +67,8 @@ export const ReestablecerClavePage = () => {
 
   return (
     <ModuloSeguridadLayout
-      pageTitle="Reestablecer clave"
-      titleDesc="Ingresa tu nueva clave"
+      pageTitle="Reestablecer password"
+      titleDesc="Ingresa tu nueva password"
     >
       <Box
         component="form"
@@ -78,13 +78,13 @@ export const ReestablecerClavePage = () => {
       >
         <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel
-            htmlFor="outlined-adornment-clave"
-            error={!!errors.clave || passwordMatch}
+            htmlFor="outlined-adornment-password"
+            error={!!errors.password || passwordMatch}
           >
-            Ingresa tu nueva clave
+            Ingresa tu nueva password
           </InputLabel>
           <OutlinedInput
-            id="outlined-adornment-clave"
+            id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -93,10 +93,10 @@ export const ReestablecerClavePage = () => {
                 </IconButton>
               </InputAdornment>
             }
-            error={!!errors.clave || passwordMatch}
-            label="Ingresa tu nueva clave"
-            {...register("clave", {
-              required: "La nueva clave es requerida",
+            error={!!errors.password || passwordMatch}
+            label="Ingresa tu nueva password"
+            {...register("password", {
+              required: "La nueva password es requerida",
               minLength: {
                 value: 8,
                 message: "La clave debe tener al menos 8 caracteres",
@@ -107,21 +107,21 @@ export const ReestablecerClavePage = () => {
               },
             })}
           />
-          {errors?.clave ? (
-            <FormHelperText error>{errors?.clave?.message}</FormHelperText>
+          {errors?.password ? (
+            <FormHelperText error>{errors?.password?.message}</FormHelperText>
           ) : passwordMatch ? (
             <FormHelperText error>Las claves no coinciden</FormHelperText>
           ) : null}
         </FormControl>
         <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel
-            htmlFor="outlined-adornment-reClave"
-            error={!!errors.reClave || passwordMatch}
+            htmlFor="outlined-adornment-rePassword"
+            error={!!errors.rePassword || passwordMatch}
           >
-            Confirma tu nueva clave
+            Confirma tu nueva password
           </InputLabel>
           <OutlinedInput
-            id="outlined-adornment-reClave"
+            id="outlined-adornment-rePassword"
             type={showRePassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -130,9 +130,9 @@ export const ReestablecerClavePage = () => {
                 </IconButton>
               </InputAdornment>
             }
-            error={!!errors.reClave || passwordMatch}
-            label="Confirma tu nueva clave"
-            {...register("reClave", {
+            error={!!errors.rePassword || passwordMatch}
+            label="Confirma tu nueva password"
+            {...register("rePassword", {
               required: "La confirmación de la clave es requerida",
               minLength: {
                 value: 8,
@@ -144,8 +144,8 @@ export const ReestablecerClavePage = () => {
               },
             })}
           />
-          {errors?.reClave ? (
-            <FormHelperText error>{errors?.reClave?.message}</FormHelperText>
+          {errors?.rePassword ? (
+            <FormHelperText error>{errors?.rePassword?.message}</FormHelperText>
           ) : passwordMatch ? (
             <FormHelperText error>Las claves no coinciden</FormHelperText>
           ) : null}

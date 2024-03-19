@@ -22,7 +22,7 @@ export const ModuloAdministradorRoutes = () => {
       handleActiveRoute(authorities[1].idPrivilege);
     } else if (currentRoute === "ver-tickets") {
       handleActiveRoute(authorities[2].idPrivilege);
-    } else if (currentRoute === "agregar-empresa") {
+    } else if (currentRoute === "agregar-company") {
       handleActiveRoute(authorities[3].idPrivilege);
     }
   }, []);
@@ -33,7 +33,7 @@ export const ModuloAdministradorRoutes = () => {
       <Route path="/gestionar-usuarios" element={<GestionarUsuariosPage />} />
       <Route path="/crear-usuario" element={<CrearUsuarioPage />} />
       <Route path="/ver-tickets" element={<VerTicketsPage />} />
-      <Route path="/agregar-empresa" element={<AgregarEmpresaPage />} />
+      <Route path="/agregar-company" element={<AgregarEmpresaPage />} />
     </Routes>
   );
 };

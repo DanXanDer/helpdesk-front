@@ -14,13 +14,13 @@ import { ClienteData } from "../components/ClienteData";
 
 const datosClienteInit = {
   nombres: "",
-  apellidos: "",
-  correo: "",
+  lastname: "",
+  email: "",
   anydesk: "",
   teamviewer: "",
-  nombreEmpresa: "",
-  nombreSede: "",
-  nombreArea: "",
+  name: "",
+  name: "",
+  name: "",
 };
 
 export const DetallesTicketPage = () => {

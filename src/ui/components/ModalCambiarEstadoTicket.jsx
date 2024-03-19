@@ -71,7 +71,7 @@ export const ModalCambiarEstadoTicket = ({
       let estadoTicket = "Por confirmar atención";
       let estadoReporteIncidente = "Por confirmar atención";
       formData.append("idReporteIncidente", ticket.idReporteIncidente);
-      formData.append("emisor", `${user.nombres} ${user.apellidos}`);
+      formData.append("emisor", `${user.nombres} ${user.lastname}`);
       formData.append("mensaje", mensaje);
       if (!!enabled) {
         if (enabled === "Conforme") {

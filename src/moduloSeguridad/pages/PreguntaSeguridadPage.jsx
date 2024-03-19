@@ -30,7 +30,7 @@ export const PreguntaSeguridadPage = () => {
     };
     try {
       await api.post("/seguridad/validar-rpta-secreta", formDataWithIdUsuario);
-      navigate("/reestablecer-clave", {
+      navigate("/reestablecer-password", {
         state: { idUsuario },
       });
     } catch (error) {

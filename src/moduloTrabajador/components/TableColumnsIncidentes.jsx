@@ -27,17 +27,17 @@ export const TableColumnsIncidentes = () => {
       ...columnOptions,
     },
     {
-      field: "nombreEmpresa",
+      field: "name",
       headerName: "Empresa",
       ...columnOptions
     },
     {
-      field: "nombreSede",
+      field: "name",
       headerName: "Sede",
       ...columnOptions
     },
     {
-      field: "nombreArea",
+      field: "name",
       headerName: "Área",
       ...columnOptions
     },

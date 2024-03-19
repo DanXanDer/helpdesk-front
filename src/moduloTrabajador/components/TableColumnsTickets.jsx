@@ -25,7 +25,7 @@ export const TableColumnsTickets = () => {
       ...columnOptions,
     },
     {
-      field: "nombreEmpresa",
+      field: "name",
       headerName: "Empresa",
       ...columnOptions
     },

@@ -106,7 +106,7 @@ export const MiReporteDetallesPage = () => {
               open={openModalContactarTrabajador}
               handleClose={handleCloseModalContactarTrabajador}
               idTicket={dataReporteToShow.idTicket}
-              emisor={user.nombres + " " + user.apellidos}
+              emisor={user.nombres + " " + user.lastname}
               receptor={dataReporteToShow.datosTrabajador}
               handleUpdateMsgTable={handleUpdateMsgTable}
             />

@@ -10,12 +10,12 @@ import api from "../../services/instance";
 import { useNavigate } from "react-router-dom";
 
 const defaultValues = {
-  sedes: [
+  branches: [
     {
       direccion: "",
       areas: [
         {
-          nombre: "",
+          name: "",
         }
       ]
     }
@@ -40,13 +40,13 @@ export const AgregarEmpresaPage = () => {
 
   const onSubmit = async (data) => {
     const isConfirmed = await showConfirmationMessage(
-      "Registrar empresa",
+      "Registrar company",
       "¿Está seguro de registrar la empresa?",
       "warning"
     );
     if (!isConfirmed) return;
     try {
-      await api.post("/modulo-administrador/agregar-empresa", data);
+      await api.post("/modulo-administrador/agregar-company", data);
       showAlertMessage("success", "Exito", "Empresa agregada exitosamente");
       navigate("/gestionar-usuarios");
       handleActiveRoute(authorities[0].idPrivilege);
@@ -59,7 +59,7 @@ export const AgregarEmpresaPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TitleWithIcon icon={<AddBusiness />} title="Agregar empresa" />
+      <TitleWithIcon icon={<AddBusiness />} title="Agregar company" />
       <Box
         component="form"
         noValidate
@@ -71,18 +71,18 @@ export const AgregarEmpresaPage = () => {
           <Grid item xs={12}>
             <Controller
               defaultValue=""
-              name="nombreEmpresa"
+              name="name"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Ingrese el nombre de la empresa"
+                  label="Ingrese nombre de la empresa"
                   margin="normal"
                   fullWidth
-                  autoComplete="nombreEmpresa"
+                  autoComplete="name"
                   autoFocus
-                  error={!!errors.nombreEmpresa}
-                  helperText={errors?.nombreEmpresa?.message}
+                  error={!!errors.name}
+                  helperText={errors?.name?.message}
                 />
               )}
               rules={{
@@ -106,7 +106,7 @@ export const AgregarEmpresaPage = () => {
             sx={{ mt: 3, mb: 2 }}
             startIcon={<AddBusiness />}
           >
-            Registrar empresa
+            Registrar company
           </Button>
         </Grid>
       </Box>

@@ -15,23 +15,12 @@ import {
 import { HelpDeskLayout } from "../../ui/layout";
 import { PersonAdd, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { FormCliente } from "../components";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
 import { TitleWithIcon } from "../../ui/components";
-
-const role = [
-  {
-    id: 2,
-    nombreTipoUsuario: "Trabajador",
-  },
-  {
-    id: 3,
-    nombreTipoUsuario: "Cliente",
-  },
-];
 
 export const CrearUsuarioPage = () => {
   const {
@@ -49,8 +38,20 @@ export const CrearUsuarioPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
-  //const [selectedRole, setSelectedRole] = useState("");
+  const [roles, setRoles] = useState();
+  const [selectedRole, setSelectedRole] = useState("");
   const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data: roles } = await api.get("/roles");
+        setRoles(roles);
+      } catch (error) {
+        showAlertMessage("error", "Error", "Ha ocurrido un error inesperado");
+      }
+    })();
+  }, [])
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -60,75 +61,60 @@ export const CrearUsuarioPage = () => {
     setShowRePassword(!showRePassword);
   };
 
-  const selectedRole = watch("role");
+  const passwordMatch =
+    watch("password") !== watch("rePassword") && getValues("rePassword") ? true : false;
 
-  let passwordMatch =
-    watch("clave") !== watch("reClave") && getValues("reClave") ? true : false;
-
-
-
-  const handleSeleccionTipo = async ({ target }) => {
-    console.log(selectedRole);
-    /* const { value } = target;
+  const handleRoleChange = async ({ target }) => {
+    const { value } = target;
+    console.log(value);
     setSelectedRole(value);
     setValue("role", value);
     clearErrors("role");
-
     if (value === "Cliente") {
-      const { data } = await api.get("/modulo-administrador/companies");
-      unregister("nivel");
-      setCompanies(data.companies);
+      try {
+        const { data: companies } = await api.get("/company");
+        setCompanies(companies);
+      } catch (error) {
+        showAlertMessage("error", "Error", "Ha ocurrido un error inesperado");
+      }
     } else {
-      unregister("empresa");
-      unregister("sede");
+      unregister("company");
+      unregister("branch");
       unregister("area");
       unregister("anydesk");
       unregister("teamviewer");
       setCompanies([]);
-    } */
+    }
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (formData) => {
     const isConfirmed = await showConfirmationMessage(
       "Crear usuario",
-      "¿Está seguro de crear el user?",
+      "¿Está seguro de continuar?",
       "warning"
     );
     if (!isConfirmed) return;
-    const privilegiosTrabajador = [5, 6];
-    const privilegiosCliente = [1, 3, 4];
-    let formData;
-    let apiUrl = "/modulo-administrador";
-    const { role } = data;
-    if (role === "Trabajador") {
-      apiUrl += "/users/crear-trabajador";
-      formData = {
-        ...data,
-        authorities: privilegiosTrabajador,
-      };
-    } else {
-      apiUrl += "/users/crear-cliente";
-      formData = {
-        authorities: privilegiosCliente,
-        idArea: data.area,
-        ...data,
-      };
+
+    const roleName = roles.find(({ idRole }) => idRole === formData.role).authority;
+
+    formData.role = {
+      idRole: formData.role
     }
+
+    const endpointPath = roleName === "Trabajador" ? "/workers" : "/clientes";
+
     try {
-      await api.post(apiUrl, formData);
+      await api.post(endpointPath, {
+        user: formData
+      });
       showAlertMessage(
         "success",
         "Usuario creado",
-        "El user se creó correctamente"
+        "El usuario se creó correctamente"
       );
-      navigate("/gestionar-usuarios");
-    } catch (error) {
-      const { mensaje: errorMsg } = error.response.data.error;
-      showAlertMessage(
-        "error",
-        "Error",
-        errorMsg,
-      );
+    } catch ({ response }) {
+      const { message } = response.data;
+      showAlertMessage("error", "Error", message);
     }
   };
 
@@ -151,7 +137,7 @@ export const CrearUsuarioPage = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Ingresa Ingresar nombre de usuario"
+                  label="Ingresa nombre de usuario"
                   margin="normal"
                   fullWidth
                   autoComplete="username"
@@ -168,14 +154,14 @@ export const CrearUsuarioPage = () => {
           <Grid item xs={12} md={5.8}>
             <FormControl variant="outlined" fullWidth margin="normal">
               <InputLabel
-                htmlFor="outlined-adornment-clave"
-                error={!!errors.clave}
+                htmlFor="outlined-adornment-password"
+                error={!!errors.password}
               >
                 Ingresa la clave
               </InputLabel>
               <OutlinedInput
                 defaultValue=""
-                id="outlined-adornment-clave"
+                id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
                 endAdornment={
                   <InputAdornment position="end">
@@ -184,9 +170,9 @@ export const CrearUsuarioPage = () => {
                     </IconButton>
                   </InputAdornment>
                 }
-                error={!!errors.clave}
+                error={!!errors.password}
                 label="Ingresa la clave"
-                {...register("clave", {
+                {...register("password", {
                   required: "La clave es requerida",
                   minLength: {
                     value: 8,
@@ -194,21 +180,21 @@ export const CrearUsuarioPage = () => {
                   },
                 })}
               />
-              {errors?.clave && (
-                <FormHelperText error>{errors?.clave?.message}</FormHelperText>
+              {errors?.password && (
+                <FormHelperText error>{errors?.password?.message}</FormHelperText>
               )}
             </FormControl>
           </Grid>
           <Grid item xs={12} md={5.8}>
             <FormControl variant="outlined" fullWidth margin="normal">
               <InputLabel
-                htmlFor="outlined-adornment-reClave"
-                error={!!errors.reClave || passwordMatch}
+                htmlFor="outlined-adornment-rePassword"
+                error={!!errors.rePassword || passwordMatch}
               >
                 Confirma la clave
               </InputLabel>
               <OutlinedInput
-                id="outlined-adornment-reClave"
+                id="outlined-adornment-rePassword"
                 type={showRePassword ? "text" : "password"}
                 endAdornment={
                   <InputAdornment position="end">
@@ -217,9 +203,9 @@ export const CrearUsuarioPage = () => {
                     </IconButton>
                   </InputAdornment>
                 }
-                error={!!errors.reClave || passwordMatch}
-                label="Confirma tu nueva clave"
-                {...register("reClave", {
+                error={!!errors.rePassword || passwordMatch}
+                label="Confirma la clave"
+                {...register("rePassword", {
                   required: "La confirmación de la clave es requerida",
                   minLength: {
                     value: 8,
@@ -231,9 +217,9 @@ export const CrearUsuarioPage = () => {
                   },
                 })}
               />
-              {errors?.reClave ? (
+              {errors?.rePassword ? (
                 <FormHelperText error>
-                  {errors?.reClave?.message}
+                  {errors?.rePassword?.message}
                 </FormHelperText>
               ) : passwordMatch ? (
                 <FormHelperText error>Las claves no coinciden</FormHelperText>
@@ -243,17 +229,17 @@ export const CrearUsuarioPage = () => {
           <Grid item xs={12}>
             <Controller
               defaultValue=""
-              name="nombres"
+              name="name"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Ingrese el nombre"
+                  label="Ingrese nombre"
                   margin="normal"
                   fullWidth
-                  autoComplete="nombres"
-                  error={!!errors.nombres}
-                  helperText={errors?.nombres?.message}
+                  autoComplete="name"
+                  error={!!errors.name}
+                  helperText={errors?.name?.message}
                 />
               )}
               rules={{
@@ -268,24 +254,24 @@ export const CrearUsuarioPage = () => {
           <Grid item xs={12}>
             <Controller
               defaultValue=""
-              name="apellidos"
+              name="lastname"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Ingresa los apellidos"
+                  label="Ingresa apellidos"
                   margin="normal"
                   fullWidth
-                  autoComplete="apellidos"
-                  error={!!errors.apellidos}
-                  helperText={errors?.apellidos?.message}
+                  autoComplete="lastname"
+                  error={!!errors.lastname}
+                  helperText={errors?.lastname?.message}
                 />
               )}
               rules={{
-                required: "Los apellidos son requeridos",
+                required: "Apellidos son requeridos",
                 pattern: {
                   value: /^[a-zA-Z\s]*$/,
-                  message: "Los apellidos solo pueden contener letras",
+                  message: "Apellidos solo pueden contener letras",
                 },
               }}
             />
@@ -293,23 +279,23 @@ export const CrearUsuarioPage = () => {
           <Grid item xs={12}>
             <Controller
               defaultValue=""
-              name="correo"
+              name="email"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Ingresa el correo"
+                  label="Ingresa correo electrónico"
                   margin="normal"
                   fullWidth
-                  error={!!errors.correo}
-                  helperText={errors?.correo?.message}
+                  error={!!errors.email}
+                  helperText={errors?.email?.message}
                 />
               )}
               rules={{
-                required: "El correo es requerido",
+                required: "El correo electrónico es requerido",
                 pattern: {
                   value: /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/,
-                  message: "El correo no es válido",
+                  message: "El correo electrónico no es válido",
                 },
               }}
             />
@@ -317,31 +303,32 @@ export const CrearUsuarioPage = () => {
           <Grid item xs={12}>
             <FormControl fullWidth margin="normal">
               <InputLabel id="select-role-label" error={!!errors.role}>
-                Tipo de usuario
+                Rol de usuario
               </InputLabel>
               <Controller
                 name="role"
-                defaultValue={selectedRole}
                 control={control}
+                defaultValue={selectedRole}
                 render={({ field }) => (
                   <Select
                     {...field}
-                    onChange={handleSeleccionTipo}
+                    onChange={handleRoleChange}
                     labelId="select-role-label"
                     id="select-role"
-                    value={selectedRole}
-                    label="Tipo de usuario"
+                    label="Rol de usuario"
                     error={!!errors.role}
                   >
-                    {role.map(({ id, nombreTipoUsuario }) => (
-                      <MenuItem key={id} value={nombreTipoUsuario}>
-                        {nombreTipoUsuario}
-                      </MenuItem>
-                    ))}
+                    {
+                      roles?.map(({ idRole, authority }) => (
+                        <MenuItem key={idRole} value={idRole}>
+                          {authority}
+                        </MenuItem>
+                      ))
+                    }
                   </Select>
                 )}
                 rules={{
-                  required: "El role de user es requerido",
+                  required: "El rol del usuario es requerido",
                 }}
               />
               {errors?.role ? (
@@ -360,6 +347,7 @@ export const CrearUsuarioPage = () => {
             clearErrors={clearErrors}
           />
         ) : null}
+
         <Grid container justifyContent="center">
           <Grid item>
             <Button

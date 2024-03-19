@@ -19,7 +19,7 @@ export const ModuloSeguridadRoutes = () => {
         element={<PreguntaSeguridadPage />}
       ></Route>
       <Route
-        path="reestablecer-clave"
+        path="reestablecer-password"
         element={<ReestablecerClavePage />}
       ></Route>
       <Route path="completar-datos" element={<CompletarDatosPage />}></Route>

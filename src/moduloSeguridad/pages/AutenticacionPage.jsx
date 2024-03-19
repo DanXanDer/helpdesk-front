@@ -94,8 +94,8 @@ export const AutenticacionPage = () => {
         />
 
         <FormControl variant="outlined" fullWidth margin="normal">
-          <InputLabel htmlFor="outlined-adornment-clave" error={!!errors.password}>
-            Ingresa tu clave
+          <InputLabel htmlFor="outlined-adornment-password" error={!!errors.password}>
+            Ingresa tu password
           </InputLabel>
           <OutlinedInput
             defaultValue=""
@@ -109,7 +109,7 @@ export const AutenticacionPage = () => {
               </InputAdornment>
             }
             error={!!errors.password}
-            label="Ingresa tu clave"
+            label="Ingresa tu password"
             {...register("password", { required: "La clave es requerida" })}
           />
           {errors?.password && (
@@ -124,7 +124,7 @@ export const AutenticacionPage = () => {
         >
           Ingresar
         </Button>
-        <LinkGrid path="/confirmar-datos" text="¿Olvidaste tu clave?" />
+        <LinkGrid path="/confirmar-datos" text="¿Olvidaste tu password?" />
       </Box>
     </ModuloSeguridadLayout>
   );

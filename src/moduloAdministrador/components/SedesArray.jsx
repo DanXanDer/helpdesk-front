@@ -6,7 +6,7 @@ import { Add, Delete } from "@mui/icons-material";
 export const SedesArray = ({ control, errors }) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "sedes",
+    name: "branches",
   });
 
   return (
@@ -18,7 +18,7 @@ export const SedesArray = ({ control, errors }) => {
               <Grid item xs={12} lg={11} key={item.id}>
                 <Controller
                   defaultValue={item.direccion}
-                  name={`sedes[${index}].direccion`}
+                  name={`branches[${index}].direccion`}
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -26,10 +26,10 @@ export const SedesArray = ({ control, errors }) => {
                       label={`Ingrese ubicación de la sede ${index + 1}`}
                       margin="normal"
                       fullWidth
-                      autoComplete={`sede${index + 1}`}
+                      autoComplete={`branch${index + 1}`}
                       autoFocus
-                      error={!!errors && !!errors.sedes && !!errors.sedes[index]?.direccion}
-                      helperText={errors && errors.sedes && errors.sedes[index]?.direccion?.message}
+                      error={!!errors && !!errors.branches && !!errors.branches[index]?.direccion}
+                      helperText={errors && errors.branches && errors.branches[index]?.direccion?.message}
                     />
                   )}
                   rules={{
@@ -43,7 +43,7 @@ export const SedesArray = ({ control, errors }) => {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <AreasArray sedeIndex={index} removeSede={remove} control={control} errors={errors} />
+                <AreasArray branchIndex={index} removeSede={remove} control={control} errors={errors} />
               </Grid>
               <Grid item xs={12} mt={3}>
                 <Divider />
@@ -57,12 +57,12 @@ export const SedesArray = ({ control, errors }) => {
             onClick={() => {
               append({
                 direccion: "",
-                areas: [{ nombre: "" }],
+                areas: [{ name: "" }],
               });
             }}
             startIcon={<Add />}
           >
-            Agregar sede
+            Agregar branch
           </Button>
         </Grid>
       </Grid>

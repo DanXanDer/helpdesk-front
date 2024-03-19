@@ -35,19 +35,19 @@ export const TableColumnsTicketsAdministrador = () => {
       ...columnOptions,
     },
     {
-      field: "nombreEmpresa",
+      field: "name",
       headerName: "Empresa",
       flex: 1,
       ...columnOptions,
     },
     {
-      field: "nombreSede",
+      field: "name",
       headerName: "Sede",
       flex: 1,
       ...columnOptions,
     },
     {
-      field: "nombreArea",
+      field: "name",
       headerName: "Area",
       flex: 1,
       ...columnOptions,

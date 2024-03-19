@@ -17,7 +17,7 @@ export const AppRouter = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getUser = async () => {
+    (async () => {
       try {
         const { data: isAuthenticated } = await api.get("/home/check-login");
         if (!!isAuthenticated) {
@@ -30,10 +30,8 @@ export const AppRouter = () => {
         }
       } catch (error) {
         showAlertMessage("error", "Error", "Ha ocurrido un error inesperado");
-        
       }
-    };
-    getUser();
+    })();
   }, []);
 
   if (status === "checking") return <CheckingSesion />;

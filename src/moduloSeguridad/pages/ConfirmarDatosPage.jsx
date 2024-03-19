@@ -34,7 +34,7 @@ export const ConfirmarDatosPage = () => {
 
   return (
     <ModuloSeguridadLayout
-      pageTitle="Reestablecer clave"
+      pageTitle="Reestablecer password"
       titleDesc="Confirmación de datos"
     >
       <Box
@@ -70,7 +70,7 @@ export const ConfirmarDatosPage = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tu nombre"
+              label="Ingresa tu name"
               margin="normal"
               fullWidth
               autoComplete="nombres"
@@ -85,22 +85,22 @@ export const ConfirmarDatosPage = () => {
         />
         <Controller
           defaultValue=""
-          name="apellidos"
+          name="lastname"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tus apellidos"
+              label="Ingresa tus lastname"
               margin="normal"
               fullWidth
-              autoComplete="apellidos"
+              autoComplete="lastname"
               autoFocus
-              error={!!errors.apellidos}
-              helperText={errors?.apellidos?.message}
+              error={!!errors.lastname}
+              helperText={errors?.lastname?.message}
             />
           )}
           rules={{
-            required: "Los apellidos son requeridos",
+            required: "Apellidos son requeridos",
           }}
         />
         <Button

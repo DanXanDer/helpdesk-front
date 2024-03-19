@@ -63,7 +63,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                 <TextField
                   fullWidth
                   label="Apellidos"
-                  value={datosCliente.apellidos}
+                  value={datosCliente.lastname}
                   variant="outlined"
                   inputProps={{
                     readOnly: true,
@@ -74,7 +74,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                 <TextField
                   fullWidth
                   label="Correo"
-                  value={datosCliente.correo}
+                  value={datosCliente.email}
                   variant="outlined"
                   inputProps={{
                     readOnly: true,
@@ -107,7 +107,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                 <TextField
                   fullWidth
                   label="Empresa"
-                  value={datosCliente.nombreEmpresa}
+                  value={datosCliente.name}
                   variant="outlined"
                   inputProps={{
                     readOnly: true,
@@ -118,7 +118,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                 <TextField
                   fullWidth
                   label="Sede"
-                  value={datosCliente.nombreSede}
+                  value={datosCliente.name}
                   variant="outlined"
                   inputProps={{
                     readOnly: true,
@@ -129,7 +129,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                 <TextField
                   fullWidth
                   label="Area"
-                  value={datosCliente.nombreArea}
+                  value={datosCliente.name}
                   variant="outlined"
                   inputProps={{
                     readOnly: true,
@@ -159,9 +159,9 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                     open={openModalComunicarseCliente}
                     handleClose={handleCloseModalComunicarseCliente}
                     idTicket={ticket.idTicket}
-                    emisor={user.nombres + " " + user.apellidos}
+                    emisor={user.nombres + " " + user.lastname}
                     receptor={
-                      datosCliente.nombres + " " + datosCliente.apellidos
+                      datosCliente.nombres + " " + datosCliente.lastname
                     }
                     handleUpdateMsgTable={handleUpdateMsgTable}
                   />
