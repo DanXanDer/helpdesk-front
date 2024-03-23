@@ -56,7 +56,7 @@ export const FormClave = () => {
     );
     if (!isConfirmed) return;
     try {
-      await api.post("/modulo-cliente/informacion/actualizar-password", formData);
+      await api.post("/modulo-client/informacion/actualizar-password", formData);
       showAlertMessage("success", "Éxito", "Clave actualizada correctamente");
       handleActiveRoute(authorities[0].idPrivilege);
       navigate("/reportar-incidente");

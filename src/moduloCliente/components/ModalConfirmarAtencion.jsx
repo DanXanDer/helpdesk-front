@@ -73,7 +73,7 @@ export const ModalConfirmarAtencion = ({ idTicket, idReporteIncidente }) => {
         mensaje,
       };
     }
-    await api.post("/modulo-cliente/cambiar-enabled-ticket", formData);
+    await api.post("/modulo-client/cambiar-enabled-ticket", formData);
     showAlertMessage("success", "Éxito", "Se ha enviado su conformidad");
     reset();
     handleClose();

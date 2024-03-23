@@ -37,7 +37,7 @@ export const NavBar = ({ drawerWidth }) => {
           <Menu />
         </IconButton>
         <Typography variant="h6" noWrap component="div">
-          Bienvenido! {user.nombres}
+          Bienvenido! {user.name}
         </Typography>
         <IconButton
           sx={{

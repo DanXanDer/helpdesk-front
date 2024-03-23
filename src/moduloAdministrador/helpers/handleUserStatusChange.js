@@ -1,6 +1,6 @@
 import { showConfirmationMessage } from "../../helpers";
 import api from "../../services/instance";
-import { getClientes } from "./getClientes";
+import { getClients } from "./getClients";
 import { getWorkers } from "./getWorkers";
 
 export const handleUserStatusChange = async (
@@ -20,7 +20,7 @@ export const handleUserStatusChange = async (
   await api.patch(`/users/${id}/update`, {
     enabled: !row.enabled
   });
-  const users = await getWorkers();
-    /* role === "Trabajador" ? await getWorkers() : await getClientes(); */
+  const users = role === "Trabajador" ? await getWorkers() : await getClients();
+    /* role === "Trabajador" ? await getWorkers() : await getClients(); */
   handleUpdateUsers(users);
 };

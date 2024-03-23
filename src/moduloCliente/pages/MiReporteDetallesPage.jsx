@@ -37,7 +37,7 @@ export const MiReporteDetallesPage = () => {
     (async () => {
       try {
         const { data: dataReporteIncidente } = await api.get(
-          `/modulo-cliente/reportes/${idReporteIncidente}`
+          `/modulo-client/reportes/${idReporteIncidente}`
         );
         const { idTicket, reporteIncidente, datosTrabajador } =
           dataReporteIncidente;
@@ -106,7 +106,7 @@ export const MiReporteDetallesPage = () => {
               open={openModalContactarTrabajador}
               handleClose={handleCloseModalContactarTrabajador}
               idTicket={dataReporteToShow.idTicket}
-              emisor={user.nombres + " " + user.lastname}
+              emisor={user.name + " " + user.lastname}
               receptor={dataReporteToShow.datosTrabajador}
               handleUpdateMsgTable={handleUpdateMsgTable}
             />
@@ -118,7 +118,7 @@ export const MiReporteDetallesPage = () => {
             dialogContentText="¿Qué le pareció la atención recibida?"
             buttonLabel="Confirmar atención"
             ticket={dataReporteToShow}
-            role="cliente"
+            role="client"
             alertDescription="Se ha enviado su conformidad"
           />
         )}

@@ -22,7 +22,7 @@ export const MisReportesPage = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get("/modulo-cliente/reportes");
+      const { data } = await api.get("/modulo-client/reportes");
       const dataReportes = data.map((reporte) => {
         const { fechaCreacion, trabajador, reporteIncidente } = reporte;
         const { fecha } = reporteIncidente;

@@ -42,7 +42,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
   return (
     <Grid container gap={2} flexDirection={"column"}>
       <Grid item>
-        <TitleWithIcon icon={<Person />} title="Datos del cliente" />
+        <TitleWithIcon icon={<Person />} title="Datos del client" />
       </Grid>
       <Grid item>
         <Grid container>
@@ -52,7 +52,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                 <TextField
                   fullWidth
                   label="Nombres"
-                  value={datosCliente.nombres}
+                  value={datosCliente.name}
                   variant="outlined"
                   inputProps={{
                     readOnly: true,
@@ -159,9 +159,9 @@ export const ClienteData = ({ datosCliente, ticket }) => {
                     open={openModalComunicarseCliente}
                     handleClose={handleCloseModalComunicarseCliente}
                     idTicket={ticket.idTicket}
-                    emisor={user.nombres + " " + user.lastname}
+                    emisor={user.name + " " + user.lastname}
                     receptor={
-                      datosCliente.nombres + " " + datosCliente.lastname
+                      datosCliente.name + " " + datosCliente.lastname
                     }
                     handleUpdateMsgTable={handleUpdateMsgTable}
                   />

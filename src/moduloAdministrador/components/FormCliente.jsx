@@ -39,7 +39,7 @@ export const FormCliente = ({
     setSelectedCompany(value);
     setValue("company", value);
     clearErrors("company");
-    const { data: branches } = await api.get(`/company/${value}/branches`);
+    const { data: branches } = await api.get(`/company/${value}/branches?enabled=true`);
     setBranches(branches);
     cleanBranchField();
   };
@@ -49,7 +49,7 @@ export const FormCliente = ({
     setSelectedBranch(value);
     setValue("branch", value);
     clearErrors("branch");
-    const { data: areas } = await api.get(`/branch/${value}/areas`);
+    const { data: areas } = await api.get(`/branch/${value}/areas?enabled=true`);
     setAreas(areas);
     cleanAreaField();
   };

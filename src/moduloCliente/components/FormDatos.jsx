@@ -26,7 +26,7 @@ export const FormDatos = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get("/modulo-cliente/informacion/datos");
+        const { data } = await api.get("/modulo-client/informacion/datos");
         const { anydesk, teamviewer, email } = data;
         setValue("anydesk", anydesk);
         setValue("teamviewer", teamviewer);
@@ -46,7 +46,7 @@ export const FormDatos = () => {
     );
     if (!isConfirmed) return;
     try {
-      await api.post("/modulo-cliente/informacion/actualizar-datos", formData);
+      await api.post("/modulo-client/informacion/actualizar-datos", formData);
       showAlertMessage("success", "Éxito", "Datos actualizados correctamente");
     } catch (error) {
       const { mensaje } = error.response.data.error;

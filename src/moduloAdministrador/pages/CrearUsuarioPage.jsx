@@ -66,13 +66,12 @@ export const CrearUsuarioPage = () => {
 
   const handleRoleChange = async ({ target }) => {
     const { value } = target;
-    console.log(value);
     setSelectedRole(value);
     setValue("role", value);
     clearErrors("role");
-    if (value === "Cliente") {
+    if (value === 3) {
       try {
-        const { data: companies } = await api.get("/company");
+        const { data: companies } = await api.get("/company?enabled=true");
         setCompanies(companies);
       } catch (error) {
         showAlertMessage("error", "Error", "Ha ocurrido un error inesperado");
@@ -94,29 +93,48 @@ export const CrearUsuarioPage = () => {
       "warning"
     );
     if (!isConfirmed) return;
-
-    const roleName = roles.find(({ idRole }) => idRole === formData.role).authority;
-
-    formData.role = {
-      idRole: formData.role
+    const { role, username, password, rePassword, name, lastname, email } = formData;
+    let formDataToSent = {
+      user: {
+        role: {
+          idRole: role
+        },
+        username,
+        password,
+        rePassword,
+        name,
+        lastname,
+        email
+      }
     }
-
-    const endpointPath = roleName === "Trabajador" ? "/workers" : "/clientes";
-
+    if (role == 3) {
+      const { area, anydesk, teamviewer } = formData;
+      formDataToSent = {
+        ...formDataToSent,
+        area: {
+          idArea: area
+        },
+        anydesk,
+        teamviewer
+      }
+    }
+    const roleName = roles.find(({ idRole }) => idRole === formData.role).authority;
+    const endpointPath = roleName === "Trabajador" ? "/workers" : "/clients";
     try {
-      await api.post(endpointPath, {
-        user: formData
-      });
+      console.log(formDataToSent);
+      await api.post(endpointPath, formDataToSent);
       showAlertMessage(
         "success",
         "Usuario creado",
         "El usuario se creó correctamente"
       );
+      navigate("/gestionar-usuarios");
     } catch ({ response }) {
+      console.log(response);
       const { message } = response.data;
       showAlertMessage("error", "Error", message);
     }
-  };
+  }
 
   return (
     <HelpDeskLayout>
@@ -338,7 +356,7 @@ export const CrearUsuarioPage = () => {
             </FormControl>
           </Grid>
         </Grid>
-        {selectedRole === "Cliente" ? (
+        {selectedRole === 3 ? (
           <FormCliente
             companies={companies}
             errors={errors}

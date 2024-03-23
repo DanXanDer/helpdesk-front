@@ -23,7 +23,7 @@ export const VerTicketsPage = () => {
     (async () => {
       const { data } = await api.get("/modulo-administrador/tickets");
       const ticketsWithId = data.tickets.map((ticket) => ({
-        cliente: ticket.nombresCliente + " " + ticket.apellidosCliente,
+        client: ticket.nombresCliente + " " + ticket.apellidosCliente,
         trabajador: ticket.nombresTrabajador + " " + ticket.apellidosTrabajador,
         ticketFechaFormateada: formatFecha(ticket.ticketFecha),
         reporteFechaFormateada: formatFecha(ticket.reporteFecha),

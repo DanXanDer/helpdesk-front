@@ -71,7 +71,7 @@ export const ModalCambiarEstadoTicket = ({
       let estadoTicket = "Por confirmar atención";
       let estadoReporteIncidente = "Por confirmar atención";
       formData.append("idReporteIncidente", ticket.idReporteIncidente);
-      formData.append("emisor", `${user.nombres} ${user.lastname}`);
+      formData.append("emisor", `${user.name} ${user.lastname}`);
       formData.append("mensaje", mensaje);
       if (!!enabled) {
         if (enabled === "Conforme") {
@@ -106,7 +106,7 @@ export const ModalCambiarEstadoTicket = ({
   return (
     <Box>
       {(ticket.enabled === "En atención" ||
-        (role === "cliente" &&
+        (role === "client" &&
           ticket.enabled === "Por confirmar atención")) && (
         <Button
           variant="contained"
@@ -168,7 +168,7 @@ export const ModalCambiarEstadoTicket = ({
                 },
               }}
             />
-            {role === "cliente" && (
+            {role === "client" && (
               <FormControl fullWidth margin="normal">
                 <InputLabel
                   id="select-conformidad-label"

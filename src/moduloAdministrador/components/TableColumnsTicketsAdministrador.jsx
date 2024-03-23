@@ -11,7 +11,7 @@ const columnOptions = {
 export const TableColumnsTicketsAdministrador = () => {
   const columns = [
     {
-      field: "cliente",
+      field: "client",
       headerName: "Cliente",
       flex: 1,
       ...columnOptions,

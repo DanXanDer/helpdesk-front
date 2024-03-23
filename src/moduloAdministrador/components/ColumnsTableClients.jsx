@@ -9,7 +9,7 @@ const columnOptions = {
 };
 
 
-export const TableColumnsClientes = (handleUpdateUsers) => {
+export const ColumnsTableClients = (handleUpdateUsers) => {
     const columns = [
         {
             field: "username",
@@ -17,7 +17,7 @@ export const TableColumnsClientes = (handleUpdateUsers) => {
             ...columnOptions
         },
         {
-            field: "nombres",
+            field: "name",
             headerName: "Nombre",
             flex: 1.1,
             ...columnOptions
@@ -35,52 +35,51 @@ export const TableColumnsClientes = (handleUpdateUsers) => {
             ...columnOptions
         },
         {
-            field: "name",
+            field: "company",
             headerName: "Empresa",
             ...columnOptions
         },
         {
-            field: "name",
+            field: "branch",
             headerName: "Sede",
             ...columnOptions
         },
         {
-            field: "name",
+            field: "area",
             headerName: "Area",
             ...columnOptions
         },
         {
             field: "enabled",
             headerName: "Estado",
-            ...columnOptions,
             renderCell: ({ formattedValue }) => {
-                const color = formattedValue === 1 ? "success.dark" : "error.dark";
-                const text = formattedValue === 1 ? "Habilitado" : "Deshabilitado";
+                const color = formattedValue === true ? "success.dark" : "error.dark";
+                const text = formattedValue === true ? "Habilitado" : "Deshabilitado";
                 return <Typography color={color}>{text}</Typography>;
             },
+            ...columnOptions,
         },
         {
             field: "accion",
             headerName: "Acción",
-            ...columnOptions,
             renderCell: ({ row }) => {
-                const { enabled, username } = row;
-                const text =
-                    enabled === 1 ? "Deshabilitar user" : "Habilitar user";
-                const subText = enabled === 1 ? "deshabilitar" : "habilitar";
-                const color = enabled === 1 ? "error" : "success";
-
+                const { enabled } = row;
+                const isEnabled = enabled === true;
+                const text = isEnabled ? "Deshabilitar usuario" : "Habilitar usuario";
+                const subText = isEnabled ? "deshabilitar" : "habilitar";
+                const color = isEnabled ? "error" : "success";
                 return (
                     <IconButton
                         color={color}
-                        onClick={() => handleUserStatusChange("cliente", text, subText, username, row, handleUpdateUsers)}
-                        sx={{ mr: 1 }}
+                        onClick={() => handleUserStatusChange(text, subText, row, handleUpdateUsers)}
+                        sx={{ mr: true }}
                     >
-                        {enabled === 1 ? <Block /> : <CheckCircle />}
+                        {enabled === true ? <Block /> : <CheckCircle />}
                     </IconButton>
                 );
             },
-        }
+            ...columnOptions,
+        },
     ]
 
     return columns;

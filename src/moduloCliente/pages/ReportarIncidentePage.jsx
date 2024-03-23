@@ -35,7 +35,7 @@ export const ReportarIncidentePage = () => {
       formData.append("nombreIncidente", data.nombreIncidente);
       formData.append("descripcion", data.descripcion);
       data.imagenes.forEach((imagen) => formData.append("imagenes", imagen));
-      await api.post("/modulo-cliente/reportes/reportar-incidente", formData, {
+      await api.post("/modulo-client/reportes/reportar-incidente", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

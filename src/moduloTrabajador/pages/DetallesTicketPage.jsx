@@ -13,7 +13,7 @@ import "./styles.css";
 import { ClienteData } from "../components/ClienteData";
 
 const datosClienteInit = {
-  nombres: "",
+  name: "",
   lastname: "",
   email: "",
   anydesk: "",
@@ -69,7 +69,7 @@ export const DetallesTicketPage = () => {
             buttonLabel="Marcar como atendido"
             ticket={detallesTicket}
             role="trabajador"
-            alertDescription="Se esperará la confirmación del cliente"
+            alertDescription="Se esperará la confirmación del client"
           />
         </Grid>
       </Grid>

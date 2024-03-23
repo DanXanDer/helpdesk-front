@@ -1,7 +1,7 @@
 import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
-import { getClientes, getWorkers } from "../helpers";
-import { TableColumnsClientes, ColumnsTableWorkers } from "../components";
+import { getClients, getWorkers } from "../helpers";
+import { ColumnsTableClients, ColumnsTableWorkers } from "../components";
 import { ManageAccounts } from "@mui/icons-material";
 import { DataGridTable, TitleWithIcon, TableTabs } from "../../ui/components";
 const tabsLabels = [
@@ -33,8 +33,8 @@ export const GestionarUsuariosPage = () => {
       })();
     } else if (newValue === 1) {
       (async () => {
-        const clientes = await getClientes();
-        setUsers(clientes);
+        const clients = await getClients();
+        setUsers(clients);
       })();
     }
     setValue(newValue);
@@ -57,7 +57,7 @@ export const GestionarUsuariosPage = () => {
       />
       <DataGridTable
         height="90%"
-        columnsTable={value === 0 ? ColumnsTableWorkers : TableColumnsClientes}
+        columnsTable={value === 0 ? ColumnsTableWorkers : ColumnsTableClients}
         paramValue={handleUpdateUsers}
         rows={users}
         loadingRows={loadingRows}

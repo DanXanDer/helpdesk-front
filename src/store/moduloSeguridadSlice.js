@@ -4,7 +4,7 @@ const initialState = {
   status: "checking", // no-autenticado, autenticado, autenticando
   user: null /* {
     idUsuario: null,
-    nombres: null,
+    name: null,
     tipo: null,
     authorities: [],
   }, */,
