@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Controller } from "react-hook-form";
 import api from "../../services/instance";
 
-export const FormCliente = ({
+export const ClientForm = ({
   companies,
   control,
   errors,

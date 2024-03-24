@@ -8,7 +8,7 @@ const columnOptions = {
   minWidth: 200,
 };
 
-export const TableColumnsTicketsAdministrador = () => {
+export const AllTicketsTableColumns = () => {
   const columns = [
     {
       field: "client",

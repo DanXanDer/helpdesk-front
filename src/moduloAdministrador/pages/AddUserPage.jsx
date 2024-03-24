@@ -17,12 +17,13 @@ import { PersonAdd, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Controller, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
-import { FormCliente } from "../components";
+import { ClientForm } from "../components";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
-import { TitleWithIcon } from "../../ui/components";
+import { TableTitle } from "../../ui/components";
+import { useUiStore } from "../../hooks";
 
-export const CrearUsuarioPage = () => {
+export const AddUserPage = () => {
   const {
     register,
     handleSubmit,
@@ -36,6 +37,7 @@ export const CrearUsuarioPage = () => {
   } = useForm();
 
   const navigate = useNavigate();
+  const { handleActiveRoute } = useUiStore();
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
   const [roles, setRoles] = useState();
@@ -121,7 +123,6 @@ export const CrearUsuarioPage = () => {
     const roleName = roles.find(({ idRole }) => idRole === formData.role).authority;
     const endpointPath = roleName === "Trabajador" ? "/workers" : "/clients";
     try {
-      console.log(formDataToSent);
       await api.post(endpointPath, formDataToSent);
       showAlertMessage(
         "success",
@@ -138,7 +139,7 @@ export const CrearUsuarioPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TitleWithIcon icon={<PersonAdd />} title="Crear usuario" />
+      <TableTitle icon={<PersonAdd />} title="Crear usuario" />
       <Box
         component="form"
         noValidate
@@ -357,7 +358,7 @@ export const CrearUsuarioPage = () => {
           </Grid>
         </Grid>
         {selectedRole === 3 ? (
-          <FormCliente
+          <ClientForm
             companies={companies}
             errors={errors}
             control={control}

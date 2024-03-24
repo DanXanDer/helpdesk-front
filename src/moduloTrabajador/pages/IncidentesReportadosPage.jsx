@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { HelpDeskLayout } from "../../ui/layout";
 import { TableColumnsIncidentes } from "../components";
-import { DataGridTable, TitleWithIcon } from "../../ui/components";
+import { DataGridTable, TableTitle } from "../../ui/components";
 import api from "../../services/instance";
 import { Report } from "@mui/icons-material";
 
@@ -27,7 +27,7 @@ export const IncidentesReportadosPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TitleWithIcon icon={<Report />} title="Incidentes reportados" />
+      <TableTitle icon={<Report />} title="Incidentes reportados" />
       <DataGridTable
         height="80%"
         columnsTable={TableColumnsIncidentes}

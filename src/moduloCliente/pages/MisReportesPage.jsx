@@ -71,7 +71,7 @@ export const MisReportesPage = () => {
       <DataGridTable
         height="80%"
         columnsTable={TablesColumnsMisReportes}
-        paramValue={() => {}}
+        handleFunction={() => {}}
         rows={misReportesPorEstado}
         loadingRows={loadingRows}
       />

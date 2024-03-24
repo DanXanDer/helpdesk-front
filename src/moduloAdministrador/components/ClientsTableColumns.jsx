@@ -1,6 +1,7 @@
 import { Block, CheckCircle } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
 import { handleUserStatusChange } from "../helpers";
+import { RenderedEnabledCell } from "../../ui/components";
 
 const columnOptions = {
     headerAlign: "left",
@@ -9,7 +10,7 @@ const columnOptions = {
 };
 
 
-export const ColumnsTableClients = (handleUpdateUsers) => {
+export const ClientsTableColumns = (handleUpdateUsers) => {
     const columns = [
         {
             field: "username",
@@ -53,9 +54,7 @@ export const ColumnsTableClients = (handleUpdateUsers) => {
             field: "enabled",
             headerName: "Estado",
             renderCell: ({ formattedValue }) => {
-                const color = formattedValue === true ? "success.dark" : "error.dark";
-                const text = formattedValue === true ? "Habilitado" : "Deshabilitado";
-                return <Typography color={color}>{text}</Typography>;
+                return RenderedEnabledCell(formattedValue);
             },
             ...columnOptions,
         },

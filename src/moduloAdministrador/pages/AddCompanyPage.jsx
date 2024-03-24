@@ -1,9 +1,9 @@
 import { Controller, useForm } from "react-hook-form";
 import { HelpDeskLayout } from "../../ui/layout";
-import { TitleWithIcon } from "../../ui/components";
+import { TableTitle } from "../../ui/components";
 import { AddBusiness } from "@mui/icons-material";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { SedesArray } from "../components";
+import { BranchesForm } from "../components";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import api from "../../services/instance";
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const defaultValues = {
   branches: [
     {
-      direccion: "",
+      name: "",
       areas: [
         {
           name: "",
@@ -22,15 +22,12 @@ const defaultValues = {
   ]
 }
 
-export const AgregarEmpresaPage = () => {
+export const AddCompanyPage = () => {
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
-    setValue,
-    getValues,
   } = useForm({
     defaultValues,
   });
@@ -40,26 +37,25 @@ export const AgregarEmpresaPage = () => {
 
   const onSubmit = async (data) => {
     const isConfirmed = await showConfirmationMessage(
-      "Registrar company",
+      "Registrar empresa",
       "¿Está seguro de registrar la empresa?",
       "warning"
     );
     if (!isConfirmed) return;
     try {
-      await api.post("/modulo-administrador/agregar-company", data);
+      await api.post("/company", data);
       showAlertMessage("success", "Exito", "Empresa agregada exitosamente");
       navigate("/gestionar-usuarios");
-      handleActiveRoute(authorities[0].idPrivilege);
-    } catch (error) {
-      const { mensaje: errorMsg } = error.response.data.error;
-      showAlertMessage("error", "Error", errorMsg);
+      handleActiveRoute(authorities[2].idPrivilege);
+    } catch ({ response }) {
+      const { message } = response.data;
+      showAlertMessage("error", "Error", message);
     }
-
   };
 
   return (
     <HelpDeskLayout>
-      <TitleWithIcon icon={<AddBusiness />} title="Agregar company" />
+      <TableTitle icon={<AddBusiness />} title="Agregar empresa" />
       <Box
         component="form"
         noValidate
@@ -96,7 +92,7 @@ export const AgregarEmpresaPage = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <SedesArray {...{ control, errors }} />
+            <BranchesForm {...{ control, errors }} />
           </Grid>
         </Grid>
         <Grid item xs={12} textAlign="center">
@@ -106,7 +102,7 @@ export const AgregarEmpresaPage = () => {
             sx={{ mt: 3, mb: 2 }}
             startIcon={<AddBusiness />}
           >
-            Registrar company
+            Registrar empresa
           </Button>
         </Grid>
       </Box>

@@ -2,7 +2,7 @@ import { Add, Delete } from "@mui/icons-material";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { Controller, useFieldArray } from "react-hook-form";
 
-export const AreasArray = ({ branchIndex, removeSede, control, errors }) => {
+export const AreasForm = ({ branchIndex, branchRemove, control, errors }) => {
     const { fields, append, remove } = useFieldArray({
         control,
         name: `branches[${branchIndex}].areas`,
@@ -12,7 +12,7 @@ export const AreasArray = ({ branchIndex, removeSede, control, errors }) => {
     const handleRemove = (k) => {
         remove(k);
         if (fields.length === 1) {
-            removeSede(branchIndex);
+            branchRemove(branchIndex);
         }
     };
 
@@ -36,7 +36,7 @@ export const AreasArray = ({ branchIndex, removeSede, control, errors }) => {
                                     render={({ field }) => (
                                         <TextField
                                             {...field}
-                                            label={`Ingrese name del área ${k + 1}`}
+                                            label={`Ingrese nombre del área ${k + 1}`}
                                             margin="normal"
                                             fullWidth
                                             autoComplete={`area${k + 1}`}
@@ -68,7 +68,7 @@ export const AreasArray = ({ branchIndex, removeSede, control, errors }) => {
                         }}
                         startIcon={<Add />}
                     >
-                        Agregar área
+                        Aumentar área
                     </Button>
                 </Grid>
             </Grid>

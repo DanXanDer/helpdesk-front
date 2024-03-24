@@ -1,15 +1,15 @@
 import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
 import { getClients, getWorkers } from "../helpers";
-import { ColumnsTableClients, ColumnsTableWorkers } from "../components";
+import { ClientsTableColumns, WorkersTableColumns } from "../components";
 import { ManageAccounts } from "@mui/icons-material";
-import { DataGridTable, TitleWithIcon, TableTabs } from "../../ui/components";
+import { DataGridTable, TableTitle, TableTabs } from "../../ui/components";
 const tabsLabels = [
   "Trabajadores",
   "Clientes",
 ]
 
-export const GestionarUsuariosPage = () => {
+export const ManageUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [loadingRows, setLoadingRows] = useState(true);
   const [value, setValue] = useState(0);
@@ -49,7 +49,7 @@ export const GestionarUsuariosPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TitleWithIcon icon={<ManageAccounts />} title="Gestionar usuarios" />
+      <TableTitle icon={<ManageAccounts />} title="Listado de usuarios" />
       <TableTabs
         tabsLabels={tabsLabels}
         value={value}
@@ -57,8 +57,8 @@ export const GestionarUsuariosPage = () => {
       />
       <DataGridTable
         height="90%"
-        columnsTable={value === 0 ? ColumnsTableWorkers : ColumnsTableClients}
-        paramValue={handleUpdateUsers}
+        columnsTable={value === 0 ? WorkersTableColumns : ClientsTableColumns}
+        handleFunction={handleUpdateUsers}
         rows={users}
         loadingRows={loadingRows}
       />

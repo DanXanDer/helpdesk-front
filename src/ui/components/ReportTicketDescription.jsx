@@ -1,12 +1,12 @@
 import { Grid, Paper, Typography } from "@mui/material";
-import { TitleWithIcon } from "./TitleWithIcon";
+import { TableTitle } from "./TableTitle";
 import { Report } from "@mui/icons-material";
 
 export const ReportTicketDescription = ({ data }) => {
   return (
     <Grid container p={2} flexDirection="column" component={Paper}>
       <Grid item xs={12}>
-        <TitleWithIcon
+        <TableTitle
           icon={<Report />}
           title={"Incidente: " + data.nombreIncidente}
         />

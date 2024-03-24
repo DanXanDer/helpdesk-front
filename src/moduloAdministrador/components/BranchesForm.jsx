@@ -1,9 +1,9 @@
 import { Controller, useFieldArray } from "react-hook-form";
-import { AreasArray } from "./AreasArray";
+import { AreasForm } from "./AreasForm";
 import { Button, Divider, Grid, TextField } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 
-export const SedesArray = ({ control, errors }) => {
+export const BranchesForm = ({ control, errors }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "branches",
@@ -17,8 +17,8 @@ export const SedesArray = ({ control, errors }) => {
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item xs={12} lg={11} key={item.id}>
                 <Controller
-                  defaultValue={item.direccion}
-                  name={`branches[${index}].direccion`}
+                  defaultValue={item.name}
+                  name={`branches[${index}].name`}
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -28,8 +28,8 @@ export const SedesArray = ({ control, errors }) => {
                       fullWidth
                       autoComplete={`branch${index + 1}`}
                       autoFocus
-                      error={!!errors && !!errors.branches && !!errors.branches[index]?.direccion}
-                      helperText={errors && errors.branches && errors.branches[index]?.direccion?.message}
+                      error={!!errors && !!errors.branches && !!errors.branches[index]?.name}
+                      helperText={errors && errors.branches && errors.branches[index]?.name?.message}
                     />
                   )}
                   rules={{
@@ -43,7 +43,7 @@ export const SedesArray = ({ control, errors }) => {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <AreasArray branchIndex={index} removeSede={remove} control={control} errors={errors} />
+                <AreasForm branchIndex={index} branchRemove={remove} control={control} errors={errors} />
               </Grid>
               <Grid item xs={12} mt={3}>
                 <Divider />
@@ -56,13 +56,13 @@ export const SedesArray = ({ control, errors }) => {
             variant="contained"
             onClick={() => {
               append({
-                direccion: "",
+                name: "",
                 areas: [{ name: "" }],
               });
             }}
             startIcon={<Add />}
           >
-            Agregar branch
+            Aumentar sede
           </Button>
         </Grid>
       </Grid>

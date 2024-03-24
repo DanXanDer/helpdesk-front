@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 
-export const TitleWithIcon = ({ icon, title }) => {
+export const TableTitle = ({ icon, title }) => {
   return (
     <Grid
       container

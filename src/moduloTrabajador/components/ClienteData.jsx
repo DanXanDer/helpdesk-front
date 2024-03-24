@@ -3,7 +3,7 @@ import {
   ModalEnviarMensaje,
   ModalTable,
   SpeedDialComponent,
-  TitleWithIcon,
+  TableTitle,
 } from "../../ui/components";
 import { Person } from "@mui/icons-material";
 import { useState } from "react";
@@ -42,7 +42,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
   return (
     <Grid container gap={2} flexDirection={"column"}>
       <Grid item>
-        <TitleWithIcon icon={<Person />} title="Datos del client" />
+        <TableTitle icon={<Person />} title="Datos del client" />
       </Grid>
       <Grid item>
         <Grid container>

@@ -21,6 +21,5 @@ export const handleUserStatusChange = async (
     enabled: !row.enabled
   });
   const users = role === "Trabajador" ? await getWorkers() : await getClients();
-    /* role === "Trabajador" ? await getWorkers() : await getClients(); */
   handleUpdateUsers(users);
 };

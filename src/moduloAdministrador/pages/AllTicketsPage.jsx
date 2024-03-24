@@ -3,7 +3,7 @@ import api from "../../services/instance";
 import { useEffect, useState } from "react";
 import { DataGridTable, TableTabs } from "../../ui/components";
 import { formatFecha } from "../../helpers";
-import { TableColumnsTicketsAdministrador } from "../components/TableColumnsTicketsAdministrador";
+import { AllTicketsTableColumns } from "../components/AllTicketsTableColumns";
 
 const tabsLabels = [
   "Todos",
@@ -13,7 +13,7 @@ const tabsLabels = [
   "No conformes",
 ];
 
-export const VerTicketsPage = () => {
+export const AllTicketsPage = () => {
   const [tickets, setTickets] = useState([]);
   const [ticketsPorEstado, setTicketsPorEstado] = useState([]);
   const [value, setValue] = useState(0);
@@ -66,7 +66,7 @@ export const VerTicketsPage = () => {
       />
       <DataGridTable
         height="80%"
-        columnsTable={TableColumnsTicketsAdministrador}
+        columnsTable={AllTicketsTableColumns}
         rows={ticketsPorEstado}
         loadingRows={loadingRows}
       />

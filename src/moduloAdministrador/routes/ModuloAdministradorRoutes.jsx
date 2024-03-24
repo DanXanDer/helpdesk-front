@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
-  AgregarEmpresaPage,
-  CrearUsuarioPage,
-  GestionarUsuariosPage,
-  VerTicketsPage,
+  AddCompanyPage,
+  AddUserPage,
+  ManageUsersPage,
+  AllTicketsPage,
+  CompaniesPage,
+  CompanyDetailsPage,
 } from "../pages";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 
@@ -22,7 +24,7 @@ export const ModuloAdministradorRoutes = () => {
       handleActiveRoute(authorities[1].idPrivilege);
     } else if (currentRoute === "ver-tickets") {
       handleActiveRoute(authorities[2].idPrivilege);
-    } else if (currentRoute === "agregar-company") {
+    } else if (currentRoute === "agregar-empresa") {
       handleActiveRoute(authorities[3].idPrivilege);
     }
   }, []);
@@ -30,10 +32,12 @@ export const ModuloAdministradorRoutes = () => {
   return (
     <Routes>
       <Route path="/*" element={<Navigate to="/gestionar-usuarios" />} />
-      <Route path="/gestionar-usuarios" element={<GestionarUsuariosPage />} />
-      <Route path="/crear-usuario" element={<CrearUsuarioPage />} />
-      <Route path="/ver-tickets" element={<VerTicketsPage />} />
-      <Route path="/agregar-company" element={<AgregarEmpresaPage />} />
+      <Route path="/gestionar-usuarios" element={<ManageUsersPage />} />
+      <Route path="/crear-usuario" element={<AddUserPage />} />
+      <Route path="/ver-tickets" element={<AllTicketsPage />} />
+      <Route path="/agregar-empresa" element={<AddCompanyPage />} />
+      <Route path="/empresas" element={<CompaniesPage />} />
+      <Route path="/empresas/:id" element={<CompanyDetailsPage />} />
     </Routes>
   );
 };
