@@ -1,21 +1,22 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from "@mui/material"
-import { ModalTitle, PageTitle } from "../../ui/components"
-import { Controller, useForm } from "react-hook-form"
+import { Edit } from "@mui/icons-material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
 import { useState } from "react"
-import { Edit } from "@mui/icons-material"
+import { Controller, useForm } from "react-hook-form";
+import { ModalTitle } from "../../ui/components";
+import { showAlertMessage } from "../../helpers";
 import api from "../../services/instance";
-import { showAlertMessage } from "../../helpers"
 
-export const ModalEditCompany = ({ id, icon, name, handleUpdateCompanies }) => {
+export const ModalEditBranch = ({ idBranch, idCompany, icon, name, handleUpdateBranches }) => {
 
     const [open, setOpen] = useState(false);
+
     const {
         handleSubmit,
         control,
         formState: { errors },
-        reset,
     } = useForm();
-    const title = `Editar nombre de la empresa ${name}`
+
+    const title = `Editar nombre de la sede ${name}`
 
     const handleClose = () => {
         setOpen(false);
@@ -28,12 +29,12 @@ export const ModalEditCompany = ({ id, icon, name, handleUpdateCompanies }) => {
     const onSubmit = async (data) => {
         try {
             handleClose();
-            await api.patch(`/company/${id}/update`, data);
-            const { data: companies } = await api.get("/company");
-            handleUpdateCompanies(companies);
-            showAlertMessage("success", "Éxito", "Se ha actualizado el nombre de la empresa");
+            await api.patch(`/branch/${idBranch}/update`, data);
+            const { data: companyDetails } = await api.get(`/company/${idCompany}`);
+            handleUpdateBranches(companyDetails.branches);
+            showAlertMessage("success", "Éxito", "Se ha actualizado el nombre de la sede");
         } catch ({ response }) {
-            const { message } = response.data
+            const { message } = response.data;
             showAlertMessage("error", "Error", message);
         }
     }
@@ -65,7 +66,7 @@ export const ModalEditCompany = ({ id, icon, name, handleUpdateCompanies }) => {
                                 <TextField
                                     {...field}
                                     fullWidth
-                                    label="Nombre de empresa"
+                                    label="Nombre de sede"
                                     margin="normal"
                                     autoFocus
                                     error={!!errors.name}
@@ -76,11 +77,11 @@ export const ModalEditCompany = ({ id, icon, name, handleUpdateCompanies }) => {
                                 required: "El nombre no puede estar vacío",
                                 maxLength: {
                                     value: 100,
-                                    message: "El nombre de la empresa debe tener máximo 100 caracteres",
+                                    message: "El nombre de la sede debe tener máximo 100 caracteres",
                                 },
                                 minLength: {
                                     value: 1,
-                                    message: "El nombre la empresa no puede estar vacío",
+                                    message: "El nombre la sede no puede estar vacío",
                                 }
                             }}
                         />

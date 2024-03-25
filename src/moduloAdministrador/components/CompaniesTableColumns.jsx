@@ -1,8 +1,8 @@
-import { Grid, IconButton } from "@mui/material";
-import { RenderedEnabledCell } from "../../ui/components";
-import { Block, Business, CheckCircle, Edit } from "@mui/icons-material";
+import { Button, Grid, IconButton } from "@mui/material";
+import { EnableStatusButton, RenderedEnabledCell } from "../../ui/components";
+import { Block, Business, CheckCircle, Info } from "@mui/icons-material";
 import api from "../../services/instance";
-import { showAlertMessage, showConfirmationMessage } from "../../helpers";
+import { getActionInfo, showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
 import { ModalEditCompany } from "./ModalEditCompany";
 
@@ -55,11 +55,8 @@ export const CompaniesTableColumns = (handleUpdateCompanies) => {
             headerName: "Acción",
             flex: 1.1,
             renderCell: ({ row }) => {
-                const { enabled, name, id } = row;
-                const isEnabled = enabled === true;
-                const actionText = isEnabled ? "Deshabilitar" : "Habilitar";
-                const subText = isEnabled ? "deshabilitar" : "habilitar";
-                const color = isEnabled ? "error" : "success";
+                const { id, name, enabled } = row;
+                const { actionText, color, isEnabled, subText } = getActionInfo(enabled);
                 const handleCompanyChangeStatus = async () => {
                     const isConfirmed = await showConfirmationMessage(
                         `${actionText} empresa`,
@@ -73,6 +70,7 @@ export const CompaniesTableColumns = (handleUpdateCompanies) => {
                         })
                         const { data: companies } = await api.get("/company");
                         handleUpdateCompanies(companies);
+                        showAlertMessage("success", "Éxito", `Se ha cambiado el estado de la empresa ${name}`);
                     } catch (error) {
                         showAlertMessage("error", "Error", "Ha ocurrido un error inesperado. Intente nuevamente");
                     }
@@ -80,13 +78,7 @@ export const CompaniesTableColumns = (handleUpdateCompanies) => {
                 return (
                     <Grid container>
                         <Grid item>
-                            <IconButton
-                                color={color}
-                                onClick={handleCompanyChangeStatus}
-                                sx={{ mr: true }}
-                            >
-                                {enabled === true ? <Block /> : <CheckCircle />}
-                            </IconButton>
+                            <EnableStatusButton color={color} enabled={enabled} handleFunction={handleCompanyChangeStatus} />
                         </Grid>
                         <Grid item>
                             <ModalEditCompany id={id} icon={<Business />} name={name} handleUpdateCompanies={handleUpdateCompanies} />
@@ -101,7 +93,18 @@ export const CompaniesTableColumns = (handleUpdateCompanies) => {
             headerName: "Detalles",
             ...columnOptions,
             renderCell: ({ row }) => {
-                //navigate(`${row.id}`);
+                const handleDetails = () => {
+                    navigate(`${row.id}`);
+                }
+                return (
+                    <Button
+                        variant="contained"
+                        startIcon={<Info />}
+                        onClick={handleDetails}
+                    >
+                        Abrir
+                    </Button>
+                )
             }
         }
     ]

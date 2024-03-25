@@ -1,6 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
 import { HelpDeskLayout } from "../../ui/layout";
-import { TableTitle } from "../../ui/components";
+import { PageTitle } from "../../ui/components";
 import { AddBusiness } from "@mui/icons-material";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { BranchesForm } from "../components";
@@ -55,7 +55,7 @@ export const AddCompanyPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TableTitle icon={<AddBusiness />} title="Agregar empresa" />
+      <PageTitle icon={<AddBusiness />} title="Agregar empresa" />
       <Box
         component="form"
         noValidate
@@ -86,13 +86,9 @@ export const AddCompanyPage = () => {
               }}
             />
           </Grid>
+          
           <Grid item xs={12}>
-            <Typography component="h3" variant="span">
-              Sedes
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <BranchesForm {...{ control, errors }} />
+            <BranchesForm {...{ control, errors }} showAddButton={true} />
           </Grid>
         </Grid>
         <Grid item xs={12} textAlign="center">

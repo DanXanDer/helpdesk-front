@@ -8,7 +8,7 @@ import {
   ModalCambiarEstadoTicket,
   ModalEnviarMensaje,
   ReportTicketDescription,
-  TableTitle,
+  PageTitle,
 } from "../../ui/components";
 import { useModuloSeguridadStore } from "../../hooks";
 import api from "../../services/instance";
@@ -79,7 +79,7 @@ export const MiReporteDetallesPage = () => {
           <ReportTicketDescription data={dataReporteToShow} />
         </Grid>
         <Grid item xs={12} component={Paper} p={2}>
-          <TableTitle icon={<Archive />} title="Historial de mensajes" />
+          <PageTitle icon={<Archive />} title="Historial de mensajes" />
 
           <Grid item xs={12}>
             <DataGridTable

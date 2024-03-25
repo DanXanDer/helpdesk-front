@@ -9,7 +9,6 @@ import {
   ReportTicketDescription,
 } from "../../ui/components";
 import api from "../../services/instance";
-import "./styles.css";
 import { ClienteData } from "../components/ClienteData";
 
 const datosClienteInit = {

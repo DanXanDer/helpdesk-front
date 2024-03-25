@@ -2,6 +2,7 @@ import { Block, CheckCircle } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
 import { handleUserStatusChange } from "../helpers";
 import { RenderedEnabledCell } from "../../ui/components";
+import { getActionInfo } from "../../helpers";
 
 const columnOptions = {
     headerAlign: "left",
@@ -63,10 +64,7 @@ export const ClientsTableColumns = (handleUpdateUsers) => {
             headerName: "Acción",
             renderCell: ({ row }) => {
                 const { enabled } = row;
-                const isEnabled = enabled === true;
-                const text = isEnabled ? "Deshabilitar usuario" : "Habilitar usuario";
-                const subText = isEnabled ? "deshabilitar" : "habilitar";
-                const color = isEnabled ? "error" : "success";
+                const { actionText, color, subText } = getActionInfo(enabled);
                 return (
                     <IconButton
                         color={color}

@@ -9,7 +9,6 @@ import {
   showConfirmationMessage,
 } from "../../helpers";
 import "react-image-gallery/styles/css/image-gallery.css";
-import "./styles.css";
 import { ConfirmationNumber } from "@mui/icons-material";
 import api from "../../services/instance";
 import { ImageGallery, ReportTicketDescription } from "../../ui/components";

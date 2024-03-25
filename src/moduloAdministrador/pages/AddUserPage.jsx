@@ -20,7 +20,7 @@ import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { ClientForm } from "../components";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
-import { TableTitle } from "../../ui/components";
+import { PageTitle } from "../../ui/components";
 import { useUiStore } from "../../hooks";
 
 export const AddUserPage = () => {
@@ -139,7 +139,7 @@ export const AddUserPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TableTitle icon={<PersonAdd />} title="Crear usuario" />
+      <PageTitle icon={<PersonAdd />} title="Crear usuario" />
       <Box
         component="form"
         noValidate

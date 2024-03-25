@@ -5,3 +5,6 @@ export * from "./AreasForm";
 export * from "./ClientsTableColumns";
 export * from "./CompaniesTableColumns";
 export * from "./ModalEditCompany";
+export * from "./CompanyDetailsTableColumns";
+export * from "./ModalEditBranch";
+export * from "./ModalAddBranch";

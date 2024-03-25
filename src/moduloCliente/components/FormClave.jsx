@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
-import { TableTitle } from "../../ui/components";
+import { PageTitle } from "../../ui/components";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 
 export const FormClave = () => {
@@ -75,7 +75,7 @@ export const FormClave = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Grid container>
-          <TableTitle icon={<Password />} title="Cambiar password" />
+          <PageTitle icon={<Password />} title="Cambiar password" />
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <FormControl variant="outlined" fullWidth margin="normal">

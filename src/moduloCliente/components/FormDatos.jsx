@@ -5,7 +5,7 @@ import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
-import { TableTitle } from "../../ui/components";
+import { PageTitle } from "../../ui/components";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 
 export const FormDatos = () => {
@@ -66,7 +66,7 @@ export const FormDatos = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Grid container>
-          <TableTitle icon={<Update />} title="Actualizar información" />
+          <PageTitle icon={<Update />} title="Actualizar información" />
           <Grid container spacing={1} justifyContent="space-between">
             <Grid item xs={12} md={5.8}>
               <Controller

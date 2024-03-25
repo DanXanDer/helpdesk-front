@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getClients, getWorkers } from "../helpers";
 import { ClientsTableColumns, WorkersTableColumns } from "../components";
 import { ManageAccounts } from "@mui/icons-material";
-import { DataGridTable, TableTitle, TableTabs } from "../../ui/components";
+import { DataGridTable, PageTitle, TableTabs } from "../../ui/components";
 const tabsLabels = [
   "Trabajadores",
   "Clientes",
@@ -49,7 +49,7 @@ export const ManageUsersPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TableTitle icon={<ManageAccounts />} title="Listado de usuarios" />
+      <PageTitle icon={<ManageAccounts />} title="Listado de usuarios" />
       <TableTabs
         tabsLabels={tabsLabels}
         value={value}

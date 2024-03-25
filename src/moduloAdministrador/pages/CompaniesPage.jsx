@@ -1,5 +1,5 @@
 import { Business } from "@mui/icons-material"
-import { DataGridTable, TableTitle } from "../../ui/components"
+import { DataGridTable, PageTitle } from "../../ui/components"
 import { HelpDeskLayout } from "../../ui/layout"
 import { useEffect, useState } from "react"
 import api from "../../services/instance";
@@ -27,7 +27,7 @@ export const CompaniesPage = () => {
 
   return (
     <HelpDeskLayout>
-      <TableTitle icon={<Business />} title="Listado de empresas" />
+      <PageTitle icon={<Business />} title="Listado de empresas" />
       {<DataGridTable
         height="90%"
         columnsTable={CompaniesTableColumns}
