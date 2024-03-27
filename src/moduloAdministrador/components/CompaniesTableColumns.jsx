@@ -1,6 +1,6 @@
-import { Button, Grid, IconButton } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { EnableStatusButton, RenderedEnabledCell } from "../../ui/components";
-import { Block, Business, CheckCircle, Info } from "@mui/icons-material";
+import { Business, Info } from "@mui/icons-material";
 import api from "../../services/instance";
 import { getActionInfo, showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useNavigate } from "react-router-dom";
@@ -81,7 +81,12 @@ export const CompaniesTableColumns = (handleUpdateCompanies) => {
                             <EnableStatusButton color={color} enabled={enabled} handleFunction={handleCompanyChangeStatus} />
                         </Grid>
                         <Grid item>
-                            <ModalEditCompany id={id} icon={<Business />} name={name} handleUpdateCompanies={handleUpdateCompanies} />
+                            <ModalEditCompany {...{
+                                id,
+                                name,
+                                handleUpdateCompanies,
+                                icon: <Business />
+                            }} />
                         </Grid>
                     </Grid>
                 );

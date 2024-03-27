@@ -6,7 +6,7 @@ import {
   ManageUsersPage,
   AllTicketsPage,
   CompaniesPage,
-  CompanyDetailsPage,
+  BranchesPage,
 } from "../pages";
 import { useModuloSeguridadStore, useUiStore } from "../../hooks";
 
@@ -37,7 +37,7 @@ export const ModuloAdministradorRoutes = () => {
       <Route path="/ver-tickets" element={<AllTicketsPage />} />
       <Route path="/agregar-empresa" element={<AddCompanyPage />} />
       <Route path="/empresas" element={<CompaniesPage />} />
-      <Route path="/empresas/:id" element={<CompanyDetailsPage />} />
+      <Route path="/empresas/:id" element={<BranchesPage />} />
     </Routes>
   );
 };

@@ -8,16 +8,17 @@ export const DataGridTable = ({
   handleFunction,
   rows,
   loadingRows,
+  params
 }) => {
   return (
-    <Box sx={{ height: height }}>
+    <Box sx={{ height: height }} >
       <DataGrid
         autoPageSize
         disableRowSelectionOnClick
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
-        columns={columnsTable(handleFunction)}
+        columns={columnsTable(handleFunction, params)}
         rows={rows}
         slots={{
           toolbar: GridToolbar,

@@ -1,7 +1,7 @@
 import { getActionInfo, showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { EnableStatusButton, RenderedEnabledCell } from "../../ui/components";
 import api from "../../services/instance";
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { ModalEditBranch } from "./ModalEditBranch";
 import { Business } from "@mui/icons-material";
@@ -12,12 +12,11 @@ const columnOptions = {
     minWidth: 130,
 };
 
-export const CompanyDetailsTableColumns = (handleUpdateBranches) => {
+export const BranchesTableColumns = (handleUpdateBranches) => {
 
     const navigate = useNavigate();
 
     const { id: idCompany } = useParams();
-
 
     const columns = [
         {
@@ -34,7 +33,7 @@ export const CompanyDetailsTableColumns = (handleUpdateBranches) => {
         },
         {
             field: "clientsCount",
-            headerName: "Clientes",
+            headerName: "Trabajadores",
             flex: 1.1,
             ...columnOptions
         },
@@ -76,7 +75,13 @@ export const CompanyDetailsTableColumns = (handleUpdateBranches) => {
                             <EnableStatusButton color={color} enabled={enabled} handleFunction={handleBranchChangeStatus} />
                         </Grid>
                         <Grid item>
-                            <ModalEditBranch idBranch={idBranch} idCompany={idCompany} icon={<Business />} name={name} handleUpdateBranches={handleUpdateBranches} />
+                            <ModalEditBranch {...{
+                                idBranch,
+                                idCompany,
+                                icon: <Business />,
+                                name,
+                                handleUpdateBranches,
+                            }} />
                         </Grid>
                     </Grid>
                 );

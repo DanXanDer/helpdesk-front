@@ -3,4 +3,4 @@ export * from "./AddUserPage";
 export * from "./AllTicketsPage";
 export * from "./AddCompanyPage";
 export * from "./CompaniesPage";
-export * from "./CompanyDetailsPage";
+export * from "./BranchesPage";
