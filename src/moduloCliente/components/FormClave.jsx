@@ -83,7 +83,7 @@ export const FormClave = () => {
                   htmlFor="outlined-adornment-password"
                   error={!!errors.password || passwordMatch}
                 >
-                  Ingresa tu nueva password
+                  Ingresa tu nueva clave
                 </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
@@ -96,9 +96,9 @@ export const FormClave = () => {
                     </InputAdornment>
                   }
                   error={!!errors.password || passwordMatch}
-                  label="Ingresa tu nueva password"
+                  label="Ingresa tu nueva clave"
                   {...register("password", {
-                    required: "La nueva password es requerida",
+                    required: "La nueva clave es requerida",
                     minLength: {
                       value: 8,
                       message: "La clave debe tener al menos 8 caracteres",
@@ -124,7 +124,7 @@ export const FormClave = () => {
                   htmlFor="outlined-adornment-rePassword"
                   error={!!errors.rePassword || passwordMatch}
                 >
-                  Confirma tu nueva password
+                  Confirma tu nueva clave
                 </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-rePassword"
@@ -140,7 +140,7 @@ export const FormClave = () => {
                     </InputAdornment>
                   }
                   error={!!errors.rePassword || passwordMatch}
-                  label="Confirma tu nueva password"
+                  label="Confirma tu nueva clave"
                   {...register("rePassword", {
                     required: "La confirmación de la clave es requerida",
                     minLength: {

@@ -21,7 +21,7 @@ import {
 import { useModuloSeguridadStore } from "../../hooks";
 import api from "../../services/instance";
 
-export const AutenticacionPage = () => {
+export const LoginPage = () => {
   const navigate = useNavigate();
 
   const {

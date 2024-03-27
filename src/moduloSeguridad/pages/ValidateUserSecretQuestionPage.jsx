@@ -6,8 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { showAlertMessage } from "../../helpers";
 import api from "../../services/instance";
 
-//TODO: Proteccion de ruta
-export const PreguntaSeguridadPage = () => {
+export const ValidateUserSecretQuestionPage = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
@@ -21,21 +20,17 @@ export const PreguntaSeguridadPage = () => {
     return window.location.replace("/mensaje-sistema");
   }
 
-  const { idUsuario, preguntaSeguridad } = state;
+  const { id, secretQuestion } = state;
 
-  const onSubmit = async (formData) => {
-    const formDataWithIdUsuario = {
-      ...formData,
-      idUsuario,
-    };
+  const onSubmit = async (data) => {
     try {
-      await api.post("/seguridad/validar-rpta-secreta", formDataWithIdUsuario);
-      navigate("/reestablecer-password", {
-        state: { idUsuario },
-      });
-    } catch (error) {
-      const { mensaje } = error.response.data.error;
-      showAlertMessage("error", "Error", mensaje);
+      await api.post(`/users/${id}/validate-secret-answer`, data);
+      navigate("/reestablecer-clave", {
+        state: { id }
+      })
+    } catch ({ response }) {
+      const { message } = response.data;
+      showAlertMessage("error", "Error", message);
     }
   };
   return (
@@ -52,10 +47,10 @@ export const PreguntaSeguridadPage = () => {
         <TextField
           margin="normal"
           fullWidth
-          id="preguntaSeguridad"
-          name="preguntaSeguridad"
+          id="secretQuestion"
+          name="secretQuestion"
           label="Pregunta de seguridad"
-          value={preguntaSeguridad}
+          value={secretQuestion}
           inputProps={
             { readOnly: true } // readOnly is a boolean attribute of input tag
           }
@@ -63,7 +58,7 @@ export const PreguntaSeguridadPage = () => {
 
         <Controller
           defaultValue=""
-          name="rptaSecreta"
+          name="secretAnswer"
           control={control}
           render={({ field }) => (
             <TextField
@@ -71,10 +66,10 @@ export const PreguntaSeguridadPage = () => {
               label="Ingresa tu respuesta secreta"
               margin="normal"
               fullWidth
-              autoComplete="rptaSecreta"
+              autoComplete="secretAnswer"
               autoFocus
-              error={!!errors.rptaSecreta}
-              helperText={errors?.rptaSecreta?.message}
+              error={!!errors.secretAnswer}
+              helperText={errors?.secretAnswer?.message}
             />
           )}
           rules={{
@@ -89,7 +84,7 @@ export const PreguntaSeguridadPage = () => {
         >
           Siguiente
         </Button>
-        <LinkGrid path="/autenticacion" text="Ir al inicio" />
+        <LinkGrid path="/login" text="Ir al inicio" />
       </Box>
     </ModuloSeguridadLayout>
   );

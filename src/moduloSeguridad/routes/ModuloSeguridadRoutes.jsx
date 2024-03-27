@@ -1,9 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
-  AutenticacionPage,
+  LoginPage,
   CompletarDatosPage,
-  ConfirmarDatosPage,
-  PreguntaSeguridadPage,
+  ValidateUserDataPage,
+  ValidateUserSecretQuestionPage,
   ReestablecerClavePage,
 } from "../pages";
 
@@ -12,14 +12,14 @@ export const ModuloSeguridadRoutes = () => {
   return (
     <Routes>
       <Route path="/*" element={<Navigate to="/" />}></Route>
-      <Route path="/" element={<AutenticacionPage />}></Route>
-      <Route path="confirmar-datos" element={<ConfirmarDatosPage />}></Route>
+      <Route path="/" element={<LoginPage />}></Route>
+      <Route path="confirmar-datos" element={<ValidateUserDataPage />}></Route>
       <Route
         path="pregunta-seguridad"
-        element={<PreguntaSeguridadPage />}
+        element={<ValidateUserSecretQuestionPage />}
       ></Route>
       <Route
-        path="reestablecer-password"
+        path="reestablecer-clave"
         element={<ReestablecerClavePage />}
       ></Route>
       <Route path="completar-datos" element={<CompletarDatosPage />}></Route>

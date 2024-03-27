@@ -6,9 +6,8 @@ import { Controller, useForm } from "react-hook-form";
 import { showAlertMessage } from "../../helpers";
 import api from "../../services/instance";
 
-export const ConfirmarDatosPage = () => {
+export const ValidateUserDataPage = () => {
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
@@ -16,25 +15,21 @@ export const ConfirmarDatosPage = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async (data) => {
     try {
-      const { data } = await api.post(
-        "/seguridad/validar-datos-user",
-        formData
-      );
-      const { idUsuario, preguntaSeguridad } = data;
+      const { data: userSecretQuestion } = await api.post("/users/validate-user-data", data);
       navigate("/pregunta-seguridad", {
-        state: { idUsuario, preguntaSeguridad },
-      });
-    } catch (error) {
-      const { mensaje } = error.response.data.error;
-      showAlertMessage("error", "Error", mensaje);
+        state: { ...userSecretQuestion }
+      })
+    } catch ({ response }) {
+      const { message } = response.data;
+      showAlertMessage("error", "Error", message);
     }
   };
 
   return (
     <ModuloSeguridadLayout
-      pageTitle="Reestablecer password"
+      pageTitle="Reestablecer clave"
       titleDesc="Confirmación de datos"
     >
       <Box
@@ -50,7 +45,7 @@ export const ConfirmarDatosPage = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tu user"
+              label="Ingresa tu usuario"
               margin="normal"
               fullWidth
               autoComplete="username"
@@ -70,7 +65,7 @@ export const ConfirmarDatosPage = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tu name"
+              label="Ingresa tu nombre"
               margin="normal"
               fullWidth
               autoComplete="name"
@@ -90,7 +85,7 @@ export const ConfirmarDatosPage = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tus lastname"
+              label="Ingresa tus apellidos"
               margin="normal"
               fullWidth
               autoComplete="lastname"
@@ -111,7 +106,7 @@ export const ConfirmarDatosPage = () => {
         >
           Siguiente
         </Button>
-        <LinkGrid path="/autenticacion" text="Ir al inicio" />
+        <LinkGrid path="/login" text="Ir al inicio" />
       </Box>
     </ModuloSeguridadLayout>
   );
