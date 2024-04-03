@@ -1,7 +1,14 @@
-import React from "react";
+import { LocalDateTime } from "@js-joda/core";
 
 export const formatFecha = (fecha) => {
-  const fechaFormateada = new Date(fecha).toLocaleString("es-ES");
-
-  return fechaFormateada;
+  const formattedDate = LocalDateTime.parse(fecha);
+  return (
+    formattedDate.toLocalDate() +
+    " - " +
+    formattedDate.hour() +
+    ":" +
+    formattedDate.minute() +
+    ":" +
+    formattedDate.second()
+  );
 };

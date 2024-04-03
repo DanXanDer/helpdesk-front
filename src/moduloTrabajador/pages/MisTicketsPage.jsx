@@ -68,7 +68,7 @@ export const MisTicketsPage = () => {
       />
       <DataGridTable
         height="80%"
-        columnsTable={TableColumnsTickets}
+        tableColumns={TableColumnsTickets}
         rows={ticketsAsignadosPorEstado}
         loadingRows={loadingRows}
       />

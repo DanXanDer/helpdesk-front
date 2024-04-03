@@ -1,4 +1,4 @@
-import { showConfirmationMessage } from "../../helpers";
+import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import api from "../../services/instance";
 import { getClients } from "./getClients";
 import { getWorkers } from "./getWorkers";
@@ -22,4 +22,5 @@ export const handleUserStatusChange = async (
   });
   const users = role === "Trabajador" ? await getWorkers() : await getClients();
   handleUpdateUsers(users);
+  showAlertMessage("success", "Éxito", `Se ha actualizado el estado del usuario ${username}`);
 };

@@ -1,9 +1,11 @@
 import { Business } from "@mui/icons-material"
-import { DataGridTable, PageTitle } from "../../ui/components"
+import { DataGridTable, ModalTitle, PageTitle } from "../../ui/components"
 import { HelpDeskLayout } from "../../ui/layout"
 import { useEffect, useState } from "react"
 import api from "../../services/instance";
-import { CompaniesTableColumns } from "../components";
+import { CompaniesTableColumns, ModalAddCompany } from "../components";
+import { showAlertMessage } from "../../helpers";
+import { Grid } from "@mui/material";
 
 export const CompaniesPage = () => {
 
@@ -27,13 +29,22 @@ export const CompaniesPage = () => {
 
   return (
     <HelpDeskLayout>
-      <PageTitle icon={<Business />} title="Listado de empresas" />
+      <Grid container justifyContent="space-between" mb={2} >
+        <Grid item>
+          <PageTitle icon={<Business/>} title="Lista de empresas" />
+        </Grid>
+        <Grid item>
+          <ModalAddCompany {...{handleUpdateCompanies}} />
+        </Grid>
+      </Grid>
       {<DataGridTable
         height="90%"
-        columnsTable={CompaniesTableColumns}
+        tableColumns={CompaniesTableColumns}
         rows={companies}
         loadingRows={loadingRows}
-        handleFunction={handleUpdateCompanies}
+        params={
+          { handleUpdateCompanies }
+        }
       />}
     </HelpDeskLayout>
   )

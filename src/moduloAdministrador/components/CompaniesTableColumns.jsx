@@ -1,5 +1,5 @@
 import { Button, Grid } from "@mui/material";
-import { EnableStatusButton, RenderedEnabledCell } from "../../ui/components";
+import { CustomizedActionsMenu, EnableStatusButton, RenderedEnabledCell } from "../../ui/components";
 import { Business, Info } from "@mui/icons-material";
 import api from "../../services/instance";
 import { getActionInfo, showAlertMessage, showConfirmationMessage } from "../../helpers";
@@ -12,7 +12,7 @@ const columnOptions = {
     minWidth: 130,
 };
 
-export const CompaniesTableColumns = (handleUpdateCompanies) => {
+export const CompaniesTableColumns = ({ handleUpdateCompanies }) => {
 
     const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ export const CompaniesTableColumns = (handleUpdateCompanies) => {
             flex: 1.1,
             renderCell: ({ row }) => {
                 const { id, name, enabled } = row;
-                const { actionText, color, isEnabled, subText } = getActionInfo(enabled);
+                const { actionText, color, subText } = getActionInfo(enabled);
                 const handleCompanyChangeStatus = async () => {
                     const isConfirmed = await showConfirmationMessage(
                         `${actionText} empresa`,
@@ -66,32 +66,36 @@ export const CompaniesTableColumns = (handleUpdateCompanies) => {
                     if (!isConfirmed) return;
                     try {
                         await api.patch(`/company/${id}/update`, {
-                            enabled: !isEnabled,
+                            enabled: !enabled,
                         })
                         const { data: companies } = await api.get("/company");
                         handleUpdateCompanies(companies);
                         showAlertMessage("success", "Éxito", `Se ha cambiado el estado de la empresa ${name}`);
                     } catch (error) {
+                        console.log(error);
                         showAlertMessage("error", "Error", "Ha ocurrido un error inesperado. Intente nuevamente");
                     }
                 }
                 return (
-                    <Grid container>
-                        <Grid item>
-                            <EnableStatusButton color={color} enabled={enabled} handleFunction={handleCompanyChangeStatus} />
-                        </Grid>
-                        <Grid item>
-                            <ModalEditCompany {...{
+                    <>
+                        <CustomizedActionsMenu
+                            enableStatusButton={<EnableStatusButton {...{
+                                color,
+                                enabled,
+                                handleFunction: handleCompanyChangeStatus
+                            }} />}
+                            modal={<ModalEditCompany {...{
                                 id,
                                 name,
                                 handleUpdateCompanies,
                                 icon: <Business />
-                            }} />
-                        </Grid>
-                    </Grid>
+                            }} />}
+                        />
+                    </>
                 );
             },
             ...columnOptions,
+            minWidth: 160,
         },
         {
             field: "details",

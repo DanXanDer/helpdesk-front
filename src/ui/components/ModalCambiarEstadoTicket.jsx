@@ -20,7 +20,7 @@ import { useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FileUploader } from "./FileUploader";
 import { showAlertMessage } from "../../helpers";
-import { useModuloSeguridadStore, useUiStore } from "../../hooks";
+import { useSecurityModelStore, useUiStore } from "../../hooks";
 import api from "../../services/instance";
 import { useNavigate } from "react-router-dom";
 
@@ -52,7 +52,7 @@ export const ModalCambiarEstadoTicket = ({
   } = useForm();
 
   const filePondRef = useRef(null);
-  const { user } = useModuloSeguridadStore();
+  const { user } = useSecurityModelStore();
   const { handleActiveRoute } = useUiStore();
   const navigate = useNavigate();
 

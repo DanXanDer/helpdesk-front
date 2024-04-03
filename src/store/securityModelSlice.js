@@ -10,8 +10,8 @@ const initialState = {
   }, */,
 };
 
-export const moduloSeguridadSlice = createSlice({
-  name: "moduloSeguridadSlice",
+export const securityModelSlice = createSlice({
+  name: "securityModelSlice",
   initialState,
   reducers: {
     setUserLogin: (state, action) => {
@@ -26,6 +26,6 @@ export const moduloSeguridadSlice = createSlice({
 });
 
 export const { setUserLogin, setUserLogout } =
-  moduloSeguridadSlice.actions;
+  securityModelSlice.actions;
 
-export default moduloSeguridadSlice.reducer;
+export default securityModelSlice.reducer;

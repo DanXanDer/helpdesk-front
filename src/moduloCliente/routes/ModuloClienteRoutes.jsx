@@ -1,43 +1,37 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
-  ActualizarInformacionPage,
-  MiReporteDetallesPage,
-  MisReportesPage,
-  ReportarIncidentePage,
+  MyReportDetailsPage,
+  MyReportsPage,
+  ReportPage,
 } from "../pages";
-import { useModuloSeguridadStore, useUiStore } from "../../hooks";
+import { useSecurityModelStore, useUiStore } from "../../hooks";
 import { useEffect } from "react";
+import { WelcomePage } from "../../moduloSeguridad/pages/WelcomePage";
+import { getActiveRoute } from "../../helpers";
+import { UserUpdatePage } from "../../ui/pages/UserUpdatePage";
 
 export const ModuloClienteRoutes = () => {
+  const { user: { authorities } } = useSecurityModelStore();
   const { handleActiveRoute } = useUiStore();
-  const { user } = useModuloSeguridadStore();
-
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    const currentRoute = currentPath.split("/")[1];
-    const { authorities } = user;
-    if (currentRoute === "reportar-incidente") {
-      handleActiveRoute(authorities[0].idPrivilege);
-    } else if (currentRoute === "mis-reportes") {
-      handleActiveRoute(authorities[1].idPrivilege);
-    } else if (currentRoute === "actualizar-informacion") {
-      handleActiveRoute(authorities[2].idPrivilege);
-    }
-  }, []);
+    const idPrivilege = getActiveRoute(authorities);
+    handleActiveRoute(idPrivilege);
+  })
 
   return (
     <Routes>
-      <Route path="/*" element={<Navigate to="/reportar-incidente" />} />
+      <Route path="/*" element={<Navigate to="/bienvenida" />} />
       <Route
         path="actualizar-informacion"
-        element={<ActualizarInformacionPage />}
+        element={<UserUpdatePage />}
       />
-      <Route path="mis-reportes" element={<MisReportesPage />} />
-      <Route path="reportar-incidente" element={<ReportarIncidentePage />} />
+      <Route path="mis-reportes" element={<MyReportsPage />} />
+      <Route path="reportar-incidente" element={<ReportPage />} />
       <Route
-        path="mis-reportes/:idReporteIncidente"
-        element={<MiReporteDetallesPage />}
+        path="mis-reportes/:id"
+        element={<MyReportDetailsPage />}
       />
+      <Route path="/bienvenida" element={<WelcomePage />} />
     </Routes>
   );
 };

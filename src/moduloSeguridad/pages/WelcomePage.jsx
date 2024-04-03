@@ -2,7 +2,7 @@ import { ListAlt } from "@mui/icons-material";
 import { HelpDeskLayout } from "../../ui/layout";
 import { Grid, Typography } from "@mui/material";
 
-export const BienvenidaPage = () => {
+export const WelcomePage = () => {
   return (
     <HelpDeskLayout>
       <Grid

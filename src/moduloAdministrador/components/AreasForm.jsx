@@ -68,14 +68,13 @@ export const AreasForm = ({ branchIndex, branchRemove, control, errors }) => {
                 ))}
                 <Grid item xs={12}>
                     <Button
-                        variant="contained"
-                        color="info"
+                        variant="outlined"
                         onClick={() => {
                             append({ name: "" });
                         }}
                         startIcon={<Add />}
                     >
-                        Aumentar área
+                        Área
                     </Button>
                 </Grid>
             </Grid>

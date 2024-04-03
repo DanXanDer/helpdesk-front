@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import {
   showAlertMessage
 } from "../../helpers";
-import { useModuloSeguridadStore } from "../../hooks";
+import { useSecurityModelStore } from "../../hooks";
 import api from "../../services/instance";
 
 export const LoginPage = () => {
@@ -33,7 +33,7 @@ export const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { handleUserLogin } = useModuloSeguridadStore();
+  const { handleUserLogin } = useSecurityModelStore();
 
   const onSubmit = async (formData) => {
     try {
@@ -79,7 +79,7 @@ export const LoginPage = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Ingresa tu Ingresar nombre de usuario"
+              label="Ingresa tu nombre de usuario"
               margin="normal"
               fullWidth
               autoComplete="username"
@@ -95,7 +95,7 @@ export const LoginPage = () => {
 
         <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel htmlFor="outlined-adornment-password" error={!!errors.password}>
-            Ingresa tu password
+            Ingresa tu clave
           </InputLabel>
           <OutlinedInput
             defaultValue=""
@@ -109,7 +109,7 @@ export const LoginPage = () => {
               </InputAdornment>
             }
             error={!!errors.password}
-            label="Ingresa tu password"
+            label="Ingresa tu clave"
             {...register("password", { required: "La clave es requerida" })}
           />
           {errors?.password && (
@@ -124,7 +124,7 @@ export const LoginPage = () => {
         >
           Ingresar
         </Button>
-        <LinkGrid path="/confirmar-datos" text="¿Olvidaste tu password?" />
+        <LinkGrid path="/confirmar-datos" text="¿Olvidaste tu clave?" />
       </Box>
     </ModuloSeguridadLayout>
   );

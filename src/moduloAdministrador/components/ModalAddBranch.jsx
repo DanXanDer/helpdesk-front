@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { showAlertMessage } from "../../helpers";
+import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { Add } from "@mui/icons-material";
+import { Add, Save } from "@mui/icons-material";
 import { ModalTitle } from "../../ui/components";
 import { BranchesForm } from "./BranchesForm";
 import api from "../../services/instance";
@@ -41,7 +41,12 @@ export const ModalAddBranch = ({ handleUpdateBranches, icon, title, idCompany })
 
     const onSubmit = async (data) => {
         try {
-            handleClose();
+            const isConfirmed = await showConfirmationMessage(
+                "Registrar sede",
+                "¿Está seguro de continuar?",
+                "warning"
+            );
+            if (!isConfirmed) return;
             const formData = {
                 company: {
                     idCompany
@@ -52,6 +57,8 @@ export const ModalAddBranch = ({ handleUpdateBranches, icon, title, idCompany })
             await api.post("/branch", formData);
             const { data: companyDetails } = await api.get(`/company/${idCompany}`);
             handleUpdateBranches(companyDetails.branches);
+            reset(defaultValues);
+            handleClose();
             showAlertMessage("success", "Exito", "Sede agregada exitosamente");
         } catch ({ response }) {
             const { message } = response.data;
@@ -67,27 +74,24 @@ export const ModalAddBranch = ({ handleUpdateBranches, icon, title, idCompany })
                 variant="contained"
                 startIcon={<Add />}
             >
-                Agregar sede
+                Sede
             </Button>
             <Dialog open={open} onClose={handleClose} >
                 <DialogTitle>
                     <ModalTitle icon={icon} title={title} />
                 </DialogTitle>
-                <Box
-                    component="form"
-                    mt={-3}
-                    noValidate
-                    sx={{ width: "600px" }}
-                    method="POST"
-                    onSubmit={handleSubmit(onSubmit)}>
-                    <DialogContent>
+                <DialogContent>
+                    <Box
+                        component="form"
+                        noValidate
+                        method="POST"
+                        onSubmit={handleSubmit(onSubmit)}>
                         <BranchesForm {...{ control, errors }} showAddButton={false} />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose} >Cerrar</Button>
-                        <Button type="submit">Guardar</Button>
-                    </DialogActions>
-                </Box>
+                        <DialogActions>
+                            <Button variant="contained" type="submit" startIcon={<Save />} >Guardar</Button>
+                        </DialogActions>
+                    </Box>
+                </DialogContent>
             </Dialog>
         </Box>
     )

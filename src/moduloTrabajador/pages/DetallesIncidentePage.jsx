@@ -4,15 +4,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   formatFecha,
-  getImagenes,
+  getImages,
   showAlertMessage,
   showConfirmationMessage,
 } from "../../helpers";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { ConfirmationNumber } from "@mui/icons-material";
 import api from "../../services/instance";
-import { ImageGallery, ReportTicketDescription } from "../../ui/components";
-import { useModuloSeguridadStore, useUiStore } from "../../hooks";
+import { GalleryImages, TicketDetails } from "../../ui/components";
+import { useSecurityModelStore, useUiStore } from "../../hooks";
 
 export const DetallesIncidentePage = () => {
   const [imagenes, setImagenes] = useState([]);
@@ -22,7 +22,7 @@ export const DetallesIncidentePage = () => {
   const { handleActiveRoute } = useUiStore();
   const {
     user: { authorities },
-  } = useModuloSeguridadStore();
+  } = useSecurityModelStore();
 
   const handleCrearTicket = async () => {
     const isConfirmed = await showConfirmationMessage(
@@ -59,21 +59,21 @@ export const DetallesIncidentePage = () => {
         ...reporteIncidente,
       };
       setDataReporteToShow(dataReporteToShow);
-      const imagenesParaGallery = await getImagenes(
+      const galleryImages = await getImages(
         rutasImagenes,
         baseUrlGetImagenes
       );
-      setImagenes(imagenesParaGallery);
+      setImagenes(galleryImages);
     })();
   }, [idReporteIncidente]);
 
   return (
     <HelpDeskLayout>
-      <ReportTicketDescription data={dataReporteToShow} />
+      <TicketDetails data={dataReporteToShow} />
       <Grid container>
         <Grid item xs={12}>
           {imagenes ? (
-            <ImageGallery imagenes={imagenes} height="55vh" width="100%" />
+            <GalleryImages imagenes={imagenes} height="55vh" width="100%" />
           ) : null}
         </Grid>
         <Grid item xs={12} textAlign="center" mt={5}>

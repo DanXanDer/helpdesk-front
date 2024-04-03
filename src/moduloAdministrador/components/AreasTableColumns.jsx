@@ -8,7 +8,7 @@ const columnOptions = {
     minWidth: 130,
 };
 
-export const AreasTableColumns = (handleUpdateAreas, params) => {
+export const AreasTableColumns = ({ handleUpdateAreas, idBranch }) => {
 
     const columns = [
         {
@@ -38,7 +38,7 @@ export const AreasTableColumns = (handleUpdateAreas, params) => {
             flex: 1.1,
             renderCell: ({ row }) => {
                 const { id: idArea, name, enabled } = row;
-                const { actionText, color, isEnabled, subText } = getActionInfo(enabled);
+                const { actionText, color, subText } = getActionInfo(enabled);
                 const handleAreChangeStatus = async () => {
                     const isConfirmed = await showConfirmationMessage(
                         `${actionText} área`,
@@ -46,9 +46,8 @@ export const AreasTableColumns = (handleUpdateAreas, params) => {
                         "warning"
                     );
                     if (!isConfirmed) return;
-                    const { idBranch, handleUpdateAreas } = params;
                     try {
-                        await api.patch(`/areas/${idArea}/update`, { enabled: !isEnabled });
+                        await api.patch(`/areas/${idArea}/update`, { enabled: !enabled });
                         const { data: areas } = await api.get(`/branch/${idBranch}/areas`);
                         handleUpdateAreas(areas);
                         showAlertMessage("success", "Éxito", `Se ha actualizado el estado del área de ${name}`);

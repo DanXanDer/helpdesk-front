@@ -1,21 +1,25 @@
 import { List } from "@mui/material";
 import { SideBarListItem } from "./SideBarListItem";
-import { useModuloSeguridadStore } from "../../hooks";
+import { useSecurityModelStore } from "../../hooks";
 
 export const SideBarList = () => {
-  const { user } = useModuloSeguridadStore();
+  const { user } = useSecurityModelStore();
 
   return (
     <List>
-      {user.authorities.map(({ idPrivilege, ...authority }) => {
-        return (
-          <SideBarListItem
-            key={idPrivilege}
-            idPrivilege={idPrivilege}
-            {...authority}
-          />
-        );
-      })}
+      {user.authorities
+        .slice()
+        .sort((a, b) => a.idPrivilege - b.idPrivilege)
+        .map(({ idPrivilege, ...authority }) => {
+          return (
+            <SideBarListItem
+              key={idPrivilege}
+              idPrivilege={idPrivilege}
+              {...authority}
+            />
+          );
+        })
+      }
     </List>
   );
 };

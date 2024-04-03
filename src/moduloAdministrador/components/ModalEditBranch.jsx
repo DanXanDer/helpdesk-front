@@ -1,5 +1,5 @@
-import { Edit, Save } from "@mui/icons-material";
-import { Box, Button, Dialog, DialogContent, DialogTitle, Grid, IconButton, TextField } from "@mui/material";
+import { Edit } from "@mui/icons-material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { DataGridTable, ModalTitle } from "../../ui/components";
@@ -56,7 +56,7 @@ export const ModalEditBranch = ({ idBranch, idCompany, icon, name, handleUpdateB
             await api.patch(`/branch/${idBranch}/update`, data);
             const { data: companyDetails } = await api.get(`/company/${idCompany}`);
             handleUpdateBranches(companyDetails.branches);
-            showAlertMessage("success", "Éxito", "Se han guardado los cambios");
+            showAlertMessage("success", "Éxito", "Se ha actualizado el nombre de la sede");
         } catch ({ response }) {
             const { message } = response.data;
             showAlertMessage("error", "Error", message);
@@ -65,11 +65,11 @@ export const ModalEditBranch = ({ idBranch, idCompany, icon, name, handleUpdateB
 
     return (
         <Box>
-            <IconButton
+            <Button
                 onClick={handleClickOpen}
             >
-                <Edit />
-            </IconButton>
+                Editar
+            </Button>
             <Dialog {...{ open, onClose: handleClose }} >
                 <DialogTitle>
                     <ModalTitle {...{ icon, title }} />
@@ -114,7 +114,7 @@ export const ModalEditBranch = ({ idBranch, idCompany, icon, name, handleUpdateB
                             </Grid>
                             <Grid item >
                                 <Button variant="contained" type="submit">
-                                    <Save />
+                                    <Edit />
                                 </Button>
                             </Grid>
                         </Grid>
@@ -124,7 +124,7 @@ export const ModalEditBranch = ({ idBranch, idCompany, icon, name, handleUpdateB
                     <DialogContent>
                         <DataGridTable
                             height="307px"
-                            columnsTable={AreasTableColumns}
+                            tableColumns={AreasTableColumns}
                             rows={areas}
                             loadingRows={loadingRows}
                             params={
@@ -136,7 +136,10 @@ export const ModalEditBranch = ({ idBranch, idCompany, icon, name, handleUpdateB
                         />
                     </DialogContent>
                 </Box>
-                <AddArea {...{ idBranch, handleUpdateAreas }} />
+                <AddArea {...{ idBranch, handleUpdateAreas, handleUpdateBranches }} />
+                <DialogActions>
+                    <Button onClick={handleClose} >Cerrar</Button>
+                </DialogActions>
             </Dialog>
         </Box>
     )

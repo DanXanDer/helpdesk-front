@@ -1,2 +1,2 @@
 export * from "./useUiStore";
-export * from "./useModuloSeguridadStore";
+export * from "./useSecurityModelStore";

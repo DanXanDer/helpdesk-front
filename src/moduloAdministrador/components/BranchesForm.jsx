@@ -22,7 +22,6 @@ export const BranchesForm = ({ control, errors, showAddButton }) => {
     <>
       <Grid container justifyContent="space-between" spacing={1}>
         {fields.map((item, index) => (
-
           <Grid item xs={12} key={item.id}>
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item xs={12}>
@@ -73,11 +72,11 @@ export const BranchesForm = ({ control, errors, showAddButton }) => {
           showAddButton && (
             <Grid item>
               <Button
-                variant="contained"
+                variant="outlined"
                 onClick={() => append({ name: "" })}
                 startIcon={<Add />}
               >
-                Agregar sede
+                Sede
               </Button>
             </Grid>
           )

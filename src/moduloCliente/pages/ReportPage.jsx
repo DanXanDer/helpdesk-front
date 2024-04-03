@@ -7,10 +7,10 @@ import { showAlertMessage, showConfirmationMessage } from "../../helpers";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/instance";
-import { FileUploader } from "../../ui/components";
-import { useModuloSeguridadStore, useUiStore } from "../../hooks";
+import { FileUploader, PageTitle } from "../../ui/components";
+import { useSecurityModelStore, useUiStore } from "../../hooks";
 
-export const ReportarIncidentePage = () => {
+export const ReportPage = () => {
   const {
     handleSubmit,
     control,
@@ -20,8 +20,8 @@ export const ReportarIncidentePage = () => {
   const navigate = useNavigate();
   const { handleActiveRoute } = useUiStore();
   const {
-    user: { authorities },
-  } = useModuloSeguridadStore();
+    user: { id, authorities },
+  } = useSecurityModelStore();
 
   const onSubmit = async (data) => {
     const isConfirmed = await showConfirmationMessage(
@@ -30,29 +30,29 @@ export const ReportarIncidentePage = () => {
       "warning"
     );
     if (!isConfirmed) return;
+    const { summary, description, images } = data;
+    const formData = new FormData();
+    formData.append("summary", summary);
+    formData.append("description", description);
+    formData.append("idClient", id);
+    images.forEach((image) => formData.append("images", image));
     try {
-      const formData = new FormData();
-      formData.append("nombreIncidente", data.nombreIncidente);
-      formData.append("descripcion", data.descripcion);
-      data.imagenes.forEach((imagen) => formData.append("imagenes", imagen));
-      await api.post("/modulo-client/reportes/reportar-incidente", formData, {
+      await api.post("/tickets", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+
         },
       });
       showAlertMessage("success", "Exito", "Incidente reportado correctamente");
-      handleActiveRoute(authorities[1].idPrivilege);
-      navigate("/mis-reportes");
+      navigate("/bienvenida");
     } catch (error) {
-      showAlertMessage("error", "Error", "Hubo un error inesperado. Intente nuevamente");
+      showALertMessage("error", "Error", "Hubo un error inesperado. Intente nuevamente");
     }
   };
 
   return (
     <HelpDeskLayout>
-      <Typography component="h3" variant="span">
-        Reportar incidente
-      </Typography>
+      <PageTitle icon={<Report />} title="Reportar incidente" />
       <Typography component="span" variant="span">
         Detalle el incidente que presenta. De ser necesario, adjunte imágenes
       </Typography>
@@ -65,7 +65,7 @@ export const ReportarIncidentePage = () => {
       >
         <Controller
           defaultValue=""
-          name="nombreIncidente"
+          name="summary"
           control={control}
           render={({ field }) => (
             <TextField
@@ -74,8 +74,8 @@ export const ReportarIncidentePage = () => {
               margin="normal"
               fullWidth
               autoFocus
-              error={!!errors.nombreIncidente}
-              helperText={errors?.nombreIncidente?.message}
+              error={!!errors.summary}
+              helperText={errors?.summary?.message}
             />
           )}
           rules={{
@@ -89,7 +89,7 @@ export const ReportarIncidentePage = () => {
         />
         <Controller
           defaultValue=""
-          name="descripcion"
+          name="description"
           control={control}
           render={({ field }) => (
             <TextField
@@ -102,8 +102,8 @@ export const ReportarIncidentePage = () => {
               multiline
               rows={8}
               fullWidth
-              error={!!errors.descripcion}
-              helperText={errors?.descripcion?.message}
+              error={!!errors.description}
+              helperText={errors?.description?.message}
             />
           )}
           rules={{
@@ -113,11 +113,16 @@ export const ReportarIncidentePage = () => {
               message:
                 "La descripción del incidente debe tener máximo 500 caracteres",
             },
+            minLength: {
+              value: 5,
+              message:
+                "La descripción del incidente debe tener mínimo 10 caracteres",
+            }
           }}
         />
         <Grid>
           <Controller
-            name="imagenes"
+            name="images"
             control={control}
             defaultValue={[]}
             render={({ field }) => (

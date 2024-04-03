@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import uiSliceReducer from "./uiSlice";
-import moduloSeguridadReducer from "./moduloSeguridadSlice";
+import moduloSeguridadReducer from "./securityModelSlice";
 
 export const store = configureStore({
   reducer: {
     uiSlice: uiSliceReducer,
-    moduloSeguridadSlice: moduloSeguridadReducer,
+    securityModelSlice: moduloSeguridadReducer,
   },
 });

@@ -1,9 +1,10 @@
 import { HelpDeskLayout } from "../../ui/layout";
 import api from "../../services/instance";
 import { useEffect, useState } from "react";
-import { DataGridTable, TableTabs } from "../../ui/components";
+import { DataGridTable, PageTitle, TableTabs } from "../../ui/components";
 import { formatFecha } from "../../helpers";
 import { AllTicketsTableColumns } from "../components/AllTicketsTableColumns";
+import { Report } from "@mui/icons-material";
 
 const tabsLabels = [
   "Todos",
@@ -66,7 +67,7 @@ export const AllTicketsPage = () => {
       />
       <DataGridTable
         height="80%"
-        columnsTable={AllTicketsTableColumns}
+        tableColumns={AllTicketsTableColumns}
         rows={ticketsPorEstado}
         loadingRows={loadingRows}
       />

@@ -10,3 +10,5 @@ export * from "./ModalEditBranch";
 export * from "./ModalAddBranch";
 export * from "./AreasTableColumns";
 export * from "./AddArea";
+export * from "./ModalAddCompany";
+export * from "./ModalAddUser";

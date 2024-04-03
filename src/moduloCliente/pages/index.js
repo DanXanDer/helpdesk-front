@@ -1,4 +1,3 @@
-export * from "./ActualizarInformacionPage";
-export * from "./MisReportesPage";
-export * from "./ReportarIncidentePage";
-export * from "./MiReporteDetallesPage";
+export * from "./MyReportsPage";
+export * from "./ReportPage";
+export * from "./MyReportDetailsPage";

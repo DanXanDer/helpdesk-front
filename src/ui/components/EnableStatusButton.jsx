@@ -1,16 +1,16 @@
-import { Block, CheckCircle } from "@mui/icons-material"
-import { Grid, IconButton } from "@mui/material"
+import { Button, Grid } from "@mui/material"
 
-export const EnableStatusButton = ({color, enabled, handleFunction}) => {
+export const EnableStatusButton = ({ color, enabled, handleFunction }) => {
     return (
         <Grid item>
-            <IconButton
+            <Button
                 color={color}
                 onClick={handleFunction}
-                sx={{ mr: true }}
             >
-                {enabled === true ? <Block /> : <CheckCircle />}
-            </IconButton>
+                {enabled ? "Deshabilitar" : "Habilitar"}
+            </Button>
         </Grid>
     )
 }
+
+

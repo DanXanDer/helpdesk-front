@@ -4,8 +4,7 @@ import { LoadingRowsOverlay, CustomNoRowsOverlay } from "./";
 
 export const DataGridTable = ({
   height,
-  columnsTable,
-  handleFunction,
+  tableColumns,
   rows,
   loadingRows,
   params
@@ -18,7 +17,7 @@ export const DataGridTable = ({
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
-        columns={columnsTable(handleFunction, params)}
+        columns={tableColumns(params)}
         rows={rows}
         slots={{
           toolbar: GridToolbar,

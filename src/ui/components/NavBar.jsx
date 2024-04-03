@@ -1,16 +1,16 @@
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import { Logout, Menu } from "@mui/icons-material";
-import { useModuloSeguridadStore, useUiStore } from "../../hooks";
+import { useSecurityModelStore, useUiStore } from "../../hooks";
 import api from "../../services/instance";
 
 export const NavBar = ({ drawerWidth }) => {
-  const { user, handleUserLogout } = useModuloSeguridadStore();
+  const { user, handleUserLogout } = useSecurityModelStore();
 
   const { handleDrawerToggle } = useUiStore();
 
   const onUsuarioLogout = async () => {
     handleUserLogout();
-    await api.post("/seguridad/logout-user");
+    await api.post("/home/logout");
   };
 
   return (

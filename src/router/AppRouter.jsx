@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ModuloSeguridadRoutes } from "../moduloSeguridad/routes";
-import { useModuloSeguridadStore, useUiStore } from "../hooks";
+import { useSecurityModelStore, useUiStore } from "../hooks";
 import { ModuloTrabajadorRoutes } from "../moduloTrabajador/routes";
 import { ModuloAdministradorRoutes } from "../moduloAdministrador/routes";
 import { ModuloClienteRoutes } from "../moduloCliente/routes";
@@ -11,8 +11,8 @@ import { MensajeSistemaPage } from "../ui/pages/MensajeSistemaPage";
 import api from "../services/instance";
 
 export const AppRouter = () => {
-  const { status, user, handleUserLogin, handleUserLogout } = useModuloSeguridadStore();
-  useModuloSeguridadStore();
+  const { status, user, handleUserLogin, handleUserLogout } = useSecurityModelStore();
+  useSecurityModelStore();
   const { handleActiveRoute } = useUiStore();
   const navigate = useNavigate();
 

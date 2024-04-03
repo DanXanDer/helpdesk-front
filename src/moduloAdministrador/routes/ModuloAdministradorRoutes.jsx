@@ -1,43 +1,33 @@
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
-  AddCompanyPage,
-  AddUserPage,
   ManageUsersPage,
   AllTicketsPage,
   CompaniesPage,
-  BranchesPage,
+  BranchesPage
 } from "../pages";
-import { useModuloSeguridadStore, useUiStore } from "../../hooks";
+import { useSecurityModelStore, useUiStore } from "../../hooks";
+import { WelcomePage } from "../../moduloSeguridad/pages/WelcomePage";
+import { getActiveRoute } from "../../helpers";
+import { UserUpdatePage } from "../../ui/pages";
 
 export const ModuloAdministradorRoutes = () => {
   const { handleActiveRoute } = useUiStore();
-  const { user } = useModuloSeguridadStore();
-
+  const { user: { authorities } } = useSecurityModelStore();
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    const currentRoute = currentPath.split("/")[1];
-    const { authorities } = user;
-    if (currentRoute === "gestionar-usuarios") {
-      handleActiveRoute(authorities[0].idPrivilege);
-    } else if (currentRoute === "crear-usuario") {
-      handleActiveRoute(authorities[1].idPrivilege);
-    } else if (currentRoute === "ver-tickets") {
-      handleActiveRoute(authorities[2].idPrivilege);
-    } else if (currentRoute === "agregar-empresa") {
-      handleActiveRoute(authorities[3].idPrivilege);
-    }
+    const idPrivilege = getActiveRoute(authorities);
+    handleActiveRoute(idPrivilege);
   }, []);
 
   return (
     <Routes>
-      <Route path="/*" element={<Navigate to="/gestionar-usuarios" />} />
-      <Route path="/gestionar-usuarios" element={<ManageUsersPage />} />
-      <Route path="/crear-usuario" element={<AddUserPage />} />
-      <Route path="/ver-tickets" element={<AllTicketsPage />} />
-      <Route path="/agregar-empresa" element={<AddCompanyPage />} />
+      <Route path="/*" element={<Navigate to="/bienvenida" />} />
+      <Route path="/usuarios" element={<ManageUsersPage />} />
+      <Route path="/historial-tickets" element={<AllTicketsPage />} />
       <Route path="/empresas" element={<CompaniesPage />} />
       <Route path="/empresas/:id" element={<BranchesPage />} />
+      <Route path="/bienvenida" element={<WelcomePage />} />
+      <Route path="/actualizar-informacion" element={<UserUpdatePage />} />
     </Routes>
   );
 };

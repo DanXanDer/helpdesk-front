@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import { HelpDeskLayout } from "../../ui/layout";
 import { Grid, Paper } from "@mui/material";
-import { formatFecha, getImagenes } from "../../helpers";
+import { formatFecha, getImages } from "../../helpers";
 import { useEffect, useState } from "react";
 import {
-  ImageGallery,
+  GalleryImages,
   ModalCambiarEstadoTicket,
-  ReportTicketDescription,
+  TicketDetails,
 } from "../../ui/components";
 import api from "../../services/instance";
 import { ClienteData } from "../components/ClienteData";
@@ -35,7 +35,7 @@ export const DetallesTicketPage = () => {
       const baseUrlGetImagenes =
         import.meta.env.VITE_BACKEND_API_URL +
         `/modulo-sistema/reportes/${ticket.idReporteIncidente}/imagenes`;
-      const imagenesParaGallery = await getImagenes(
+      const galleryImages = await getImages(
         rutasImagenes,
         baseUrlGetImagenes
       );
@@ -45,7 +45,7 @@ export const DetallesTicketPage = () => {
       };
       setDetallesTicket(detallesTicket);
       setDatosCliente(datosCliente);
-      setImagenes(imagenesParaGallery);
+      setImagenes(galleryImages);
     })();
   }, [idTicket]);
 
@@ -53,9 +53,9 @@ export const DetallesTicketPage = () => {
     <HelpDeskLayout>
       <Grid container gap={1} justifyContent="space-between">
         <Grid item xs={12} md={6.9} component={Paper} elevation={3}>
-          <ReportTicketDescription data={detallesTicket} />
+          <TicketDetails data={detallesTicket} />
           <Grid item xs={12}>
-            <ImageGallery imagenes={imagenes} height="60vh" width="100%" />
+            <GalleryImages imagenes={imagenes} height="60vh" width="100%" />
           </Grid>
         </Grid>
         <Grid item xs={12} md={4.9} p={2} component={Paper} elevation={3}>

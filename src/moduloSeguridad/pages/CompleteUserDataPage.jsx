@@ -16,11 +16,11 @@ import {
   TextField,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { showAlertMessage } from "../../helpers";
-import { useModuloSeguridadStore } from "../../hooks";
+import { getActiveRoute, showAlertMessage } from "../../helpers";
+import { useSecurityModelStore } from "../../hooks";
 import api from "../../services/instance";
 
-export const CompletarDatosPage = () => {
+export const CompleteUserDataPage = () => {
   const {
     register,
     handleSubmit,
@@ -37,7 +37,7 @@ export const CompletarDatosPage = () => {
   const { state } = useLocation();
   const { secretQuestions: secretQuestionsData, userDetails } = state;
 
-  const { handleUserLogin } = useModuloSeguridadStore();
+  const { handleUserLogin } = useSecurityModelStore();
 
   useEffect(() => {
     setSecretQuestions(secretQuestionsData);

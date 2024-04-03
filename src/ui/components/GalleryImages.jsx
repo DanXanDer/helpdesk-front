@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReactImageGallery from "react-image-gallery";
 
-export const ImageGallery = ({ imagenes, height, width }) => {
+export const GalleryImages = ({ images, height, width }) => {
   const [fullScreen, setFullScreen] = useState(false);
 
   const handleScreenChange = (isFullScreen) => {
@@ -14,7 +14,7 @@ export const ImageGallery = ({ imagenes, height, width }) => {
       onScreenChange={handleScreenChange}
       showPlayButton={false}
       showBullets={true}
-      items={imagenes}
+      items={images}
       renderItem={(item) => (
         <div className="image-gallery-image">
           <img

@@ -40,11 +40,12 @@ export const ModalEditCompany = ({ id, icon, name, handleUpdateCompanies }) => {
 
     return (
         <Box>
-            <IconButton
+            <Button
                 onClick={handleClickOpen}
             >
-                <Edit />
-            </IconButton>
+                Editar
+            </Button>
+
             <Dialog open={open} onClose={handleClose} >
                 <DialogTitle>
                     <ModalTitle icon={icon} title={title} />

@@ -4,10 +4,13 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import api from "../../services/instance";
 import { showAlertMessage, showConfirmationMessage } from "../../helpers";
+import { useParams } from "react-router-dom";
 
-export const AddArea = ({ idBranch, handleUpdateAreas }) => {
+export const AddArea = ({ idBranch, handleUpdateAreas, handleUpdateBranches }) => {
 
     const [addArea, setAddArea] = useState(false);
+
+    const { id } = useParams();
 
     const {
         register,
@@ -15,7 +18,6 @@ export const AddArea = ({ idBranch, handleUpdateAreas }) => {
         control,
         formState: { errors },
         unregister,
-        clearErrors,
         reset
     } = useForm();
 
@@ -34,7 +36,9 @@ export const AddArea = ({ idBranch, handleUpdateAreas }) => {
                 }
             });
             const { data: areas } = await api.get(`/branch/${idBranch}/areas`);
+            const { data: { branches } } = await api.get(`/company/${id}`);
             handleUpdateAreas(areas);
+            handleUpdateBranches(branches);
             showAlertMessage("success", "Éxito", "Se ha agregado el área");
             reset();
             setAddArea(false);
@@ -66,8 +70,8 @@ export const AddArea = ({ idBranch, handleUpdateAreas }) => {
                     {
                         !addArea && (
                             <Grid item xs={12} mt={2}>
-                                <Button variant="contained" onClick={handleClickAddArea} startIcon={<Add />}>
-                                    Agregar área
+                                <Button variant="outlined" onClick={handleClickAddArea} startIcon={<Add />}>
+                                    área
                                 </Button>
                             </Grid>
                         )

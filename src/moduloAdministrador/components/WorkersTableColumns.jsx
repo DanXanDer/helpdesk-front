@@ -1,7 +1,7 @@
 import { Block, CheckCircle } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
 import { handleUserStatusChange } from "../helpers";
-import { RenderedEnabledCell } from "../../ui/components";
+import { EnableStatusButton, RenderedEnabledCell } from "../../ui/components";
 import { getActionInfo } from "../../helpers";
 
 const columnOptions = {
@@ -10,7 +10,7 @@ const columnOptions = {
   align: "left",
 };
 
-export const WorkersTableColumns = (handleUpdateUsers) => {
+export const WorkersTableColumns = ({handleUpdateUsers}) => {
   const columns = [
     {
       field: "username",
@@ -51,14 +51,15 @@ export const WorkersTableColumns = (handleUpdateUsers) => {
         const { enabled } = row;
         const { actionText, color, subText } = getActionInfo(enabled);
         return (
-          <IconButton
-            color={color}
-            onClick={() => handleUserStatusChange(actionText, subText, row, handleUpdateUsers)}
-            sx={{ mr: true }}
-          >
-            {enabled === true ? <Block /> : <CheckCircle />}
-          </IconButton>
-        );
+          <EnableStatusButton
+            {...{
+              color,
+              enabled,
+              handleFunction: () => handleUserStatusChange(actionText, subText, row, handleUpdateUsers)
+            }}
+          />
+
+        )
       },
       ...columnOptions,
     },

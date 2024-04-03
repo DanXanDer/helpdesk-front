@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { ImageGallery } from "./ImageGallery";
+import { GalleryImages } from "./GalleryImages";
 
 export const ModalDetailsMsg = ({
   modalOpen,
@@ -43,7 +43,7 @@ export const ModalDetailsMsg = ({
         </DialogContent>
         {imagenes.length > 0 ? (
           <Grid item xs={12}>
-            <ImageGallery imagenes={imagenes} height="400px" width="100%" />
+            <GalleryImages imagenes={imagenes} height="400px" width="100%" />
           </Grid>
         ) : null}
 

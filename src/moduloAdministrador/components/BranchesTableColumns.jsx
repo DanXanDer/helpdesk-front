@@ -1,8 +1,8 @@
 import { getActionInfo, showAlertMessage, showConfirmationMessage } from "../../helpers";
-import { EnableStatusButton, RenderedEnabledCell } from "../../ui/components";
+import { CustomizedActionsMenu, EnableStatusButton, RenderedEnabledCell } from "../../ui/components";
 import api from "../../services/instance";
 import { Grid } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ModalEditBranch } from "./ModalEditBranch";
 import { Business } from "@mui/icons-material";
 
@@ -12,9 +12,7 @@ const columnOptions = {
     minWidth: 130,
 };
 
-export const BranchesTableColumns = (handleUpdateBranches) => {
-
-    const navigate = useNavigate();
+export const BranchesTableColumns = ({ handleUpdateBranches }) => {
 
     const { id: idCompany } = useParams();
 
@@ -52,7 +50,7 @@ export const BranchesTableColumns = (handleUpdateBranches) => {
             flex: 1.1,
             renderCell: ({ row }) => {
                 const { id: idBranch, name, enabled } = row;
-                const { actionText, color, isEnabled, subText } = getActionInfo(enabled);
+                const { actionText, color, subText } = getActionInfo(enabled);
                 const handleBranchChangeStatus = async () => {
                     const isConfirmed = await showConfirmationMessage(
                         `${actionText} sede`,
@@ -61,7 +59,7 @@ export const BranchesTableColumns = (handleUpdateBranches) => {
                     );
                     if (!isConfirmed) return;
                     try {
-                        await api.patch(`/branch/${idBranch}/update`, { enabled: !isEnabled });
+                        await api.patch(`/branch/${idBranch}/update`, { enabled: !enabled, });
                         const { data: companyDetails } = await api.get(`/company/${idCompany}`);
                         handleUpdateBranches(companyDetails.branches);
                         showAlertMessage("success", "Éxito", `Se ha cambiado el estado de la sede ${name}`);
@@ -70,20 +68,22 @@ export const BranchesTableColumns = (handleUpdateBranches) => {
                     }
                 };
                 return (
-                    <Grid container>
-                        <Grid item>
-                            <EnableStatusButton color={color} enabled={enabled} handleFunction={handleBranchChangeStatus} />
-                        </Grid>
-                        <Grid item>
-                            <ModalEditBranch {...{
+                    <>
+                        <CustomizedActionsMenu
+                            enableStatusButton={<EnableStatusButton {...{
+                                color,
+                                enabled,
+                                handleFunction: handleBranchChangeStatus
+                            }} />}
+                            modal={<ModalEditBranch {...{
                                 idBranch,
                                 idCompany,
                                 icon: <Business />,
                                 name,
-                                handleUpdateBranches,
-                            }} />
-                        </Grid>
-                    </Grid>
+                                handleUpdateBranches
+                            }} />}
+                        />
+                    </>
                 );
             }
         }

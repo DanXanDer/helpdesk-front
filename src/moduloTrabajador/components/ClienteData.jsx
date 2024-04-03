@@ -7,7 +7,7 @@ import {
 } from "../../ui/components";
 import { Person } from "@mui/icons-material";
 import { useState } from "react";
-import { useModuloSeguridadStore } from "../../hooks";
+import { useSecurityModelStore } from "../../hooks";
 
 export const ClienteData = ({ datosCliente, ticket }) => {
   const [openModalHistorialMensajes, setOpenModalHistorialMensajes] =
@@ -17,7 +17,7 @@ export const ClienteData = ({ datosCliente, ticket }) => {
 
   const [mensajes, setMensajes] = useState([]);
 
-  const { user } = useModuloSeguridadStore();
+  const { user } = useSecurityModelStore();
 
   const handleClickOpenModalHistorialMensajes = () => {
     setOpenModalHistorialMensajes(true);

@@ -54,10 +54,10 @@ export const BranchesPage = () => {
       </Grid>
       <DataGridTable
         height="90%"
-        columnsTable={BranchesTableColumns}
+        tableColumns={BranchesTableColumns}
         rows={companyDetails.branches}
         loadingRows={loadingRows}
-        handleFunction={handleUpdateBranches}
+        params={{ handleUpdateBranches }}
       />
     </HelpDeskLayout>
   )

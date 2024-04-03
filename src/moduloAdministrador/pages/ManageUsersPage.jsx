@@ -1,9 +1,10 @@
 import { HelpDeskLayout } from "../../ui/layout";
 import { useEffect, useState } from "react";
 import { getClients, getWorkers } from "../helpers";
-import { ClientsTableColumns, WorkersTableColumns } from "../components";
+import { ClientsTableColumns, ModalAddUser, WorkersTableColumns } from "../components";
 import { ManageAccounts } from "@mui/icons-material";
 import { DataGridTable, PageTitle, TableTabs } from "../../ui/components";
+import { Grid } from "@mui/material";
 const tabsLabels = [
   "Trabajadores",
   "Clientes",
@@ -49,18 +50,29 @@ export const ManageUsersPage = () => {
 
   return (
     <HelpDeskLayout>
-      <PageTitle icon={<ManageAccounts />} title="Listado de usuarios" />
+      <Grid container justifyContent="space-between">
+        <Grid item>
+          <PageTitle icon={<ManageAccounts />} title="Lista de usuarios" />
+        </Grid>
+        <Grid item>
+          <ModalAddUser />
+        </Grid>
+      </Grid>
       <TableTabs
         tabsLabels={tabsLabels}
         value={value}
         handleChange={handleChange}
       />
       <DataGridTable
-        height="90%"
-        columnsTable={value === 0 ? WorkersTableColumns : ClientsTableColumns}
-        handleFunction={handleUpdateUsers}
+        height="80%"
+        tableColumns={value === 0 ? WorkersTableColumns : ClientsTableColumns}
         rows={users}
         loadingRows={loadingRows}
+        params={
+          {
+            handleUpdateUsers,
+          }
+        }
       />
     </HelpDeskLayout>
   );
