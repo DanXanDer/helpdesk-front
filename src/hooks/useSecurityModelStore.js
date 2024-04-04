@@ -1,8 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setUserLogin,
-  setUserLogout,
-} from "../store/securityModelSlice";
+import { setUserLogin, setUserLogout } from "../store/securityModelSlice";
 
 export const useSecurityModelStore = () => {
   const { user, status } = useSelector((state) => state.securityModelSlice);

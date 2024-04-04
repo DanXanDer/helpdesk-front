@@ -10,13 +10,16 @@ import { WelcomePage } from "../../moduloSeguridad/pages/WelcomePage";
 import { getActiveRoute } from "../../helpers";
 import { UserUpdatePage } from "../../ui/pages/UserUpdatePage";
 
-export const ModuloClienteRoutes = () => {
+export const ClientModuleRoutes = () => {
   const { user: { authorities } } = useSecurityModelStore();
   const { handleActiveRoute } = useUiStore();
   useEffect(() => {
     const idPrivilege = getActiveRoute(authorities);
     handleActiveRoute(idPrivilege);
-  })
+  }, [])
+
+
+
 
   return (
     <Routes>

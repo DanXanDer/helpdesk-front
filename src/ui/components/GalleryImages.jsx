@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ReactImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 export const GalleryImages = ({ images, height, width }) => {
   const [fullScreen, setFullScreen] = useState(false);
@@ -29,4 +30,5 @@ export const GalleryImages = ({ images, height, width }) => {
       )}
     />
   );
+
 };

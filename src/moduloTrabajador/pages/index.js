@@ -1,3 +1,2 @@
-export * from "./MisTicketsPage";
-export * from "./DetallesIncidentePage";
-export * from "./DetallesTicketPage";
+export * from "./TicketsPage";
+export * from "./TicketDetailsPage";

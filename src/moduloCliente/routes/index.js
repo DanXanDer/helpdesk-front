@@ -1,1 +1,1 @@
-export * from "./ModuloClienteRoutes";
+export * from "./ClientModuleRoutes";

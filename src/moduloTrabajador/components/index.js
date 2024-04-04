@@ -1,4 +1,4 @@
 export * from "./TableColumnsIncidentes";
-export * from "./TableColumnsTickets";
+export * from "./TicketsTableColumns";
 export * from "./TableColumnsDetallesTicket";
-export * from "./ClienteData";
+export * from "./ClientInfo";

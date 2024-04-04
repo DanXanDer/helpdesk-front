@@ -1,1 +1,1 @@
-export * from "./ModuloTrabajadorRoutes";
+export * from "./WorkerModuleRoutes";

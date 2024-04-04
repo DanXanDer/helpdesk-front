@@ -1,1 +1,1 @@
-export * from "./ModuloAdministradorRoutes";
+export * from "./AdminModuleRoutes";

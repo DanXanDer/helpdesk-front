@@ -11,7 +11,7 @@ import { WelcomePage } from "../../moduloSeguridad/pages/WelcomePage";
 import { getActiveRoute } from "../../helpers";
 import { UserUpdatePage } from "../../ui/pages";
 
-export const ModuloAdministradorRoutes = () => {
+export const AdminModuleRoutes = () => {
   const { handleActiveRoute } = useUiStore();
   const { user: { authorities } } = useSecurityModelStore();
   useEffect(() => {

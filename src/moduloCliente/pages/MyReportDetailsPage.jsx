@@ -41,7 +41,7 @@ export const MyReportDetailsPage = () => {
           {
             ticket?.messages && (
               <DataGridTable
-                height="60vh"
+                height="50vh"
                 tableColumns={MessagesTableColumns}
                 rows={ticket.messages}
                 loadingRows={loadingRows}

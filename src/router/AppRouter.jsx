@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ModuloSeguridadRoutes } from "../moduloSeguridad/routes";
 import { useSecurityModelStore, useUiStore } from "../hooks";
-import { ModuloTrabajadorRoutes } from "../moduloTrabajador/routes";
-import { ModuloAdministradorRoutes } from "../moduloAdministrador/routes";
-import { ModuloClienteRoutes } from "../moduloCliente/routes";
+import { WorkerModuleRoutes } from "../moduloTrabajador/routes";
+import { AdminModuleRoutes } from "../moduloAdministrador/routes";
+import { ClientModuleRoutes } from "../moduloCliente/routes";
 import { showAlertMessage } from "../helpers";
 import { CheckingSesion } from "../ui/components";
 import { MensajeSistemaPage } from "../ui/pages/MensajeSistemaPage";
@@ -41,13 +41,13 @@ export const AppRouter = () => {
       {user ? (
         <>
           {user.role === "Trabajador" && (
-            <Route path="/*" element={<ModuloTrabajadorRoutes />} />
+            <Route path="/*" element={<WorkerModuleRoutes />} />
           )}
           {user.role === "Administrador" && (
-            <Route path="/*" element={<ModuloAdministradorRoutes />} />
+            <Route path="/*" element={<AdminModuleRoutes />} />
           )}
           {user.role === "Cliente" && (
-            <Route path="/*" element={<ModuloClienteRoutes />} />
+            <Route path="/*" element={<ClientModuleRoutes />} />
           )}
         </>
       ) : (
